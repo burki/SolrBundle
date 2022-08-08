@@ -54,7 +54,7 @@ class SynchronizeIndexCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $entities = $this->getIndexableEntities($input->getArgument('entity'));
+        $indexableEntities = $this->getIndexableEntities($input->getArgument('entity'));
         $source = $input->getOption('source');
         if ($source !== null) {
             $output->writeln('<comment>The source option is deprecated and will be removed in version 2.0</comment>');
@@ -63,13 +63,13 @@ class SynchronizeIndexCommand extends Command
         $startOffset = $input->getOption('start-offset');
         $batchSize = $input->getOption('flushsize');
 
-        if ($startOffset > 0 && count($entities) > 1) {
+        if ($startOffset > 0 && count($indexableEntities) > 1) {
             $output->writeln('<error>Wrong usage. Please use start-offset option together with the entity argument.</error>');
 
             return;
         }
 
-        foreach ($entities as $entityClassname) {
+        foreach ($indexableEntities as $entityClassname) {
             $objectManager = $this->getObjectManager($entityClassname);
 
             $output->writeln(sprintf('Indexing: <info>%s</info>', $entityClassname));
@@ -117,12 +117,15 @@ class SynchronizeIndexCommand extends Command
                 try {
                     $this->solr->synchronizeIndex($entities);
                 } catch (\Exception $e) {
-                    $output->writeln(sprintf('A error occurs: %s', $e->getMessage()));
+                    $output->writeln(sprintf('An error occured: %s', $e->getMessage()));
                 }
             }
 
             $output->writeln('<info>Synchronization finished</info>');
             $output->writeln('');
+
+            // Clear ObjectManager to make sure no proxies but real entities are loaded
+            $objectManager->clear();
         }
 
         return 0;
@@ -131,9 +134,9 @@ class SynchronizeIndexCommand extends Command
     /**
      * @param string $entityClassname
      *
+     * @return ObjectManager
      * @throws \RuntimeException if no doctrine instance is configured
      *
-     * @return ObjectManager
      */
     private function getObjectManager($entityClassname)
     {
@@ -185,7 +188,7 @@ class SynchronizeIndexCommand extends Command
      * Get the total number of entities in a repository
      *
      * @param string $entity
-     * @param int    $startOffset
+     * @param int $startOffset
      *
      * @return int
      *

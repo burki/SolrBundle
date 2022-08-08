@@ -4,6 +4,7 @@ namespace FS\SolrBundle\Client\Solarium;
 
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationInterface;
 use FS\SolrBundle\Query\DeleteDocumentQuery;
+use FS\SolrBundle\Query\FindByIdentifierQuery;
 use Solarium\Core\Query\QueryInterface;
 use Solarium\QueryType\Update\Query\Document;
 use \Solarium\Client;

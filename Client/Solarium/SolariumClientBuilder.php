@@ -4,6 +4,7 @@ namespace FS\SolrBundle\Client\Solarium;
 
 use FS\SolrBundle\Client\Builder;
 use Solarium\Client;
+use Solarium\Core\Client\Adapter\Curl;
 use Solarium\Core\Plugin\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -28,7 +29,7 @@ class SolariumClientBuilder implements Builder
     private $eventDispatcher;
 
     /**
-     * @param array                    $settings
+     * @param array $settings
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(array $settings, EventDispatcherInterface $eventDispatcher)
@@ -38,7 +39,7 @@ class SolariumClientBuilder implements Builder
     }
 
     /**
-     * @param string         $pluginName
+     * @param string $pluginName
      * @param AbstractPlugin $plugin
      */
     public function addPlugin($pluginName, AbstractPlugin $plugin)
@@ -82,7 +83,9 @@ class SolariumClientBuilder implements Builder
             $settings[$name] = $options;
         }
 
-        $solariumClient = new Client(array('endpoint' => $settings), $this->eventDispatcher);
+        $adapter = new Curl();
+        $config = array('endpoint' => $settings);
+        $solariumClient = new Client($adapter, $this->eventDispatcher, $config);
         foreach ($this->plugins as $pluginName => $plugin) {
             $solariumClient->registerPlugin($pluginName, $plugin);
         }

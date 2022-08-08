@@ -161,7 +161,7 @@ class SolrQuery extends AbstractQuery
      *
      * @return SolrQuery
      */
-    public function addField(string $field): Query
+    public function addField($field): Query
     {
         $entityFieldNames = array_flip($this->mappedFields);
         if (array_key_exists($field, $entityFieldNames)) {
@@ -192,7 +192,7 @@ class SolrQuery extends AbstractQuery
 
         $keyField = $this->getMetaInformation()->getDocumentKey();
 
-        $documentLimitation = $this->createFilterQuery('id')->setQuery('id:'.$keyField.'*');
+        $documentLimitation = $this->createFilterQuery('id')->setQuery('id:' . $keyField . '*');
 
         $this->addFilterQuery($documentLimitation);
         if ($this->customQuery) {
@@ -258,12 +258,12 @@ class SolrQuery extends AbstractQuery
         if (is_array($fieldValue) && count($fieldValue) > 1) {
             sort($fieldValue);
 
-            $quoted = array_map(function($value) {
-                return '"'. $value .'"';
+            $quoted = array_map(function ($value) {
+                return '"' . $value . '"';
             }, $fieldValue);
 
             $fieldValue = implode(' TO ', $quoted);
-            $fieldValue = '['. $fieldValue . ']';
+            $fieldValue = '[' . $fieldValue . ']';
 
             return $fieldValue;
         }
@@ -278,7 +278,7 @@ class SolrQuery extends AbstractQuery
 
         $termParts = explode(' ', $fieldValue);
         if (count($termParts) > 1) {
-            $fieldValue = '"'.$fieldValue.'"';
+            $fieldValue = '"' . $fieldValue . '"';
         }
 
         return $fieldValue;
