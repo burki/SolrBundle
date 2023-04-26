@@ -219,7 +219,7 @@ class SolrQuery extends AbstractQuery
         foreach ($searchTerms as $fieldName => $fieldValue) {
 
             if ($fieldName == 'id') {
-                $this->getFilterQuery('id')->setQuery('id:' . $fieldValue);
+                $this->getFilterQuery('id')->setQuery('id:' . $this->escapeId($fieldValue));
 
                 $termCount++;
 

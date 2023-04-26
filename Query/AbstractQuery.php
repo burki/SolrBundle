@@ -38,6 +38,18 @@ abstract class AbstractQuery extends SolariumQuery
     private $metaInformation;
 
     /**
+     * Escape an id possibly containing a :.
+     *
+     * @param string $input
+     *
+     * @return string
+     */
+    protected function escapeId(string $id): string
+    {
+        return addcslashes($id, ':');
+    }
+
+    /**
      * @return MetaInformationInterface
      */
     public function getMetaInformation()

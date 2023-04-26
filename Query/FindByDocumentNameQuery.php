@@ -29,7 +29,7 @@ class FindByDocumentNameQuery extends AbstractQuery
      *
      * @throws QueryException if documentName is null
      */
-    public function getQuery()
+    public function getQuery(): ?string
     {
         $documentName = $this->documentName;
 
@@ -37,7 +37,7 @@ class FindByDocumentNameQuery extends AbstractQuery
             throw new QueryException('documentName should not be null');
         }
 
-        $documentLimitation = $this->createFilterQuery('id')->setQuery(sprintf('id:%s_*', $documentName));
+        $documentLimitation = $this->createFilterQuery('id')->setQuery(sprintf('id:%s_*', $this->escapeId($documentName)));
         $this->addFilterQuery($documentLimitation);
 
         $this->setQuery('*:*');

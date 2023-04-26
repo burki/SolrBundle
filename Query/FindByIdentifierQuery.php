@@ -24,7 +24,7 @@ class FindByIdentifierQuery extends AbstractQuery
      *
      * @throws QueryException when id or document_name is null
      */
-    public function getQuery()
+    public function getQuery(): ?string
     {
         $idField = $this->documentKey;
 
@@ -32,7 +32,7 @@ class FindByIdentifierQuery extends AbstractQuery
             throw new QueryException('id should not be null');
         }
 
-        $documentLimitation = $this->createFilterQuery('id')->setQuery(sprintf('id:%s', $idField));
+        $documentLimitation = $this->createFilterQuery('id')->setQuery(sprintf('id:%s', $this->escapeId($idField)));
         $this->addFilterQuery($documentLimitation);
 
         $this->setQuery('*:*');

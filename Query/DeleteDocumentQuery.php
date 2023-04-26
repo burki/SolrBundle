@@ -32,7 +32,7 @@ class DeleteDocumentQuery extends AbstractQuery
             throw new QueryException('id should not be null');
         }
 
-        $this->setQuery(sprintf('id:%s', $idField));
+        $this->setQuery(sprintf('id:%s', $this->escapeId($idField)));
 
         return parent::getQuery();
     }
