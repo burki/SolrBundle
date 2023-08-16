@@ -54,6 +54,7 @@ class SolariumClientBuilder implements Builder
      */
     public function build()
     {
+        $timeout = null;
         $settings = [];
         foreach ($this->settings as $name => $options) {
             if (isset($options['dsn'])) {
@@ -80,10 +81,25 @@ class SolariumClientBuilder implements Builder
                 }
             }
 
+            if (isset($options['timeout']) && (is_null($timeout) || $options['timeout'] > $timeout)) {
+                $timeout = (int)$options['timeout'];
+            }
+
             $settings[$name] = $options;
         }
 
         $adapter = new Curl();
+        if (!is_null($timeout) && $timeout > 0) {
+            /*
+             * Setting "timeout" as "option" in the HTTP Client Adapter is deprecated since Solarium 5.2.0
+             * because not all adapters could handle it.
+             * Configure the timeout on the http adapter instead
+             *
+             * https://github.com/solariumphp/solarium/blob/master/CHANGELOG.md#520
+             */
+            $adapter->setTimeout($timeout);
+        }
+
         $config = array('endpoint' => $settings);
         $solariumClient = new Client($adapter, $this->eventDispatcher, $config);
         foreach ($this->plugins as $pluginName => $plugin) {
