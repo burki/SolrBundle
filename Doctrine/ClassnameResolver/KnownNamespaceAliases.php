@@ -73,7 +73,7 @@ class KnownNamespaceAliases
      */
     public function getAllNamespaceAliases()
     {
-        return array_keys($this->knownNamespaceAlias);
+        return $this->knownNamespaceAlias;
     }
 
     /**
