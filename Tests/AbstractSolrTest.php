@@ -3,7 +3,6 @@
 
 namespace FS\SolrBundle\Tests;
 
-
 use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
 use FS\SolrBundle\Doctrine\Mapper\EntityMapperInterface;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
@@ -37,7 +36,8 @@ abstract class AbstractSolrTest extends TestCase
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $this->mapper = $this->getMockBuilder(EntityMapperInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['setMappingCommand', 'toDocument', 'toEntity', 'setHydrationMode'])
+            ->onlyMethods(['toDocument', 'toEntity', 'setHydrationMode'])
+            ->addMethods(['setMappingCommand'])
             ->getMock();
 
         $this->solrClientFake = $this->createMock(Client::class);

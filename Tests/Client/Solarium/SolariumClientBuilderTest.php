@@ -95,7 +95,7 @@ class SolariumClientBuilderTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dsnProvider()
+    public static function dsnProvider()
     {
         return [
             [
