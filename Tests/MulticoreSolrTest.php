@@ -48,22 +48,21 @@ class MulticoreSolrTest extends AbstractSolrTest
 
         $this->solrClientFake->expects($this->once())
             ->method('getEndpoints')
-            ->will($this->returnValue(array(
+            ->willReturn(array(
                 'core0' => array(),
                 'core1' => array()
-            )));
+            ));
 
-        $this->solrClientFake->expects($this->at(2))
+        $this->solrClientFake->expects(self::exactly(2))
             ->method('update')
-            ->with($updateQuery, 'core0');
-
-        $this->solrClientFake->expects($this->at(3))
-            ->method('update')
-            ->with($updateQuery, 'core1');
+            ->withConsecutive(
+                [$updateQuery, 'core0'],
+                [$updateQuery, 'core1']
+            );
 
         $this->mapper->expects($this->once())
             ->method('toDocument')
-            ->will($this->returnValue(new DocumentStub()));
+            ->willReturn(new DocumentStub());
 
         $solr = new Solr($this->solrClientFake, $this->eventDispatcher, $this->metaFactory, $this->mapper);
         $solr->addDocument(new ValidTestEntityAllCores());
@@ -81,18 +80,17 @@ class MulticoreSolrTest extends AbstractSolrTest
 
         $this->solrClientFake->expects($this->once())
             ->method('getEndpoints')
-            ->will($this->returnValue(array(
+            ->willReturn(array(
                 'core0' => array(),
                 'core1' => array()
-            )));
+            ));
 
-        $this->solrClientFake->expects($this->at(2))
+        $this->solrClientFake->expects(self::exactly(2))
             ->method('update')
-            ->with($updateQuery, 'core0');
-
-        $this->solrClientFake->expects($this->at(3))
-            ->method('update')
-            ->with($updateQuery, 'core1');
+            ->withConsecutive(
+                [$updateQuery, 'core0'],
+                [$updateQuery, 'core1']
+            );
 
         $this->mapper->expects($this->once())
             ->method('toDocument')

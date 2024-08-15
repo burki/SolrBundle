@@ -55,25 +55,24 @@ class EntityIndexerSubscriberTest extends TestCase
 
         $objectManager = $this->createMock(EntityManagerInterface::class);
 
-        $this->solr->expects($this->at(0))
+        $this->solr->expects(self::exactly(2))
             ->method('removeDocument')
-            ->with($this->callback(function(ValidTestEntityWithCollection $entity) {
-                if (count($entity->getCollection())) {
-                    return false;
-                }
+            ->willReturnOnConsecutiveCalls(
+                $this->callback(function (ValidTestEntityWithCollection $entity) {
+                    if (count($entity->getCollection())) {
+                        return false;
+                    }
 
-                return true;
-            }));
+                    return true;
+                }),
+                $this->callback(function ($entity) {
+                    if (!$entity instanceof NestedEntity) {
+                        return false;
+                    }
 
-        $this->solr->expects($this->at(1))
-            ->method('removeDocument')
-            ->with($this->callback(function($entity) {
-                if (!$entity instanceof NestedEntity) {
-                    return false;
-                }
-
-                return true;
-            }));
+                    return true;
+                })
+            );
 
         $deleteRootEntityEvent = new LifecycleEventArgs($entity, $objectManager);
         $this->subscriber->preRemove($deleteRootEntityEvent);
@@ -97,13 +96,12 @@ class EntityIndexerSubscriberTest extends TestCase
             ->with($changedEntity);
 
         $unitOfWork = $this->createMock(UnitOfWork::class);
-        $unitOfWork->expects($this->at(0))
+        $unitOfWork->expects(self::exactly(2))
             ->method('getEntityChangeSet')
-            ->willReturn(['title' => 'value']);
-
-        $unitOfWork->expects($this->at(1))
-            ->method('getEntityChangeSet')
-            ->willReturn([]);
+            ->willReturnOnConsecutiveCalls(
+                ['title' => 'value'],
+                []
+            );
 
         $objectManager = $this->createMock(EntityManagerInterface::class);
         $objectManager->expects($this->any())
