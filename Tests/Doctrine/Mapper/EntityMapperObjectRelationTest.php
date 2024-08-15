@@ -31,7 +31,7 @@ class EntityMapperObjectRelationTest extends \PHPUnit\Framework\TestCase
      */
     private $mapper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->doctrineHydrator = $this->createMock(HydratorInterface::class);
         $this->indexHydrator = $this->createMock(HydratorInterface::class);

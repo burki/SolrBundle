@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class KnownNamespaceAliasesTest extends TestCase
 {
-
     /**
      * @test
      */
@@ -19,19 +18,20 @@ class KnownNamespaceAliasesTest extends TestCase
         $config1 = $this->createMock(OrmConfiguration::class);
         $config1->expects($this->once())
             ->method('getEntityNamespaces')
-            ->will($this->returnValue(array('AcmeDemoBundle')));
+            ->willReturn(array('AcmeDemoBundle'));
 
         $config2 = $this->createMock(OrmConfiguration::class);
         $config2->expects($this->once())
             ->method('getEntityNamespaces')
-            ->will($this->returnValue(array('AcmeBlogBundle')));
+            ->willReturn(array('AcmeBlogBundle'));
 
         $knownAliases = new KnownNamespaceAliases();
         $knownAliases->addEntityNamespaces($config1);
         $knownAliases->addEntityNamespaces($config2);
 
-        $this->assertTrue(in_array('AcmeDemoBundle', $knownAliases->getAllNamespaceAliases()));
-        $this->assertTrue(in_array('AcmeBlogBundle', $knownAliases->getAllNamespaceAliases()));
+        $namespaceAliases = $knownAliases->getAllNamespaceAliases();
+        $this->assertTrue(in_array('AcmeDemoBundle', $namespaceAliases, true));
+        $this->assertTrue(in_array('AcmeBlogBundle', $namespaceAliases, true));
     }
 
     /**
@@ -53,8 +53,8 @@ class KnownNamespaceAliasesTest extends TestCase
         $knownAliases->addDocumentNamespaces($config1);
         $knownAliases->addDocumentNamespaces($config2);
 
-        $this->assertTrue(in_array('AcmeDemoBundle', $knownAliases->getAllNamespaceAliases()));
-        $this->assertTrue(in_array('AcmeBlogBundle', $knownAliases->getAllNamespaceAliases()));
+        $this->assertTrue(in_array('AcmeDemoBundle', $knownAliases->getAllNamespaceAliases(), true));
+        $this->assertTrue(in_array('AcmeBlogBundle', $knownAliases->getAllNamespaceAliases(), true));
     }
 
     /**
@@ -79,4 +79,3 @@ class KnownNamespaceAliasesTest extends TestCase
         $this->assertEquals('Acme\DemoBundle\Document', $knownAliases->getFullyQualifiedNamespace('AcmeDemoBundle'));
     }
 }
- 

@@ -31,7 +31,7 @@ class RepositoryTest extends \PHPUnit\Framework\TestCase
 
     private $mapper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->metaInformationFactory = new MetaInformationFactory($reader = new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader()));
         $this->mapper = $this->createMock(EntityMapperInterface::class);

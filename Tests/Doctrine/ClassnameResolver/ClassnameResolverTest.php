@@ -17,7 +17,7 @@ class ClassnameResolverTest extends TestCase
 
     private $knownAliases;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->knownAliases = $this->createMock(KnownNamespaceAliases::class);
     }

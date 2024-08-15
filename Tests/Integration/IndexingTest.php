@@ -45,7 +45,7 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
      */
     private $eventDispatcher;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->eventDispatcher = new EventDispatcherFake();
         $this->client = $this->setupSolrClient();

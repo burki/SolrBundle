@@ -100,7 +100,7 @@ class EventDispatcherFake implements EventDispatcherInterface
      *
      * @api
      */
-    public function addListener($eventName, $listener, $priority = 0)
+    public function addListener(string $eventName, callable $listener, int $priority = 0): void
     {
         // TODO: Implement addListener() method.
     }
@@ -115,7 +115,7 @@ class EventDispatcherFake implements EventDispatcherInterface
      *
      * @api
      */
-    public function addSubscriber(EventSubscriberInterface $subscriber)
+    public function addSubscriber(EventSubscriberInterface $subscriber): void
     {
         // TODO: Implement addSubscriber() method.
     }
@@ -123,10 +123,10 @@ class EventDispatcherFake implements EventDispatcherInterface
     /**
      * Removes an event listener from the specified events.
      *
-     * @param string|array $eventName The event(s) to remove a listener from
+     * @param string       $eventName The event(s) to remove a listener from
      * @param callable     $listener The listener to remove
      */
-    public function removeListener($eventName, $listener)
+    public function removeListener(string $eventName, callable $listener): void
     {
         // TODO: Implement removeListener() method.
     }
@@ -136,7 +136,7 @@ class EventDispatcherFake implements EventDispatcherInterface
      *
      * @param EventSubscriberInterface $subscriber The subscriber
      */
-    public function removeSubscriber(EventSubscriberInterface $subscriber)
+    public function removeSubscriber(EventSubscriberInterface $subscriber): void
     {
         // TODO: Implement removeSubscriber() method.
     }
@@ -148,7 +148,7 @@ class EventDispatcherFake implements EventDispatcherInterface
      *
      * @return array The event listeners for the specified event, or all event listeners by event name
      */
-    public function getListeners($eventName = null)
+    public function getListeners(?string $eventName = null): array
     {
         // TODO: Implement getListeners() method.
     }
@@ -160,7 +160,7 @@ class EventDispatcherFake implements EventDispatcherInterface
      *
      * @return Boolean true if the specified event has any listeners, false otherwise
      */
-    public function hasListeners($eventName = null)
+    public function hasListeners(?string $eventName = null): bool
     {
         // TODO: Implement hasListeners() method.
     }
@@ -175,9 +175,9 @@ class EventDispatcherFake implements EventDispatcherInterface
      *
      * @return int|null The event listener priority
      */
-    public function getListenerPriority($eventName, $listener)
+    public function getListenerPriority(string $eventName, callable $listener): ?int
     {
         // TODO: Implement getListenerPriority() method.
     }
 
-} 
+}

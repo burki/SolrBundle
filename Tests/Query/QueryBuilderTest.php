@@ -11,7 +11,7 @@ class QueryBuilderTest extends \PHPUnit\Framework\TestCase
 {
     private $solr;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->solr = $this->createMock(SolrInterface::class);
     }

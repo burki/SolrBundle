@@ -25,7 +25,7 @@ class MetaInformationFactoryTest extends \PHPUnit\Framework\TestCase
      */
     private $reader;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->reader = new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader());
     }
@@ -203,4 +203,3 @@ class MetaInformationFactoryTest extends \PHPUnit\Framework\TestCase
 
     }
 }
-

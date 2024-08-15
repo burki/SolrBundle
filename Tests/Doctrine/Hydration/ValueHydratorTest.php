@@ -23,7 +23,7 @@ class ValueHydratorTest extends \PHPUnit\Framework\TestCase
      */
     private $reader;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->reader = new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader());
     }
@@ -134,4 +134,3 @@ class ValueHydratorTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($hydratedDocument->getRelation() === $entity1);
     }
 }
- 

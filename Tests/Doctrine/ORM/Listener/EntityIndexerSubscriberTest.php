@@ -32,7 +32,7 @@ class EntityIndexerSubscriberTest extends TestCase
 
     private $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->solr = $this->createMock(SolrInterface::class);

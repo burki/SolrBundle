@@ -19,7 +19,7 @@ class FSSolrExtensionTest extends \PHPUnit\Framework\TestCase
      */
     private $container = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->container = new ContainerBuilder();
     }
@@ -135,4 +135,3 @@ class FSSolrExtensionTest extends \PHPUnit\Framework\TestCase
         );
     }
 }
-
