@@ -9,13 +9,14 @@ use FS\SolrBundle\Doctrine\Mapper\EntityMapperInterface;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Solr;
 use FS\SolrBundle\Tests\Util\MetaTestInformationFactory;
+use PHPUnit\Framework\TestCase;
 use Solarium\Client;
-use Solarium\QueryType\Update\Query\Document\DocumentInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Solarium\QueryType\Update\Query\Query as UpdateQuery;
 use Solarium\QueryType\Select\Query\Query as SelectQuery;
+use Solarium\QueryType\Update\Query\Document\DocumentInterface;
+use Solarium\QueryType\Update\Query\Query as UpdateQuery;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-abstract class AbstractSolrTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractSolrTest extends TestCase
 {
     /**
      * @var MetaInformationFactory
@@ -30,13 +31,13 @@ abstract class AbstractSolrTest extends \PHPUnit_Framework_TestCase
      */
     protected $solr;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->metaFactory = new MetaInformationFactory(new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader()));
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $this->mapper = $this->getMockBuilder(EntityMapperInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('setMappingCommand', 'toDocument', 'toEntity', 'setHydrationMode'))
+            ->setMethods(['setMappingCommand', 'toDocument', 'toEntity', 'setHydrationMode'])
             ->getMock();
 
         $this->solrClientFake = $this->createMock(Client::class);
@@ -56,7 +57,7 @@ abstract class AbstractSolrTest extends \PHPUnit_Framework_TestCase
         $this->solrClientFake
             ->expects($this->once())
             ->method('createUpdate')
-            ->will($this->returnValue($updateQuery));
+            ->willReturn($updateQuery);
 
         $this->solrClientFake
             ->expects($this->once())
@@ -93,7 +94,7 @@ abstract class AbstractSolrTest extends \PHPUnit_Framework_TestCase
         $this->solrClientFake
             ->expects($this->once())
             ->method('createUpdate')
-            ->will($this->returnValue($deleteQuery));
+            ->willReturn($deleteQuery);
 
         $this->solrClientFake
             ->expects($this->once())
@@ -109,10 +110,10 @@ abstract class AbstractSolrTest extends \PHPUnit_Framework_TestCase
 
         $this->metaFactory->expects($this->once())
             ->method('loadInformation')
-            ->will($this->returnValue($metaInformation));
+            ->willReturn($metaInformation);
     }
 
-    protected function assertQueryWasExecuted($data = array(), $index)
+    protected function assertQueryWasExecuted($data, $index)
     {
         $selectQuery = $this->createMock(SelectQuery::class);
         $selectQuery->expects($this->once())
@@ -123,18 +124,18 @@ abstract class AbstractSolrTest extends \PHPUnit_Framework_TestCase
         $this->solrClientFake
             ->expects($this->once())
             ->method('createSelect')
-            ->will($this->returnValue($selectQuery));
+            ->willReturn($selectQuery);
 
         $this->solrClientFake
             ->expects($this->once())
             ->method('select')
-            ->will($this->returnValue($queryResult));
+            ->willReturn($queryResult);
     }
 
     protected function mapOneDocument()
     {
         $this->mapper->expects($this->once())
             ->method('toDocument')
-            ->will($this->returnValue($this->createMock(DocumentInterface::class)));
+            ->willReturn($this->createMock(DocumentInterface::class));
     }
 }

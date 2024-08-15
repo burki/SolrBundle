@@ -16,7 +16,7 @@ use FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithRelation;
 use FS\SolrBundle\Tests\Util\MetaTestInformationFactory;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 
-class EntityMapperObjectRelationTest extends \PHPUnit_Framework_TestCase
+class EntityMapperObjectRelationTest extends \PHPUnit\Framework\TestCase
 {
     private $doctrineHydrator = null;
     private $indexHydrator = null;
@@ -288,7 +288,7 @@ class EntityMapperObjectRelationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey('complex_data_type', $fields);
 
-        $this->assertEquals($data, $fields['complex_data_type']);
+        $this->assertEquals($data, $fields['complex_data_type'][0]);
     }
 
     /**

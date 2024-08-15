@@ -3,9 +3,9 @@
 namespace FS\SolrBundle\Tests\Doctrine\Hydration;
 
 
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
 use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
 use FS\SolrBundle\Doctrine\Annotation\Field;
 use FS\SolrBundle\Doctrine\Hydration\DoctrineHydrator;
@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 /**
  * @group hydration
  */
-class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
+class DoctrineHydratorTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

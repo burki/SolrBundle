@@ -11,7 +11,7 @@
   "homepage": "https://github.com/boppy/SolrBundle",
   "license": "MIT",
   "require": {
-    "php": "^7.2 || ^8.0",
+    "php": "^7.3 || ^8.0",
     "solarium/solarium": "6.3.*",
     "symfony/dependency-injection": "^4.0|^5.0|^6.0",
     "symfony/http-kernel": "^4.0|^5.0|^6.0",
@@ -20,16 +20,22 @@
     "minimalcode/search": "^1.0",
     "ramsey/uuid": "^3.5|^4.1",
     "myclabs/deep-copy": "^1.6",
-    "doctrine/annotations": "^1.4"
+    "doctrine/annotations": "^1.7"
   },
   "require-dev": {
-    "doctrine/orm": "^2.3",
+    "doctrine/mongodb-odm-bundle": "^4.2",
+    "doctrine/orm": "^2.4",
     "phpunit/phpunit": "^7.0"
   },
   "minimum-stability": "stable",
   "autoload": {
     "psr-0": {
       "FS\\SolrBundle": ""
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Doctrine\\ODM\\MongoDB\\": "vendor/doctrine/mongodb-odm/lib/Doctrine/ODM/MongoDB/"
     }
   },
   "config": {

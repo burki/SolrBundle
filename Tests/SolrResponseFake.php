@@ -26,4 +26,3 @@ class SolrResponseFake
         $this->response = $response;
     }
 }
-

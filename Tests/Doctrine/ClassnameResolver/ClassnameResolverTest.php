@@ -1,15 +1,16 @@
 <?php
 
-namespace FS\SolrBundle\Tests\Solr\Doctrine;
+namespace FS\SolrBundle\Tests\Solr\Doctrine\ClassnameResolver;
 
 use FS\SolrBundle\Doctrine\ClassnameResolver\ClassnameResolver;
 use FS\SolrBundle\Doctrine\ClassnameResolver\KnownNamespaceAliases;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group resolver
  */
-class ClassnameResolverTest extends \PHPUnit_Framework_TestCase
+class ClassnameResolverTest extends TestCase
 {
     const ENTITY_NAMESPACE = 'FS\SolrBundle\Tests\Fixtures';
     const UNKNOW_ENTITY_NAMESPACE = 'FS\Unknown';
@@ -104,4 +105,3 @@ class ClassnameResolverTest extends \PHPUnit_Framework_TestCase
         return $resolver;
     }
 }
- 

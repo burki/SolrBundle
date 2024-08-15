@@ -3,7 +3,7 @@
 
 namespace FS\SolrBundle\Tests;
 
-class DocumentStub implements \Solarium\QueryType\Update\Query\Document\DocumentInterface
+class DocumentStub implements \Solarium\Core\Query\DocumentInterface
 {
     public $id = 1;
     public $document_name_s = 'stub_document';
@@ -35,7 +35,7 @@ class DocumentStub implements \Solarium\QueryType\Update\Query\Document\Document
     /**
      * @return array
      */
-    public function getFields()
+    public function getFields(): array
     {
         return array('id' => $this->id, 'document_name' => $this->document_name_s);
     }

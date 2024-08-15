@@ -2,28 +2,25 @@
 
 namespace FS\SolrBundle\Tests;
 
-class ResultFake implements \IteratorAggregate, \Countable
+class ResultFake extends \Solarium\QueryType\Select\Result\Result
 {
-
-    private $data = array();
-
     public function __construct($data)
     {
         $this->data = $data;
     }
 
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->data);
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->data);
     }
 
-    public function getNumFound()
+    public function getNumFound(): ?int
     {
         return $this->count();
     }
-} 
+}

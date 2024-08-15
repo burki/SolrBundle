@@ -3,12 +3,12 @@
 namespace FS\SolrBundle\Tests\Query;
 
 use FS\SolrBundle\Query\FindByIdentifierQuery;
-use Solarium\QueryType\Update\Query\Document\Document;
+use Solarium\QueryType\Update\Query\Document;
 
 /**
  * @group query
  */
-class FindByIdentifierQueryTest extends \PHPUnit_Framework_TestCase
+class FindByIdentifierQueryTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testGetQuery_SearchInAllFields()

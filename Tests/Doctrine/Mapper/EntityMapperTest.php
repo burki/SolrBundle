@@ -2,10 +2,10 @@
 
 namespace FS\SolrBundle\Tests\Doctrine\Mapper;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Collections\ArrayCollection;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
 use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
 use FS\SolrBundle\Doctrine\Hydration\DoctrineHydrator;
 use FS\SolrBundle\Doctrine\Hydration\HydrationModes;
@@ -23,13 +23,13 @@ use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithCollection;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithRelation;
 use FS\SolrBundle\Tests\Util\MetaTestInformationFactory;
-use Solarium\QueryType\Update\Query\Document\Document;
+use Solarium\QueryType\Update\Query\Document;
 
 /**
  *
  * @group mapper
  */
-class EntityMapperTest extends \PHPUnit_Framework_TestCase
+class EntityMapperTest extends \PHPUnit\Framework\TestCase
 {
 
     private $doctrineHydrator = null;

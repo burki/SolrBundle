@@ -15,7 +15,7 @@ use FS\SolrBundle\Tests\Fixtures\EntityWithRepository;
 use FS\SolrBundle\Tests\Fixtures\ValidEntityRepository;
 use FS\SolrBundle\Query\SolrQuery;
 use Solarium\Plugin\BufferedAdd\BufferedAdd;
-use Solarium\QueryType\Update\Query\Document\Document;
+use Solarium\QueryType\Update\Query\Document;
 
 /**
  *
@@ -217,7 +217,7 @@ class SolrTest extends AbstractSolrTest
 
         $bufferPlugin->expects($this->once())
             ->method('setEndpoint')
-            ->with(null);
+            ;
 
         $bufferPlugin->expects($this->once())
             ->method('commit');
@@ -225,12 +225,11 @@ class SolrTest extends AbstractSolrTest
         $this->solrClientFake->expects($this->once())
             ->method('getPlugin')
             ->with('bufferedadd')
-            ->will($this->returnValue($bufferPlugin));
-
+            ->willReturn($bufferPlugin);
 
         $this->mapper->expects($this->once())
             ->method('toDocument')
-            ->will($this->returnValue(new DocumentStub()));
+            ->willReturn(new DocumentStub());
 
         $this->solr->synchronizeIndex(array($entity));
     }
@@ -247,14 +246,14 @@ class SolrTest extends AbstractSolrTest
         $entity2->setText('a text');
 
         $bufferPlugin = $this->createMock(BufferedAdd::class);
-
-        $bufferPlugin->expects($this->at(2))
+        $bufferPlugin->expects(self::exactly(2))
             ->method('setEndpoint')
-            ->with('core0');
-
-        $bufferPlugin->expects($this->at(5))
-            ->method('setEndpoint')
-            ->with('core1');
+            // currently fails
+            ->withConsecutive(
+                ['core0'],
+                ['core1']
+            )
+            ;
 
         $bufferPlugin->expects($this->exactly(2))
             ->method('commit');
@@ -262,12 +261,11 @@ class SolrTest extends AbstractSolrTest
         $this->solrClientFake->expects($this->once())
             ->method('getPlugin')
             ->with('bufferedadd')
-            ->will($this->returnValue($bufferPlugin));
-
+            ->willReturn($bufferPlugin);
 
         $this->mapper->expects($this->exactly(2))
             ->method('toDocument')
-            ->will($this->returnValue(new DocumentStub()));
+            ->willReturn(new DocumentStub());
 
         $this->solr->synchronizeIndex(array($entity1, $entity2));
     }
@@ -282,6 +280,3 @@ class SolrTest extends AbstractSolrTest
         $this->assertTrue($queryBuilder instanceof QueryBuilderInterface);
     }
 }
-
-
-

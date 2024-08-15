@@ -3,12 +3,12 @@
 namespace FS\SolrBundle\Tests\Query;
 
 use FS\SolrBundle\Query\FindByDocumentNameQuery;
-use Solarium\QueryType\Update\Query\Document\Document;
+use Solarium\QueryType\Update\Query\Document;
 
 /**
  * @group query
  */
-class FindByDocumentNameQueryTest extends \PHPUnit_Framework_TestCase
+class FindByDocumentNameQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @group query1

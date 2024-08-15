@@ -15,14 +15,14 @@ use FS\SolrBundle\Tests\SolrClientFake;
 use FS\SolrBundle\Tests\Util\MetaTestInformationFactory;
 use FS\SolrBundle\Tests\Util\CommandFactoryStub;
 use Solarium\Core\Query\Helper;
-use Solarium\QueryType\Update\Query\Document\Document;
+use Solarium\QueryType\Update\Query\Document;
 use FS\SolrBundle\Repository\Repository;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 
 /**
  * @group repository
  */
-class RepositoryTest extends \PHPUnit_Framework_TestCase
+class RepositoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var MetaTestInformationFactory
@@ -161,4 +161,3 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('{!parent which="id:entitynestedproperty_*"}name_t:*test*test*', $solr->query->getQuery());
     }
 }
-

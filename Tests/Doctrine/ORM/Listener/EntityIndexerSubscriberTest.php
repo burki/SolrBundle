@@ -3,11 +3,11 @@
 namespace FS\SolrBundle\Tests\Doctrine\ORM\Listener;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
+use Doctrine\Persistence\ObjectManager;
 use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Doctrine\ORM\Listener\EntityIndexerSubscriber;
@@ -15,10 +15,11 @@ use FS\SolrBundle\SolrInterface;
 use FS\SolrBundle\Tests\Fixtures\NestedEntity;
 use FS\SolrBundle\Tests\Fixtures\NotIndexedEntity;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithCollection;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Tests\Constraints\ValidTest;
 
-class EntityIndexerSubscriberTest extends \PHPUnit_Framework_TestCase
+class EntityIndexerSubscriberTest extends TestCase
 {
     /**
      * @var EntityIndexerSubscriber
@@ -52,7 +53,7 @@ class EntityIndexerSubscriberTest extends \PHPUnit_Framework_TestCase
         $entity->setId(uniqid());
         $entity->setCollection(new ArrayCollection([$nested]));
 
-        $objectManager = $this->createMock(ObjectManager::class);
+        $objectManager = $this->createMock(EntityManagerInterface::class);
 
         $this->solr->expects($this->at(0))
             ->method('removeDocument')

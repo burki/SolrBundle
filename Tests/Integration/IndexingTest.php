@@ -23,7 +23,7 @@ use Sensio\Bundle\DistributionBundle\Configurator\Step\DoctrineStep;
 use Solarium\Client;
 use Solarium\QueryType\Ping\Query;
 
-class IndexingTest extends \PHPUnit_Framework_TestCase
+class IndexingTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Solr

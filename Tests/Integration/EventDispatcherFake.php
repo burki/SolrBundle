@@ -38,17 +38,17 @@ class EventDispatcherFake implements EventDispatcherInterface
      *
      * @api
      */
-    public function dispatch($eventName, Event $event = null)
+    public function dispatch(object $event, ?string $eventName = null): object
     {
         if ($event instanceof ErrorEvent) {
             $this->errorEvents[$eventName] = $event;
 
-            return;
+            return $event;
         }
 
         $this->events[$eventName] = $event;
 
-        return;
+        return $event;
     }
 
     /**

@@ -5,7 +5,7 @@ namespace FS\SolrBundle\Tests\Client\Solarium;
 use FS\SolrBundle\Client\Solarium\SolariumClientBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class SolariumClientBuilderTest extends \PHPUnit_Framework_TestCase
+class SolariumClientBuilderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var array
@@ -22,10 +22,10 @@ class SolariumClientBuilderTest extends \PHPUnit_Framework_TestCase
                 'schema' => 'http',
                 'host' => '127.0.0.1',
                 'port' => 8983,
-                'path' => '/solr',
+                'path' => '/',
                 'timeout' => 5,
-                'core' => null
-            ]
+                'core' => null,
+            ],
         ];
     }
 
@@ -34,7 +34,9 @@ class SolariumClientBuilderTest extends \PHPUnit_Framework_TestCase
         $actual = $this->createClientWithSettings($this->defaultEndpoints);
 
         $endpoint = $actual->getEndpoint('unittest');
-        $this->assertEquals('http://127.0.0.1:8983/solr/', $endpoint->getBaseUri());
+        // since 'core' => null
+        $this->expectException(\Solarium\Exception\UnexpectedValueException::class);
+        $this->assertEquals('http://127.0.0.1:8983/solr', $endpoint->getBaseUri());
     }
 
     public function testCreateClientWithoutDsnWithCore()
@@ -58,12 +60,14 @@ class SolariumClientBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $settings = $this->defaultEndpoints;
         $settings['unittest'] = [
-            'dsn' => $dsn
+            'dsn' => $dsn,
         ];
 
         $actual = $this->createClientWithSettings($settings);
 
         $endpoint = $actual->getEndpoint('unittest');
+        // since 'core' => null
+        $this->expectException(\Solarium\Exception\UnexpectedValueException::class);
         $this->assertEquals($expectedBaseUri, $endpoint->getBaseUri(), $message);
     }
 
@@ -79,13 +83,13 @@ class SolariumClientBuilderTest extends \PHPUnit_Framework_TestCase
         $settings = $this->defaultEndpoints;
         $settings['unittest'] = [
             'dsn' => $dsn,
-            'core' => 'core0'
+            'core' => 'core0',
         ];
 
         $actual = $this->createClientWithSettings($settings);
 
         $endpoint = $actual->getEndpoint('unittest');
-        $this->assertEquals($expectedBaseUri . 'core0/', $endpoint->getBaseUri(), $message . ' with core');
+        $this->assertEquals($expectedBaseUri . '/core0/', $endpoint->getBaseUri(), $message . ' with core');
     }
 
     /**
@@ -95,28 +99,28 @@ class SolariumClientBuilderTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [
-                'http://example.com:1234',
                 'http://example.com:1234/',
+                'http://example.com:1234/solr',
                 'Test DSN without path and any authentication'
             ],
             [
+                'http://example.com:1234/',
                 'http://example.com:1234/solr',
-                'http://example.com:1234/solr/',
                 'Test DSN without any authentication'
             ],
             [
+                'http://user@example.com:1234/',
                 'http://user@example.com:1234/solr',
-                'http://user@example.com:1234/solr/',
                 'Test DSN with user-only authentication'
             ],
             [
+                'http://user:secret@example.com:1234/',
                 'http://user:secret@example.com:1234/solr',
-                'http://user:secret@example.com:1234/solr/',
                 'Test DSN with authentication'
             ],
             [
+                'https://example.com:1234/',
                 'https://example.com:1234/solr',
-                'https://example.com:1234/solr/',
                 'Test DSN with HTTPS'
             ]
         ];
@@ -131,7 +135,7 @@ class SolariumClientBuilderTest extends \PHPUnit_Framework_TestCase
     {
         /** @var EventDispatcherInterface $eventDispatcherMock */
         $eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
-        
+
         return (new SolariumClientBuilder($settings, $eventDispatcherMock))->build();
     }
 }

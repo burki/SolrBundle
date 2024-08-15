@@ -12,8 +12,8 @@ use FS\SolrBundle\Query\QueryBuilder;
 use FS\SolrBundle\Query\QueryBuilderInterface;
 use FS\SolrBundle\Repository\RepositoryInterface;
 use Solarium\Core\Client\Endpoint;
+use Solarium\Core\Query\DocumentInterface;
 use Solarium\Plugin\BufferedAdd\BufferedAdd;
-use Solarium\QueryType\Update\Query\Document;
 use Solarium\QueryType\Select\Query\Query as SolariumQuery;
 use FS\SolrBundle\Doctrine\Mapper\EntityMapper;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
@@ -402,9 +402,9 @@ class Solr implements SolrInterface
     /**
      * @param MetaInformationInterface $metaInformation
      *
-     * @return Document
+     * @return DocumentInterface
      */
-    private function toDocument(MetaInformationInterface $metaInformation): Document
+    private function toDocument(MetaInformationInterface $metaInformation): DocumentInterface
     {
         $doc = $this->entityMapper->toDocument($metaInformation);
 
