@@ -8,6 +8,7 @@ use FS\SolrBundle\Doctrine\Annotation\Field;
 use FS\SolrBundle\Doctrine\Hydration\HydratorInterface;
 use FS\SolrBundle\Doctrine\Mapper\EntityMapper;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
+use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 use FS\SolrBundle\Tests\Fixtures\EntityNestedProperty;
 use FS\SolrBundle\Tests\Fixtures\NestedEntity;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
@@ -89,11 +90,11 @@ class EntityMapperObjectRelationTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
-     * @expectedException \FS\SolrBundle\Doctrine\Mapper\SolrMappingException
-     * @expectedExceptionMessage No method "unknown()" found in class "FS\SolrBundle\Tests\Fixtures\EntityNestedProperty"
      */
     public function throwExceptionIfConfiguredGetterDoesNotExists()
     {
+        $this->expectException(SolrMappingException::class);
+        $this->expectExceptionMessage('No method "unknown()" found in class "FS\SolrBundle\Tests\Fixtures\EntityNestedProperty"');
         $collection = new ArrayCollection([new \DateTime(), new \DateTime()]);
 
         $entity = new EntityNestedProperty();
@@ -293,11 +294,11 @@ class EntityMapperObjectRelationTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
-     * @expectedException \FS\SolrBundle\Doctrine\Mapper\SolrMappingException
-     * @expectedExceptionMessage The configured getter "asString" in "FS\SolrBundle\Tests\Doctrine\Mapper\TestObject" must return a string or array, got object
      */
     public function callGetterWithObjectAsReturnValue()
     {
+        $this->expectException(SolrMappingException::class);
+        $this->expectExceptionMessage('The configured getter "asString" in "FS\SolrBundle\Tests\Doctrine\Mapper\TestObject" must return a string or array, got object');
         $entity1 = new ValidTestEntity();
 
         $metaInformation = MetaTestInformationFactory::getMetaInformation($entity1);
@@ -343,8 +344,8 @@ class EntityMapperObjectRelationTest extends \PHPUnit\Framework\TestCase
 }
 
 /** @Solr\Document() */
-class TestObject {
-
+class TestObject
+{
     /** @Solr\Id  */
     private $id;
 

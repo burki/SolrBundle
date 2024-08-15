@@ -2,6 +2,7 @@
 
 namespace FS\SolrBundle\Tests\Query;
 
+use FS\SolrBundle\Query\Exception\QueryException;
 use FS\SolrBundle\Query\FindByIdentifierQuery;
 use Solarium\QueryType\Update\Query\Document;
 
@@ -10,7 +11,6 @@ use Solarium\QueryType\Update\Query\Document;
  */
 class FindByIdentifierQueryTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testGetQuery_SearchInAllFields()
     {
         $document = new Document();
@@ -25,11 +25,12 @@ class FindByIdentifierQueryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException FS\SolrBundle\Query\Exception\QueryException
-     * @expectedExceptionMessage id should not be null
+     * @test
      */
     public function testGetQuery_IdMissing()
     {
+        $this->expectException(QueryException::class);
+        $this->expectExceptionMessage('id should not be null');
         $query = new FindByIdentifierQuery();
         $query->setDocument(new Document());
 

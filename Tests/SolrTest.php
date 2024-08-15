@@ -3,6 +3,7 @@
 namespace FS\SolrBundle\Tests;
 
 use FS\SolrBundle\Query\QueryBuilderInterface;
+use FS\SolrBundle\SolrException;
 use FS\SolrBundle\Tests\Fixtures\EntityWithInvalidRepository;
 use FS\SolrBundle\Tests\Fixtures\InvalidTestEntityFiltered;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityFiltered;
@@ -41,11 +42,12 @@ class SolrTest extends AbstractSolrTest
     }
 
     /**
-     * @expectedException \FS\SolrBundle\SolrException
-     * @expectedExceptionMessage FS\SolrBundle\Tests\Fixtures\InvalidEntityRepository must extends the FS\SolrBundle\Repository\Repository
+     * @test
      */
     public function testGetRepository_UserdefinedInvalidRepository()
     {
+        $this->expectException(SolrException::class);
+        $this->expectExceptionMessage('FS\SolrBundle\Tests\Fixtures\InvalidEntityRepository must extends the FS\SolrBundle\Repository\Repository');
         $this->solr->getRepository(EntityWithInvalidRepository::class);
     }
 
@@ -193,10 +195,11 @@ class SolrTest extends AbstractSolrTest
     }
 
     /**
-     * @expectedException \FS\SolrBundle\SolrException
+     * @test
      */
     public function testAddEntity_FilteredEntityWithUnknownCallback()
     {
+        $this->expectException(SolrException::class);
         $this->assertUpdateQueryWasNotExecuted();
 
         $this->eventDispatcher->expects($this->never())

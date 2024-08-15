@@ -114,11 +114,9 @@ class SolrQueryTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(array_key_exists('text_t', $terms), 'text_t not in terms');
     }
 
-    /**
-     * @expectedException \FS\SolrBundle\Query\Exception\UnknownFieldException
-     */
     public function testAddSearchTerm_UnknownField()
     {
+        $this->expectException(UnknownFieldException::class);
         $solrQuery = $this->createQueryWithFieldMapping();
 
         $solrQuery->addSearchTerm('unknownfield', 'foo');

@@ -2,6 +2,7 @@
 
 namespace FS\SolrBundle\Tests\Query;
 
+use FS\SolrBundle\Query\Exception\QueryException;
 use FS\SolrBundle\Query\FindByDocumentNameQuery;
 use Solarium\QueryType\Update\Query\Document;
 
@@ -27,15 +28,15 @@ class FindByDocumentNameQueryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException FS\SolrBundle\Query\Exception\QueryException
-     * @expectedExceptionMessage documentName should not be null
+     * @test
      */
     public function testGetQuery_DocumentnameMissing()
     {
+        $this->expectException(QueryException::class);
+        $this->expectExceptionMessage('documentName should not be null');
         $query = new FindByDocumentNameQuery();
         $query->setDocument(new Document());
 
         $query->getQuery();
     }
-
 }

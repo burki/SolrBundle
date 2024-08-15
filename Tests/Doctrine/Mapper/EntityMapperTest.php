@@ -16,6 +16,7 @@ use FS\SolrBundle\Doctrine\Hydration\ValueHydrator;
 use FS\SolrBundle\Doctrine\Mapper\EntityMapper;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Doctrine\Annotation\Field;
+use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 use FS\SolrBundle\Tests\Fixtures\EntityWithCustomId;
 use FS\SolrBundle\Tests\Fixtures\PartialUpdateEntity;
 use FS\SolrBundle\Tests\Fixtures\ValidOdmTestDocument;
@@ -56,7 +57,6 @@ class EntityMapperTest extends \PHPUnit\Framework\TestCase
 
     public function testToDocument_DocumentIsUpdated()
     {
-
         $actual = $this->mapper->toDocument(MetaTestInformationFactory::getMetaInformation());
         $this->assertTrue($actual instanceof Document);
 
@@ -83,7 +83,7 @@ class EntityMapperTest extends \PHPUnit\Framework\TestCase
 
         $this->indexHydrator->expects($this->once())
             ->method('hydrate')
-            ->will($this->returnValue($targetEntity));
+            ->willReturn($targetEntity);
 
         $this->doctrineHydrator->expects($this->never())
             ->method('hydrate');
@@ -136,11 +136,11 @@ class EntityMapperTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
-     * @expectedException \FS\SolrBundle\Doctrine\Mapper\SolrMappingException
-     * @expectedExceptionMessage Please check your config. Given entity is not a Doctrine entity, but Doctrine hydration is enabled. Use setHydrationMode(HydrationModes::HYDRATE_DOCTRINE) to fix this.
      */
     public function throwExceptionIfGivenObjectIsNotEntityButItShould()
     {
+        $this->expectException(SolrMappingException::class);
+        $this->expectExceptionMessage('Please check your config. Given entity is not a Doctrine entity, but Doctrine hydration is enabled. Use setHydrationMode(HydrationModes::HYDRATE_DOCTRINE) to fix this.');
         $targetEntity = new PlainObject();
 
         $this->indexHydrator = new IndexHydrator(new NoDatabaseValueHydrator());
@@ -191,12 +191,12 @@ class EntityMapperTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
-     * @expectedException \FS\SolrBundle\Doctrine\Mapper\SolrMappingException
-     * @expectedExceptionMessage No entity id set for "FS\SolrBundle\Tests\Fixtures\ValidTestEntity"
      */
     public function throwExceptionIfEntityHasNoId()
     {
-        $entity = new ValidTestEntity;
+        $this->expectException(SolrMappingException::class);
+        $this->expectExceptionMessage('No entity id set for "FS\SolrBundle\Tests\Fixtures\ValidTestEntity"');
+        $entity = new ValidTestEntity();
 
         $metaInformation = $this->metaInformationFactory->loadInformation($entity);
 

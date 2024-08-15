@@ -61,15 +61,19 @@ class AnnotationReaderTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException \FS\SolrBundle\Doctrine\Annotation\AnnotationReaderException
-     * @expectedExceptionMessage no identifer declared in entity FS\SolrBundle\Tests\Fixtures\NotIndexedEntity
+     * @test
      */
-    public function testGetIdentifier_ShouldThrowException()
+    public function shouldFailToGetUndefinedIdentifier(): void
     {
+        $this->expectException(\FS\SolrBundle\Doctrine\Annotation\AnnotationReaderException::class);
+        $this->expectExceptionMessage('no identifer declared in entity FS\SolrBundle\Tests\Fixtures\NotIndexedEntity');
         $this->reader->getIdentifier(new NotIndexedEntity());
     }
 
-    public function testGetIdentifier()
+    /**
+     * @test
+     */
+    public function shouldGetIdentifier(): void
     {
         $id = $this->reader->getIdentifier(new ValidTestEntity());
 
@@ -77,7 +81,7 @@ class AnnotationReaderTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($id->generateId);
     }
 
-    public function testGetFieldMapping_ThreeMappingsAndId()
+    public function testGetFieldMapping_ThreeMappingsAndId(): void
     {
         $fields = $this->reader->getFieldMapping(new ValidTestEntity());
 
@@ -86,14 +90,14 @@ class AnnotationReaderTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(array_key_exists('id', $fields));
     }
 
-    public function testGetRepository_ValidRepositoryDeclared()
+    public function testGetRepository_ValidRepositoryDeclared(): void
     {
         $repositoryClassname = $this->reader->getRepository(new EntityWithRepository());
 
         $this->assertEquals(ValidEntityRepository::class, $repositoryClassname, 'wrong declared repository');
     }
 
-    public function testGetRepository_NoRepositoryAttributSet()
+    public function testGetRepository_NoRepositoryAttributSet(): void
     {
         $repository = $this->reader->getRepository(new ValidTestEntity());
 
@@ -102,7 +106,7 @@ class AnnotationReaderTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $actual, 'no repository was declared');
     }
 
-    public function testGetBoost()
+    public function testGetBoost(): void
     {
         $boost = $this->reader->getEntityBoost(new ValidTestEntity());
 
@@ -110,11 +114,12 @@ class AnnotationReaderTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException \FS\SolrBundle\Doctrine\Annotation\AnnotationReaderException
-     * @expectedExceptionMessage Invalid boost value "aaaa" in class "FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithInvalidBoost" configured
+     * @test
      */
-    public function testGetBoost_BoostNotNumeric()
+    public function shouldFailToGetNonNumericBoost(): void
     {
+        $this->expectException(\FS\SolrBundle\Doctrine\Annotation\AnnotationReaderException::class);
+        $this->expectExceptionMessage('Invalid boost value "aaaa" in class "FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithInvalidBoost" configured');
         $this->reader->getEntityBoost(new ValidTestEntityWithInvalidBoost());
     }
 
@@ -129,7 +134,7 @@ class AnnotationReaderTest extends \PHPUnit\Framework\TestCase
     {
         $boost = $this->reader->getEntityBoost(new ValidTestEntityNoBoost());
 
-        $this->assertEquals(null, $boost);
+        $this->assertNull($boost);
     }
 
     public function testGetCallback_CallbackDefined()
@@ -225,7 +230,6 @@ class AnnotationReaderTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('format(\'d.m.Y\')', $fields[0]->getGetterName());
 
         $this->assertEquals('object_dt', $fields[0]->getNameWithAlias());
-
     }
 
     /**
@@ -262,10 +266,10 @@ class AnnotationReaderTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
-     * @expectedException \FS\SolrBundle\Doctrine\Mapper\SolrMappingException
      */
-    public function methodWithAnnotationMustHaveAField()
+    public function methodWithAnnotationShouldHaveField(): void
     {
+        $this->expectException(\FS\SolrBundle\Doctrine\Mapper\SolrMappingException::class);
         $this->reader->getMethods(new EntityMissingNameProperty());
     }
 }

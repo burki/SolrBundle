@@ -8,6 +8,7 @@ use FS\SolrBundle\Doctrine\ClassnameResolver\ClassnameResolverException;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformation;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationInterface;
+use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 use FS\SolrBundle\Tests\Fixtures\EntityNestedProperty;
 use FS\SolrBundle\Tests\Fixtures\NestedEntity;
 use FS\SolrBundle\Tests\Fixtures\NotIndexedEntity;
@@ -95,11 +96,12 @@ class MetaInformationFactoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException \FS\SolrBundle\Doctrine\Mapper\SolrMappingException
-     * @expectedExceptionMessage no declaration for document found in entity
+     * @test
      */
     public function testLoadInformation_EntityHasNoDocumentDeclaration_ShouldThrowException()
     {
+        $this->expectException(SolrMappingException::class);
+        $this->expectExceptionMessage('no declaration for document found in entity');
         $doctrineConfiguration = $this->getClassnameResolver(NotIndexedEntity::class);
 
         $factory = new MetaInformationFactory($this->reader);
@@ -108,11 +110,12 @@ class MetaInformationFactoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException \FS\SolrBundle\Doctrine\ClassnameResolver\ClassnameResolverException
-     * @expectedExceptionMessage could not resolve classname for entity
+     * @test
      */
     public function testLoadInformation_EntityDoesNoExists()
     {
+        $this->expectException(ClassnameResolverException::class);
+        $this->expectExceptionMessage('could not resolve classname for entity');
         $doctrineConfiguration = $this->getClassnameResolverCouldNotResolveClassname();
 
         $factory = new MetaInformationFactory($this->reader);
