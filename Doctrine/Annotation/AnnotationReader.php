@@ -5,6 +5,7 @@ namespace FS\SolrBundle\Doctrine\Annotation;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Annotations\Reader;
 use FS\SolrBundle\Doctrine\Mapper\MappingDriver;
+use FS\SolrBundle\Doctrine\Mapper\MappingDriverException;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 
 class AnnotationReader implements MappingDriver
@@ -125,7 +126,7 @@ class AnnotationReader implements MappingDriver
      *
      * @return number
      *
-     * @throws AnnotationReaderException if the boost value is not numeric
+     * @throws MappingDriverException if the boost value is not numeric
      */
     public function getEntityBoost($entity)
     {
@@ -137,7 +138,7 @@ class AnnotationReader implements MappingDriver
 
         $boostValue = $annotation->getBoost();
         if (!is_numeric($boostValue)) {
-            throw new AnnotationReaderException(sprintf('Invalid boost value "%s" in class "%s" configured', $boostValue, get_class($entity)));
+            throw new MappingDriverException(sprintf('Invalid boost value "%s" in class "%s" configured', $boostValue, get_class($entity)));
         }
 
         if ($boostValue === 0) {
@@ -172,14 +173,14 @@ class AnnotationReader implements MappingDriver
      *
      * @return Id
      *
-     * @throws AnnotationReaderException if given $entity has no identifier
+     * @throws MappingDriverException if given $entity has no identifier
      */
     public function getIdentifier($entity)
     {
         $id = $this->getPropertiesByType($entity, self::FIELD_IDENTIFIER_CLASS);
 
         if (count($id) == 0) {
-            throw new AnnotationReaderException('no identifer declared in entity ' . get_class($entity));
+            throw new MappingDriverException('no identifer declared in entity ' . get_class($entity));
         }
 
         return reset($id);

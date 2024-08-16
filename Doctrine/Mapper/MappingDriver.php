@@ -25,7 +25,7 @@ interface MappingDriver
      *
      * @return number
      *
-     * @throws AnnotationReaderException if the boost value is not numeric
+     * @throws MappingDriverException if the boost value is not numeric
      */
     public function getEntityBoost($entity);
 
@@ -41,7 +41,7 @@ interface MappingDriver
      *
      * @return Id
      *
-     * @throws AnnotationReaderException if given $entity has no identifier
+     * @throws MappingDriverException if given $entity has no identifier
      */
     public function getIdentifier($entity);
 

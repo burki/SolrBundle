@@ -65,7 +65,7 @@ class AnnotationReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function shouldFailToGetUndefinedIdentifier(): void
     {
-        $this->expectException(\FS\SolrBundle\Doctrine\Annotation\AnnotationReaderException::class);
+        $this->expectException(\FS\SolrBundle\Doctrine\Mapper\MappingDriverException::class);
         $this->expectExceptionMessage('no identifer declared in entity FS\SolrBundle\Tests\Fixtures\NotIndexedEntity');
         $this->reader->getIdentifier(new NotIndexedEntity());
     }
@@ -118,7 +118,7 @@ class AnnotationReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function shouldFailToGetNonNumericBoost(): void
     {
-        $this->expectException(\FS\SolrBundle\Doctrine\Annotation\AnnotationReaderException::class);
+        $this->expectException(\FS\SolrBundle\Doctrine\Mapper\MappingDriverException::class);
         $this->expectExceptionMessage('Invalid boost value "aaaa" in class "FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithInvalidBoost" configured');
         $this->reader->getEntityBoost(new ValidTestEntityWithInvalidBoost());
     }
