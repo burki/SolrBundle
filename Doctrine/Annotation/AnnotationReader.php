@@ -4,9 +4,10 @@ namespace FS\SolrBundle\Doctrine\Annotation;
 
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Annotations\Reader;
+use FS\SolrBundle\Doctrine\Mapper\MappingDriver;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 
-class AnnotationReader
+class AnnotationReader implements MappingDriver
 {
     /**
      * @var Reader
