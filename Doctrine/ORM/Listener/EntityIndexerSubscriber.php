@@ -30,7 +30,7 @@ class EntityIndexerSubscriber extends AbstractIndexingListener implements EventS
     /**
      * {@inheritdoc}
      */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return ['postUpdate', 'postPersist', 'preRemove', 'postFlush'];
     }

@@ -14,7 +14,7 @@ class AddSolariumPluginsPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $plugins = $container->findTaggedServiceIds('solarium.client.plugin');
 

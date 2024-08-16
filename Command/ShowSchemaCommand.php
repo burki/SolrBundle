@@ -26,7 +26,7 @@ class ShowSchemaCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('solr:schema:show')
             ->setDescription('Show configured entities and their fields');
@@ -35,7 +35,7 @@ class ShowSchemaCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         foreach ($this->namespaces->getEntityClassnames() as $classname) {
             try {

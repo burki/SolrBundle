@@ -39,7 +39,7 @@ class SynchronizeIndexCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('solr:index:populate')
             ->addArgument('entity', InputArgument::OPTIONAL, 'The entity you want to index', null)
@@ -52,7 +52,7 @@ class SynchronizeIndexCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $indexableEntities = $this->getIndexableEntities($input->getArgument('entity'));
         $source = $input->getOption('source');
@@ -66,7 +66,7 @@ class SynchronizeIndexCommand extends Command
         if ($startOffset > 0 && count($indexableEntities) > 1) {
             $output->writeln('<error>Wrong usage. Please use start-offset option together with the entity argument.</error>');
 
-            return;
+            return 1;
         }
 
         foreach ($indexableEntities as $entityClassname) {

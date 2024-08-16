@@ -27,7 +27,7 @@ class RequestCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, \Throwable $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null): void
     {
         $this->data = [
             'queries' => array_map(function ($query) {
@@ -100,7 +100,7 @@ class RequestCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'solr';
     }
@@ -108,7 +108,7 @@ class RequestCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function reset()
+    public function reset(): void
     {
         $this->data = [
             'queries' => [],

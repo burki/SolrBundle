@@ -13,7 +13,7 @@ class DocumentIndexerSubscriber extends AbstractIndexingListener implements Even
     /**
      * {@inheritdoc}
      */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return array('postUpdate', 'postPersist', 'preRemove');
     }
