@@ -1,7 +1,7 @@
 {
   "name": "boppy/solr-bundle",
   "type": "symfony-bundle",
-  "description": "Forked from floriansemm/solr-bundle - Symfony >= 4.3 Solr integration bundle",
+  "description": "Forked from floriansemm/solr-bundle - Symfony >= 5.4 Solr integration bundle",
   "keywords": [
     "search",
     "index",
@@ -11,12 +11,12 @@
   "homepage": "https://github.com/boppy/SolrBundle",
   "license": "MIT",
   "require": {
-    "php": "^7.4 || ^8.0",
+    "php": "^8.0",
     "solarium/solarium": "6.3.*",
-    "symfony/dependency-injection": "^4.0|^5.0|^6.0",
-    "symfony/http-kernel": "^4.0|^5.0|^6.0",
-    "symfony/config": "^4.0|^5.0|^6.0",
-    "symfony/doctrine-bridge": "^4.0|^5.0|^6.0",
+    "symfony/dependency-injection": "^5.4|^6.4|^7.0",
+    "symfony/http-kernel": "^5.4|^6.4|^7.0",
+    "symfony/config": "^5.4|^6.4|^7.0",
+    "symfony/doctrine-bridge": "^5.4|^6.4|^7.0",
     "minimalcode/search": "^1.0",
     "ramsey/uuid": "^3.5|^4.1",
     "myclabs/deep-copy": "^1.6",
