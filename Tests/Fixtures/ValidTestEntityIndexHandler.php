@@ -7,17 +7,20 @@ use FS\SolrBundle\Doctrine\Annotation as Solr;
 /**
  * @Solr\Document(indexHandler="indexHandler")
  */
+#[Solr\Document(indexHandler:"indexHandler")]
 class ValidTestEntityIndexHandler
 {
 
     /**
      * @Solr\Id
      */
+    #[Solr\Id]
     private $id;
 
     /**
      * @Solr\Field
      */
+    #[Solr\Field]
     private $title;
 
     public function indexHandler()
@@ -25,4 +28,3 @@ class ValidTestEntityIndexHandler
         return 'my_core';
     }
 }
-

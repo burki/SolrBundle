@@ -8,6 +8,8 @@ use FS\SolrBundle\Doctrine\Annotation as Solr;
  * @Solr\Document(index="index0")
  * @Solr\SynchronizationFilter(callback="shouldBeIndex")
  */
+#[Solr\Document(index:"index0")]
+#[Solr\SynchronizationFilter(callback:"shouldBeIndex")]
 class ValidTestEntityFiltered
 {
     /**
@@ -15,6 +17,7 @@ class ValidTestEntityFiltered
      *
      * @var int
      */
+    #[Solr\Id]
     private $id;
 
     private $shouldBeIndexedWasCalled = false;
@@ -33,4 +36,3 @@ class ValidTestEntityFiltered
         return $this->shouldBeIndexedWasCalled;
     }
 }
-

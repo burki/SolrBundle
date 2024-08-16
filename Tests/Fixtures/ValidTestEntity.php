@@ -9,12 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @Solr\Document(boost="1")
  */
+#[ORM\Entity]
+#[Solr\Document(boost:"1")]
 class ValidTestEntity
 {
 
     /**
      * @Solr\Id
      */
+    #[Solr\Id]
     private $id;
 
     /**
@@ -22,6 +25,7 @@ class ValidTestEntity
      *
      * @var string
      */
+    #[Solr\Field(type:"text")]
     private $text;
 
     /**
@@ -29,6 +33,7 @@ class ValidTestEntity
      *
      * @var string
      */
+    #[Solr\Field]
     private $title;
 
     /**
@@ -36,6 +41,7 @@ class ValidTestEntity
      *
      * @var \DateTime
      */
+    #[Solr\Field(type:"date", getter:"format('d.m.Y')")]
     private $created_at;
 
     /**
@@ -43,6 +49,7 @@ class ValidTestEntity
      *
      * @var string
      */
+    #[Solr\Field(type:"my_costom_fieldtype")]
     private $costomField;
 
     /**
@@ -65,6 +72,7 @@ class ValidTestEntity
      *
      * @Solr\Field(name="complex_data_type", getter="getComplexData")
      */
+    #[Solr\Field(type:"complex_data_type", getter:"getComplexData")]
     private $complexDataType;
 
     /**

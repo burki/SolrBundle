@@ -10,6 +10,8 @@ use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
  * @MongoDB\Document
  * @Solr\Document(boost="1")
  */
+#[MongoDB\Document]
+#[Solr\Document(boost:"1")]
 class ValidOdmTestDocument
 {
 
@@ -190,4 +192,3 @@ class ValidOdmTestDocument
         $this->publishDate = $publishDate;
     }
 }
-

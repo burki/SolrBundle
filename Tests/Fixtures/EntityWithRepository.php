@@ -7,6 +7,7 @@ use FS\SolrBundle\Doctrine\Annotation as Solr;
 /**
  * @Solr\Document(repository="FS\SolrBundle\Tests\Fixtures\ValidEntityRepository")
  */
+#[Solr\Document(repository: "FS\SolrBundle\Tests\Fixtures\ValidEntityRepository")]
 class EntityWithRepository
 {
     /**
@@ -16,4 +17,3 @@ class EntityWithRepository
      */
     private $id;
 }
-
