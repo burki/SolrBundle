@@ -1,6 +1,6 @@
 <?php
 
-namespace FS\SolrBundle\Tests\Solr\Repository;
+namespace FS\SolrBundle\Tests\Repository;
 
 use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
 use FS\SolrBundle\Doctrine\Hydration\HydrationModes;

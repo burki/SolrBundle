@@ -1,6 +1,6 @@
 <?php
 
-namespace FS\SolrBundle\Tests\Solr\Doctrine\ClassnameResolver;
+namespace FS\SolrBundle\Tests\Doctrine\ClassnameResolver;
 
 use FS\SolrBundle\Doctrine\ClassnameResolver\ClassnameResolver;
 use FS\SolrBundle\Doctrine\ClassnameResolver\ClassnameResolverException;
