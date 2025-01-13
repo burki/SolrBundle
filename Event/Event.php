@@ -8,12 +8,12 @@ use Symfony\Contracts\EventDispatcher\Event as BaseEvent;
 class Event extends BaseEvent
 {
     /**
-     * @var Client
+     * @var Client|null
      */
     private $client = null;
 
     /**
-     * @var MetaInformationInterface
+     * @var MetaInformationInterface|null
      */
     private $metainformation = null;
 
@@ -25,21 +25,21 @@ class Event extends BaseEvent
     private $solrAction = '';
 
     /**
-     * @var Event
+     * @var Event|null
      */
     private $sourceEvent;
 
     /**
-     * @param Client                   $client
-     * @param MetaInformationInterface $metainformation
-     * @param string                   $solrAction
-     * @param Event                    $sourceEvent
+     * @param Client|null                   $client
+     * @param MetaInformationInterface|null $metainformation
+     * @param string                        $solrAction
+     * @param Event|null                    $sourceEvent
      */
     public function __construct(
-        Client $client = null,
-        MetaInformationInterface $metainformation = null,
+        ?Client $client = null,
+        ?MetaInformationInterface $metainformation = null,
         $solrAction = '',
-        Event $sourceEvent = null
+        ?Event $sourceEvent = null
     )
     {
         $this->client = $client;

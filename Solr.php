@@ -58,13 +58,13 @@ class Solr implements SolrInterface
 
     /**
      * @param Client                   $client
-     * @param EventDispatcherInterface $manager
+     * @param EventDispatcherInterface|null $manager
      * @param MetaInformationFactory   $metaInformationFactory
      * @param EntityMapperInterface    $entityMapper
      */
     public function __construct(
         Client $client,
-        EventDispatcherInterface $manager = null,
+        ?EventDispatcherInterface $manager,
         MetaInformationFactory $metaInformationFactory,
         EntityMapperInterface $entityMapper
     )
