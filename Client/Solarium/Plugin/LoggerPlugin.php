@@ -29,7 +29,7 @@ class LoggerPlugin extends AbstractPlugin
     /**
      * {@inheritdoc}
      */
-    protected function initPluginType()
+    protected function initPluginType(): void
     {
         $dispatcher = $this->client->getEventDispatcher();
         $dispatcher->addListener(Events::PRE_EXECUTE_REQUEST,   [$this, 'preExecuteRequest']);
