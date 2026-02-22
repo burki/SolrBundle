@@ -16,10 +16,10 @@ class FSSolrExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.xml');
-        $loader->load('event_listener.xml');
-        $loader->load('log_listener.xml');
+        $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.php');
+        $loader->load('event_listener.php');
+        $loader->load('log_listener.php');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
