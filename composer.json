@@ -1,48 +1,48 @@
 {
-  "name": "boppy/solr-bundle",
-  "type": "symfony-bundle",
-  "description": "Forked from floriansemm/solr-bundle - Symfony >= 5.4 Solr integration bundle",
-  "keywords": [
-    "search",
-    "index",
-    "symfony",
-    "solr"
-  ],
-  "homepage": "https://github.com/boppy/SolrBundle",
-  "license": "MIT",
-  "require": {
-    "php": "^8.1",
-    "solarium/solarium": "^6.4",
-    "symfony/dependency-injection": "^5.4|^6.4|^7.0|^8.0",
-    "symfony/http-kernel": "^5.4|^6.4|^7.0|^8.0",
-    "symfony/config": "^5.4|^6.4|^7.0|^8.0",
-    "symfony/doctrine-bridge": "^5.4|^6.4|^7.0|^8.0",
-    "minimalcode/search": "^1.0",
-    "ramsey/uuid": "^3.5|^4.1",
-    "myclabs/deep-copy": "^1.6",
-    "doctrine/annotations": "^1.7|^2.0"
-  },
-  "require-dev": {
-    "doctrine/mongodb-odm-bundle": "^4.2",
-    "doctrine/orm": "^2.9",
-    "phpunit/phpunit": "^9.0"
-  },
-  "minimum-stability": "stable",
-  "autoload": {
-    "psr-0": {
-      "FS\\SolrBundle": ""
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Doctrine\\ODM\\MongoDB\\": "vendor/doctrine/mongodb-odm/lib/Doctrine/ODM/MongoDB/"
-    }
-  },
-  "config": {
-    "bin-dir": "bin"
-  },
-  "suggest": {
-    "doctrine/orm": "Required if you want to use the Doctrine ORM"
-  },
-  "target-dir": "FS/SolrBundle"
+    "name": "boppy/solr-bundle",
+    "type": "symfony-bundle",
+    "description": "Forked from floriansemm/solr-bundle - Symfony >= 5.4 Solr integration bundle",
+    "keywords": [
+        "search",
+        "index",
+        "symfony",
+        "solr"
+    ],
+    "homepage": "https://github.com/boppy/SolrBundle",
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "solarium/solarium": "^6.4",
+        "symfony/dependency-injection": "^5.4|^6.4|^7.0|^8.0",
+        "symfony/http-kernel": "^5.4|^6.4|^7.0|^8.0",
+        "symfony/config": "^5.4|^6.4|^7.0|^8.0",
+        "symfony/doctrine-bridge": "^5.4|^6.4|^7.0|^8.0",
+        "minimalcode/search": "^1.0",
+        "ramsey/uuid": "^3.5|^4.1",
+        "myclabs/deep-copy": "^1.6",
+        "doctrine/annotations": "^1.7|^2.0"
+    },
+    "require-dev": {
+        "doctrine/mongodb-odm-bundle": "^4.2",
+        "doctrine/orm": "^2.9",
+        "phpunit/phpunit": "^9.0"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-0": {
+            "FS\\SolrBundle": ""
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Doctrine\\ODM\\MongoDB\\": "vendor/doctrine/mongodb-odm/lib/Doctrine/ODM/MongoDB/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "suggest": {
+        "doctrine/orm": "Required if you want to use the Doctrine ORM"
+    },
+    "target-dir": "FS/SolrBundle"
 }
