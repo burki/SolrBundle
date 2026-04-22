@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use FS\SolrBundle\Client\Solarium\SolariumClientBuilder;
-use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
+use FS\SolrBundle\Attribute\AttributeReader;
 use FS\SolrBundle\Doctrine\Hydration\DoctrineHydrator;
 use FS\SolrBundle\Doctrine\Hydration\IndexHydrator;
 use FS\SolrBundle\Doctrine\Hydration\ValueHydrator;
@@ -57,7 +57,7 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
             return;
         }
 
-        $metainformationFactory = new MetaInformationFactory(new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader()));
+        $metainformationFactory = new MetaInformationFactory(new AttributeReader());
         $logger = $this->createMock(LoggerInterface::class);
 
         $this->solr = new Solr(

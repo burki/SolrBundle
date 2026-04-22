@@ -4,7 +4,7 @@ namespace FS\SolrBundle\Tests\Doctrine\Hydration;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
+use FS\SolrBundle\Attribute\AttributeReader;
 use FS\SolrBundle\Doctrine\Hydration\ValueHydrator;
 use FS\SolrBundle\Doctrine\Hydration\ValueHydratorInterface;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
@@ -19,13 +19,13 @@ use FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithRelation;
 class ValueHydratorTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var AnnotationReader
+     * @var AttributeReader
      */
     private $reader;
 
     public function setUp(): void
     {
-        $this->reader = new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader());
+        $this->reader = new AttributeReader();
     }
 
     /**

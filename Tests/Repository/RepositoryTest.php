@@ -2,9 +2,8 @@
 
 namespace FS\SolrBundle\Tests\Repository;
 
-use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
+use FS\SolrBundle\Attribute\AttributeReader;
 use FS\SolrBundle\Doctrine\Hydration\HydrationModes;
-use FS\SolrBundle\Doctrine\Mapper\EntityMapper;
 use FS\SolrBundle\Doctrine\Mapper\EntityMapperInterface;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Query\AbstractQuery;
@@ -13,8 +12,6 @@ use FS\SolrBundle\Query\FindByIdentifierQuery;
 use FS\SolrBundle\Tests\Fixtures\EntityNestedProperty;
 use FS\SolrBundle\Tests\SolrClientFake;
 use FS\SolrBundle\Tests\Util\MetaTestInformationFactory;
-use FS\SolrBundle\Tests\Util\CommandFactoryStub;
-use Solarium\Core\Query\Helper;
 use Solarium\QueryType\Update\Query\Document;
 use FS\SolrBundle\Repository\Repository;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
@@ -33,7 +30,7 @@ class RepositoryTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->metaInformationFactory = new MetaInformationFactory($reader = new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader()));
+        $this->metaInformationFactory = new MetaInformationFactory($reader = new AttributeReader());
         $this->mapper = $this->createMock(EntityMapperInterface::class);
         $this->mapper->expects($this->once())
             ->method('setHydrationMode')

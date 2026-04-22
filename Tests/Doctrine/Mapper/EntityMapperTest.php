@@ -2,11 +2,10 @@
 
 namespace FS\SolrBundle\Tests\Doctrine\Mapper;
 
-use Doctrine\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
-use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
+use FS\SolrBundle\Attribute\AttributeReader;
 use FS\SolrBundle\Doctrine\Hydration\DoctrineHydrator;
 use FS\SolrBundle\Doctrine\Hydration\HydrationModes;
 use FS\SolrBundle\Doctrine\Hydration\HydratorInterface;
@@ -15,14 +14,12 @@ use FS\SolrBundle\Doctrine\Hydration\NoDatabaseValueHydrator;
 use FS\SolrBundle\Doctrine\Hydration\ValueHydrator;
 use FS\SolrBundle\Doctrine\Mapper\EntityMapper;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
-use FS\SolrBundle\Doctrine\Annotation\Field;
+use FS\SolrBundle\Attribute\Field;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 use FS\SolrBundle\Tests\Fixtures\EntityWithCustomId;
 use FS\SolrBundle\Tests\Fixtures\PartialUpdateEntity;
 use FS\SolrBundle\Tests\Fixtures\ValidOdmTestDocument;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
-use FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithCollection;
-use FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithRelation;
 use FS\SolrBundle\Tests\Util\MetaTestInformationFactory;
 use Solarium\QueryType\Update\Query\Document;
 
@@ -50,7 +47,7 @@ class EntityMapperTest extends \PHPUnit\Framework\TestCase
     {
         $this->doctrineHydrator = $this->createMock(HydratorInterface::class);
         $this->indexHydrator = $this->createMock(HydratorInterface::class);
-        $this->metaInformationFactory = new MetaInformationFactory(new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader()));
+        $this->metaInformationFactory = new MetaInformationFactory(new AttributeReader());
 
         $this->mapper = new EntityMapper($this->doctrineHydrator, $this->indexHydrator, $this->metaInformationFactory);
     }
@@ -246,11 +243,13 @@ class EntityMapperTest extends \PHPUnit\Framework\TestCase
     }
 }
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 
 /**
  * @Solr\Document(boost="1")
  */
+#[SolrAttribute\Document(boost: "1")]
 class PlainObject
 {
     /**
@@ -258,5 +257,6 @@ class PlainObject
      *
      * @Solr\Id
      */
+    #[SolrAttribute\Id]
     private $id;
 }

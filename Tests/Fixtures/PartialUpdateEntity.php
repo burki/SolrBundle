@@ -2,6 +2,7 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 
 class PartialUpdateEntity extends ValidTestEntity
@@ -11,6 +12,7 @@ class PartialUpdateEntity extends ValidTestEntity
      *
      * @Solr\Field(fieldModifier="set")
      */
+    #[SolrAttribute\Field(fieldModifier: "set")]
     private $subtitle;
 
     /**

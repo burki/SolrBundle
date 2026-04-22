@@ -3,7 +3,6 @@
 namespace FS\SolrBundle\Doctrine\Hydration;
 
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationInterface;
-use FS\SolrBundle\Doctrine\Annotation\Field;
 
 class DoctrineValueHydrator extends ValueHydrator
 {
@@ -23,5 +22,4 @@ class DoctrineValueHydrator extends ValueHydrator
 
         return true;
     }
-
 }

@@ -2,6 +2,7 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 use Doctrine\ORM\Mapping as ORM;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
@@ -10,12 +11,15 @@ use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
  * @ORM\Entity()
  * @Solr\Document(boost="1", index="*")
  */
+#[ORM\Entity]
+#[SolrAttribute\Document(boost:"1", index:"*")]
 class ValidTestEntityAllCores
 {
 
     /**
      * @Solr\Id
      */
+    #[SolrAttribute\Id]
     private $id;
 
     /**
@@ -23,6 +27,7 @@ class ValidTestEntityAllCores
      *
      * @var string
      */
+    #[SolrAttribute\Field(type:"text")]
     private $text;
 
     /**
@@ -30,6 +35,7 @@ class ValidTestEntityAllCores
      *
      * @var string
      */
+    #[SolrAttribute\Field()]
     private $title;
 
     /**
@@ -37,6 +43,7 @@ class ValidTestEntityAllCores
      *
      * @var \DateTime
      */
+    #[SolrAttribute\Field(type:"date", getter:"format('d.m.Y')")]
     private $created_at;
 
     /**
@@ -44,6 +51,7 @@ class ValidTestEntityAllCores
      *
      * @var string
      */
+    #[SolrAttribute\Field(type:"my_costom_fieldtype")]
     private $costomField;
 
     /**
@@ -189,4 +197,3 @@ class ValidTestEntityAllCores
         $this->publishDate = $publishDate;
     }
 }
-

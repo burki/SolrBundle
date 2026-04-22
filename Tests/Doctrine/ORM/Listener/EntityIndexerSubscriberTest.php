@@ -8,7 +8,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\ObjectManager;
-use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
+use FS\SolrBundle\Attribute\AttributeReader;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Doctrine\ORM\Listener\EntityIndexerSubscriber;
 use FS\SolrBundle\SolrInterface;
@@ -36,7 +36,7 @@ class EntityIndexerSubscriberTest extends TestCase
     {
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->solr = $this->createMock(SolrInterface::class);
-        $this->metaInformationFactory = new MetaInformationFactory(new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader()));
+        $this->metaInformationFactory = new MetaInformationFactory(new AttributeReader());
 
         $this->subscriber = new EntityIndexerSubscriber($this->solr, $this->metaInformationFactory, $this->logger);
     }
@@ -136,8 +136,6 @@ class EntityIndexerSubscriberTest extends TestCase
 
         $this->subscriber->postPersist($lifecycleEventArgs);
         $this->subscriber->preRemove($lifecycleEventArgs);
-
-
 
         $this->subscriber->postFlush(new PostFlushEventArgs($objectManager));
     }

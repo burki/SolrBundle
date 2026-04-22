@@ -2,14 +2,15 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 
 /**
  * @Solr\Document(index="index0")
  * @Solr\SynchronizationFilter(callback="shouldBeIndex")
  */
-#[Solr\Document(index:"index0")]
-#[Solr\SynchronizationFilter(callback:"shouldBeIndex")]
+#[SolrAttribute\Document(index:"index0")]
+#[SolrAttribute\SynchronizationFilter(callback:"shouldBeIndex")]
 class ValidTestEntityFiltered
 {
     /**
@@ -17,7 +18,7 @@ class ValidTestEntityFiltered
      *
      * @var int
      */
-    #[Solr\Id]
+    #[SolrAttribute\Id]
     private $id;
 
     private $shouldBeIndexedWasCalled = false;

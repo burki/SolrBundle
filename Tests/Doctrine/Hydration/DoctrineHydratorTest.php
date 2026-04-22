@@ -2,14 +2,11 @@
 
 namespace FS\SolrBundle\Tests\Doctrine\Hydration;
 
-
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
-use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
-use FS\SolrBundle\Doctrine\Annotation\Field;
+use FS\SolrBundle\Attribute\AttributeReader;
 use FS\SolrBundle\Doctrine\Hydration\DoctrineHydrator;
-use FS\SolrBundle\Doctrine\Hydration\DoctrineHydratorInterface;
 use FS\SolrBundle\Doctrine\Hydration\DoctrineValueHydrator;
 use FS\SolrBundle\Doctrine\Hydration\ValueHydrator;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformation;
@@ -18,22 +15,20 @@ use FS\SolrBundle\Doctrine\Mapper\MetaInformationInterface;
 use FS\SolrBundle\Tests\Doctrine\Mapper\SolrDocumentStub;
 use FS\SolrBundle\Tests\Fixtures\ValidOdmTestDocument;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
-use Symfony\Component\Validator\Constraints\Valid;
 
 /**
  * @group hydration
  */
 class DoctrineHydratorTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
-     * @var AnnotationReader
+     * @var AttributeReader
      */
     private $reader;
 
     public function setUp(): void
     {
-        $this->reader = new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader());
+        $this->reader = new AttributeReader();
     }
 
     /**
@@ -206,5 +201,4 @@ class DoctrineHydratorTest extends \PHPUnit\Framework\TestCase
 
         return $managerRegistry;
     }
-
 }

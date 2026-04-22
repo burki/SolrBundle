@@ -2,12 +2,11 @@
 
 namespace FS\SolrBundle\Tests\Doctrine\Hydration;
 
-use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
+use FS\SolrBundle\Attribute\AttributeReader;
 use FS\SolrBundle\Doctrine\Hydration\NoDatabaseValueHydrator;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Tests\Doctrine\Mapper\SolrDocumentStub;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
-use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 
 class NoDatabaseValueHydratorTest extends \PHPUnit\Framework\TestCase
 {
@@ -16,7 +15,7 @@ class NoDatabaseValueHydratorTest extends \PHPUnit\Framework\TestCase
      */
     public function doNotCutIdFields()
     {
-        $reader = new AnnotationReader(new DoctrineAnnotationReader());
+        $reader = new AttributeReader();
         $hydrator = new NoDatabaseValueHydrator();
 
         $document = new SolrDocumentStub(array(

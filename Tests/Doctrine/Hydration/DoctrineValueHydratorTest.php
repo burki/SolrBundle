@@ -1,10 +1,8 @@
 <?php
 
-
 namespace FS\SolrBundle\Tests\Doctrine\Hydration;
 
-
-use FS\SolrBundle\Doctrine\Annotation\Field;
+use FS\SolrBundle\Attribute\Field;
 use FS\SolrBundle\Doctrine\Hydration\DoctrineValueHydrator;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformation;
 

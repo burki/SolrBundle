@@ -2,6 +2,7 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,11 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @Solr\Nested()
  */
+#[ORM\Entity]
+#[SolrAttribute\Document()]
 class NestedEntity
 {
     /**
      * @Solr\Id
      */
+    #[SolrAttribute\Id]
     private $id;
 
     /**
@@ -21,6 +25,7 @@ class NestedEntity
      *
      * @Solr\Field(type="text")
      */
+    #[SolrAttribute\Field(type:"text")]
     private $name;
 
     /**
@@ -54,6 +59,4 @@ class NestedEntity
     {
         $this->name = $name;
     }
-
-
 }

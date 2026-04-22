@@ -1,8 +1,9 @@
 <?php
 
-namespace FS\SolrBundle\Tests\Doctrine\Annotation;
+namespace FS\SolrBundle\Tests\Attribute;
 
-use FS\SolrBundle\Doctrine\Annotation\Field;
+use FS\SolrBundle\Attribute\AttributeReader;
+use FS\SolrBundle\Attribute\Field;
 use FS\SolrBundle\Tests\Fixtures\ValidEntityRepository;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityIndexHandler;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityIndexProperty;
@@ -14,7 +15,6 @@ use FS\SolrBundle\Tests\Fixtures\ValidTestEntityNumericFields;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithInvalidBoost;
 use FS\SolrBundle\Tests\Fixtures\ValidOdmTestDocument;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
-use FS\SolrBundle\Doctrine\Annotation\AttributeReader;
 use FS\SolrBundle\Tests\Fixtures\EntityWithRepository;
 use FS\SolrBundle\Tests\Fixtures\NotIndexedEntity;
 
@@ -41,7 +41,7 @@ class AttributeReaderTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(0, count($fields));
     }
 
-    public function testGetFields_ThreeFieldsDetected()
+    public function testGetFields_FiveFieldsDetected()
     {
         $fields = $this->reader->getFields(new ValidTestEntity());
 
@@ -252,7 +252,7 @@ class AttributeReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function checkIfPlainObjectIsNotDoctrineDocument()
     {
-        $this->assertFalse($this->reader->isOdm(new ChildEntity()), 'is not a doctrine document');
+        $this->assertFalse($this->reader->isOdm(new ChildEntityAttributes()), 'is not a doctrine document');
     }
 
     /**
@@ -273,13 +273,14 @@ class AttributeReaderTest extends \PHPUnit\Framework\TestCase
     }
 }
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 
 /**
  *
  * @Solr\Document
  */
-#[Solr\Document]
+#[SolrAttribute\Document]
 abstract class BaseEntityAttributes
 {
     /**
@@ -291,7 +292,7 @@ abstract class BaseEntityAttributes
      *
      * @Solr\Field(type="integer")
      */
-    #[Solr\Field(type:"integer")]
+    #[SolrAttribute\Field(type:"integer")]
     protected $baseField2;
 }
 
@@ -300,13 +301,13 @@ class ChildEntityAttributes extends BaseEntityAttributes
     /**
      * @Solr\Field(type="integer")
      */
-    #[Solr\Field(type:"integer")]
+    #[SolrAttribute\Field(type:"integer")]
     protected $baseField1;
 
     /**
      * @Solr\Field(type="integer")
      */
-    #[Solr\Field(type:"integer")]
+    #[SolrAttribute\Field(type:"integer")]
     protected $childField1;
 }
 
@@ -315,7 +316,7 @@ class ChildEntity2Attributes extends ChildEntityAttributes
     /**
      * @Solr\Field(type="integer")
      */
-    #[Solr\Field(type:"integer")]
+    #[SolrAttribute\Field(type:"integer")]
     private $childField2;
 }
 
@@ -324,22 +325,22 @@ class EntityWithObjectAttributes
     /**
      * @Solr\Field(type="datetime", getter="format('d.m.Y')")
      */
-    #[Solr\Field(type:"datetime", getter:"format('d.m.Y')")]
+    #[SolrAttribute\Field(type:"datetime", getter:"format('d.m.Y')")]
     private $object;
 }
 
 /**
  * @Solr\Nested()
  */
-#[Solr\Nested]
+#[SolrAttribute\Nested]
 class NestedObjectAttributes {}
 
 /** @Solr\Document() */
-#[Solr\Document]
+#[SolrAttribute\Document]
 class EntityMissingNamePropertyAttributes {
 
     /** @Solr\Field(type="string") */
-    #[Solr\Field(type:"string")]
+    #[SolrAttribute\Field(type:"string")]
     public function getPropertyValue2()
     {
         return 1234;

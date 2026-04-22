@@ -2,17 +2,20 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 
 /**
  * @Solr\Document(boost="1")
  */
+#[SolrAttribute\Document(boost: 1)]
 class ValidTestEntityWithRelation
 {
 
     /**
      * @Solr\Id
      */
+    #[SolrAttribute\Id]
     private $id;
 
     /**
@@ -20,6 +23,7 @@ class ValidTestEntityWithRelation
      *
      * @var string
      */
+    #[SolrAttribute\Field(type: "text")]
     private $text;
 
     /**
@@ -27,6 +31,7 @@ class ValidTestEntityWithRelation
      *
      * @var string
      */
+    #[SolrAttribute\Field()]
     private $title;
 
     /**
@@ -34,6 +39,7 @@ class ValidTestEntityWithRelation
      *
      * @var \DateTime
      */
+    #[SolrAttribute\Field(type: "date")]
     private $created_at;
 
     /**
@@ -41,6 +47,7 @@ class ValidTestEntityWithRelation
      *
      * @var string
      */
+    #[SolrAttribute\Field(type: "my_costom_fieldtype")]
     private $costomField;
 
     /**
@@ -48,6 +55,7 @@ class ValidTestEntityWithRelation
      *
      * @Solr\Field(type="strings", getter="getTitle")
      */
+    #[SolrAttribute\Field(type: "strings", getter: "getTitle")]
     private $relation;
 
     /**
@@ -55,6 +63,7 @@ class ValidTestEntityWithRelation
      *
      * @Solr\Field(type="strings")
      */
+    #[SolrAttribute\Field(type: "strings")]
     private $posts;
 
     public function getId()
@@ -163,4 +172,3 @@ class ValidTestEntityWithRelation
         $this->created_at = $created_at;
     }
 }
-

@@ -2,14 +2,11 @@
 
 namespace FS\SolrBundle\Tests\Query;
 
-use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
-use FS\SolrBundle\Doctrine\Annotation\Id;
+use FS\SolrBundle\Attribute\Id;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformation;
-use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Query\Exception\UnknownFieldException;
 use FS\SolrBundle\Query\SolrQuery;
 use FS\SolrBundle\SolrInterface;
-use FS\SolrBundle\SolrQueryFacade;
 
 /**
  *

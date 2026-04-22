@@ -1,7 +1,10 @@
 <?php
 
-namespace FS\SolrBundle\Doctrine\Annotation;
+namespace FS\SolrBundle\Attribute;
 
+use FS\SolrBundle\Attribute\Document;
+use FS\SolrBundle\Attribute\Field;
+use FS\SolrBundle\Attribute\Id;
 use FS\SolrBundle\Doctrine\Mapper\MappingDriver;
 use FS\SolrBundle\Doctrine\Mapper\MappingDriverException;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
@@ -9,7 +12,7 @@ use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 /**
  * This class reads native attributes instead of using
  * Doctrine\Common\Annotations\Reader
- * to create FS\SolrBundle\Doctrine\Annotation
+ * to create FS\SolrBundle\Attribute instances.
  */
 class AttributeReader implements MappingDriver
 {
@@ -18,11 +21,11 @@ class AttributeReader implements MappingDriver
      */
     private $entityProperties;
 
-    const DOCUMENT_CLASS = 'FS\SolrBundle\Doctrine\Annotation\Document';
-    const DOCUMENT_NESTED_CLASS = 'FS\SolrBundle\Doctrine\Annotation\Nested';
-    const FIELD_CLASS = 'FS\SolrBundle\Doctrine\Annotation\Field';
-    const FIELD_IDENTIFIER_CLASS = 'FS\SolrBundle\Doctrine\Annotation\Id';
-    const SYNCHRONIZATION_FILTER_CLASS = 'FS\SolrBundle\Doctrine\Annotation\SynchronizationFilter';
+    const DOCUMENT_CLASS = 'FS\SolrBundle\Attribute\Document';
+    const DOCUMENT_NESTED_CLASS = 'FS\SolrBundle\Attribute\Nested';
+    const FIELD_CLASS = 'FS\SolrBundle\Attribute\Field';
+    const FIELD_IDENTIFIER_CLASS = 'FS\SolrBundle\Attribute\Id';
+    const SYNCHRONIZATION_FILTER_CLASS = 'FS\SolrBundle\Attribute\SynchronizationFilter';
 
     /**
      * reads the entity and returns a set of annotations
@@ -30,7 +33,7 @@ class AttributeReader implements MappingDriver
      * @param object $entity
      * @param string $type
      *
-     * @return Annotation[]
+     * @return Attribute[]
      */
     private function getPropertiesByType($entity, $type)
     {

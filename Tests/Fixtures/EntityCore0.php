@@ -2,16 +2,19 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 
 /**
  * @Solr\Document(index="core0")
  */
+#[SolrAttribute\Document(index: "core0")]
 class EntityCore0
 {
     /**
      * @Solr\Id
      */
+    #[SolrAttribute\Id]
     private $id;
 
     /**
@@ -19,6 +22,7 @@ class EntityCore0
      *
      * @var string
      */
+    #[SolrAttribute\Field(type:"text")]
     private $text;
 
     /**
@@ -52,6 +56,4 @@ class EntityCore0
     {
         $this->text = $text;
     }
-
-
 }

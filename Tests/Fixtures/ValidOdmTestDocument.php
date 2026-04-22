@@ -2,6 +2,7 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
@@ -11,7 +12,7 @@ use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
  * @Solr\Document(boost="1")
  */
 #[MongoDB\Document]
-#[Solr\Document(boost:"1")]
+#[SolrAttribute\Document(boost:"1")]
 class ValidOdmTestDocument
 {
 
@@ -19,6 +20,7 @@ class ValidOdmTestDocument
      * @MongoDB\Id
      * @Solr\Id
      */
+    #[SolrAttribute\Id]
     private $id;
 
     /**

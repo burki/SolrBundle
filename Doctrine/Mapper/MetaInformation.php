@@ -1,8 +1,8 @@
 <?php
 namespace FS\SolrBundle\Doctrine\Mapper;
 
-use FS\SolrBundle\Doctrine\Annotation\Field;
-use FS\SolrBundle\Doctrine\Annotation\Id;
+use FS\SolrBundle\Attribute\Field;
+use FS\SolrBundle\Attribute\Id;
 
 /**
  * Holds meta-information about an entity

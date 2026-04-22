@@ -2,8 +2,6 @@
 
 namespace FS\SolrBundle\Doctrine\Hydration;
 
-use Doctrine\Common\Collections\Collection;
-use FS\SolrBundle\Doctrine\Annotation\Field;
 use FS\SolrBundle\Doctrine\Hydration\PropertyAccessor\MethodCallPropertyAccessor;
 use FS\SolrBundle\Doctrine\Hydration\PropertyAccessor\PrivatePropertyAccessor;
 use FS\SolrBundle\Doctrine\Hydration\PropertyAccessor\PropertyAccessorInterface;
@@ -147,4 +145,4 @@ class ValueHydrator implements HydratorInterface
     {
         return true;
     }
-} 
+}

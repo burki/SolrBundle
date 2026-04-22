@@ -1,7 +1,7 @@
 <?php
 namespace FS\SolrBundle\Tests\Util;
 
-use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
+use FS\SolrBundle\Attribute\AttributeReader;
 use FS\SolrBundle\Doctrine\Mapper\Mapping\CommandFactory;
 use FS\SolrBundle\Doctrine\Mapper\Mapping\MapAllFieldsCommand;
 use FS\SolrBundle\Doctrine\Mapper\Mapping\MapIdentifierCommand;
@@ -15,7 +15,7 @@ class CommandFactoryStub
      */
     public static function getFactoryWithAllMappingCommand()
     {
-        $reader = new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader());
+        $reader = new AttributeReader();
 
         $commandFactory = new CommandFactory();
         $commandFactory->add(new MapAllFieldsCommand(new MetaInformationFactory($reader)), 'all');
@@ -24,4 +24,3 @@ class CommandFactoryStub
         return $commandFactory;
     }
 }
-

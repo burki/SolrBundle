@@ -2,6 +2,7 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,14 +11,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @Solr\Document(boost="1")
  */
 #[ORM\Entity]
-#[Solr\Document(boost:"1")]
+#[SolrAttribute\Document(boost:"1")]
 class ValidTestEntity
 {
 
     /**
      * @Solr\Id
      */
-    #[Solr\Id]
+    #[SolrAttribute\Id]
     private $id;
 
     /**
@@ -25,7 +26,7 @@ class ValidTestEntity
      *
      * @var string
      */
-    #[Solr\Field(type:"text")]
+    #[SolrAttribute\Field(type:"text")]
     private $text;
 
     /**
@@ -33,7 +34,7 @@ class ValidTestEntity
      *
      * @var string
      */
-    #[Solr\Field]
+    #[SolrAttribute\Field]
     private $title;
 
     /**
@@ -41,7 +42,7 @@ class ValidTestEntity
      *
      * @var \DateTime
      */
-    #[Solr\Field(type:"date", getter:"format('d.m.Y')")]
+    #[SolrAttribute\Field(type:"date", getter:"format('d.m.Y')")]
     private $created_at;
 
     /**
@@ -49,7 +50,7 @@ class ValidTestEntity
      *
      * @var string
      */
-    #[Solr\Field(type:"my_costom_fieldtype")]
+    #[SolrAttribute\Field(type:"my_costom_fieldtype")]
     private $costomField;
 
     /**
@@ -72,7 +73,7 @@ class ValidTestEntity
      *
      * @Solr\Field(name="complex_data_type", getter="getComplexData")
      */
-    #[Solr\Field(type:"complex_data_type", getter:"getComplexData")]
+    #[SolrAttribute\Field(type:"complex_data_type", getter:"getComplexData")]
     private $complexDataType;
 
     /**
@@ -224,4 +225,3 @@ class ValidTestEntity
         return json_decode($this->complexDataType, true);
     }
 }
-

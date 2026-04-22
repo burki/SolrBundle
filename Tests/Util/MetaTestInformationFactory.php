@@ -1,8 +1,8 @@
 <?php
 namespace FS\SolrBundle\Tests\Util;
 
-use FS\SolrBundle\Doctrine\Annotation\Field;
-use FS\SolrBundle\Doctrine\Annotation\Id;
+use FS\SolrBundle\Attribute\Field;
+use FS\SolrBundle\Attribute\Id;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformation;
 
@@ -45,4 +45,3 @@ class MetaTestInformationFactory
         return $metaInformation;
     }
 }
-

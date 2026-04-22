@@ -3,7 +3,7 @@
 namespace FS\SolrBundle\Doctrine\Mapper\Factory;
 
 use Doctrine\Common\Collections\Collection;
-use FS\SolrBundle\Doctrine\Annotation\Field;
+use FS\SolrBundle\Attribute\Field;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationInterface;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;

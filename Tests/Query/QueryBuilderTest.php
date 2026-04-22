@@ -2,7 +2,7 @@
 
 namespace FS\SolrBundle\Tests\Query;
 
-use FS\SolrBundle\Doctrine\Annotation\Field;
+use FS\SolrBundle\Attribute\Field;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformation;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 use FS\SolrBundle\Query\QueryBuilder;

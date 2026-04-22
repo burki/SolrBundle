@@ -1,8 +1,9 @@
 <?php
+
 namespace FS\SolrBundle\Tests\Doctrine\Mapper;
 
-use FS\SolrBundle\Doctrine\Annotation\AnnotationReader;
-use FS\SolrBundle\Doctrine\Annotation\Field;
+use FS\SolrBundle\Attribute\AttributeReader;
+use FS\SolrBundle\Attribute\Field;
 use FS\SolrBundle\Doctrine\ClassnameResolver\ClassnameResolver;
 use FS\SolrBundle\Doctrine\ClassnameResolver\ClassnameResolverException;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
@@ -22,13 +23,13 @@ use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 class MetaInformationFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var AnnotationReader
+     * @var AttributeReader
      */
     private $reader;
 
     public function setUp(): void
     {
-        $this->reader = new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader());
+        $this->reader = new AttributeReader();
     }
 
     private function getClassnameResolver($namespace)
@@ -202,7 +203,5 @@ class MetaInformationFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertArrayNotHasKey('collection', $metainformation->getFieldMapping());
         $this->assertArrayHasKey('collection.id', $metainformation->getFieldMapping());
         $this->assertArrayHasKey('collection.name_t', $metainformation->getFieldMapping());
-
-
     }
 }

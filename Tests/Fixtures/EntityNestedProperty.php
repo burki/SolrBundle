@@ -2,6 +2,7 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
+use FS\SolrBundle\Attribute as SolrAttribute;
 use FS\SolrBundle\Doctrine\Annotation as Solr;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,11 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @Solr\Document()
  */
+#[ORM\Entity]
+#[SolrAttribute\Document()]
 class EntityNestedProperty
 {
     /**
      * @Solr\Id
      */
+    #[SolrAttribute\Id]
     private $id;
 
     /**
@@ -21,6 +25,7 @@ class EntityNestedProperty
      *
      * @Solr\Field(type="text")
      */
+    #[SolrAttribute\Field(type:"text")]
     private $name;
 
     /**
@@ -28,6 +33,7 @@ class EntityNestedProperty
      *
      * @Solr\Field(nestedClass="FS\SolrBundle\Tests\Fixtures\NestedEntity")
      */
+    #[SolrAttribute\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity")]
     private $collection;
 
     /**
@@ -35,6 +41,7 @@ class EntityNestedProperty
      *
      * @Solr\Field(nestedClass="FS\SolrBundle\Tests\Fixtures\NestedEntity", getter="sliceCollection")
      */
+    #[SolrAttribute\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity", getter:"sliceCollection")]
     private $collectionValidGetter;
 
     /**
@@ -42,23 +49,27 @@ class EntityNestedProperty
      *
      * @Solr\Field(nestedClass="FS\SolrBundle\Tests\Fixtures\NestedEntity", getter="unknown")
      */
+    #[SolrAttribute\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity", getter:"unknown")]
     private $collectionInvalidGetter;
-    
+
     /**
      * @var object
      *
      * @Solr\Field(nestedClass="FS\SolrBundle\Tests\Fixtures\NestedEntity")
      */
+    #[SolrAttribute\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity")]
     private $nestedProperty;
 
     /**
      * @Solr\Field(type="datetime", getter="format('d.m.Y')")
      */
+    #[SolrAttribute\Field(type:"datetime", getter:"format('d.m.Y')")]
     private $getterWithParameters;
 
     /**
      * @Solr\Field(type="string", getter="getName")
      */
+    #[SolrAttribute\Field(type:"string", getter:"getName")]
     private $simpleGetter;
 
     /**
@@ -76,7 +87,7 @@ class EntityNestedProperty
     {
         $this->id = $id;
     }
-    
+
     public function sliceCollection()
     {
         return [$this->collectionValidGetter[0]];
