@@ -43,7 +43,7 @@ return static function (ContainerConfigurator $container) {
 
     $services->set('solr.meta.information.factory', \FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory::class)
         ->public()
-        ->args([service('solr.doctrine.annotation.annotation_reader')]);
+        ->args([service('solr.attribute.attribute_reader')]);
 
     $services->set('solr.doctrine.classnameresolver.known_entity_namespaces', \FS\SolrBundle\Doctrine\ClassnameResolver\KnownNamespaceAliases::class)
         ->public();
@@ -76,8 +76,7 @@ return static function (ContainerConfigurator $container) {
     $services->set('solr.doctrine.hydration.index_hydrator', \FS\SolrBundle\Doctrine\Hydration\IndexHydrator::class)
         ->args([service('solr.doctrine.hydration.no_database_value_hydrator')]);
 
-    $services->set('solr.doctrine.annotation.annotation_reader', \FS\SolrBundle\Doctrine\Annotation\AnnotationReader::class)
-        ->args([service('annotation_reader')]);
+    $services->set('solr.attribute.attribute_reader', \FS\SolrBundle\Attribute\AttributeReader::class);
 
     $services->set('solr.command.clear_index_command', \FS\SolrBundle\Command\ClearIndexCommand::class)
         ->args([service('solr.client')])
