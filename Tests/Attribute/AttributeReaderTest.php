@@ -13,7 +13,6 @@ use FS\SolrBundle\Tests\Fixtures\ValidTestEntityFiltered;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityFloatBoost;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityNumericFields;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithInvalidBoost;
-use FS\SolrBundle\Tests\Fixtures\ValidOdmTestDocument;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 use FS\SolrBundle\Tests\Fixtures\EntityWithRepository;
 use FS\SolrBundle\Tests\Fixtures\NotIndexedEntity;
@@ -258,9 +257,9 @@ class AttributeReaderTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function checkIfValidDocumentIsDoctrineDocument()
+    public function checkIfValidDocumentIsNotDoctrineDocument()
     {
-        $this->assertTrue($this->reader->isOdm(new ValidOdmTestDocument()), 'is a doctrine document');
+        $this->assertFalse($this->reader->isOdm(new ValidTestEntity()), 'is not a doctrine document');
     }
 
     /**

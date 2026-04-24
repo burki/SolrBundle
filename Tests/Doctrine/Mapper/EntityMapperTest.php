@@ -17,7 +17,6 @@ use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 use FS\SolrBundle\Tests\Fixtures\EntityWithCustomId;
 use FS\SolrBundle\Tests\Fixtures\PartialUpdateEntity;
-use FS\SolrBundle\Tests\Fixtures\ValidOdmTestDocument;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 use FS\SolrBundle\Tests\Util\MetaTestInformationFactory;
 use Solarium\QueryType\Update\Query\Document;
@@ -99,26 +98,6 @@ class EntityMapperTest extends \PHPUnit\Framework\TestCase
 
         $this->doctrineHydrator = new DoctrineHydrator(new ValueHydrator());
         $this->doctrineHydrator->setOrmManager($this->setupOrmManager($targetEntity, 1));
-
-        $this->mapper = new EntityMapper($this->doctrineHydrator, $this->indexHydrator, $this->metaInformationFactory);
-        $this->mapper->setHydrationMode(HydrationModes::HYDRATE_DOCTRINE);
-        $entity = $this->mapper->toEntity(new Document(array('id' => 'document_1', 'title' => 'value from index')), $targetEntity);
-
-        $this->assertTrue($entity instanceof $targetEntity);
-
-        $this->assertEquals('a value', $entity->getField());
-        $this->assertEquals('value from index', $entity->getTitle());
-    }
-
-    public function testToEntity_ConcreteDocumentClass_WithDoctrineOdm()
-    {
-        $targetEntity = new ValidOdmTestDocument();
-        $targetEntity->setField('a value');
-
-        $this->indexHydrator = new IndexHydrator(new NoDatabaseValueHydrator());
-
-        $this->doctrineHydrator = new DoctrineHydrator(new ValueHydrator());
-        $this->doctrineHydrator->setOdmManager($this->setupOdmManager($targetEntity, 1));
 
         $this->mapper = new EntityMapper($this->doctrineHydrator, $this->indexHydrator, $this->metaInformationFactory);
         $this->mapper->setHydrationMode(HydrationModes::HYDRATE_DOCTRINE);

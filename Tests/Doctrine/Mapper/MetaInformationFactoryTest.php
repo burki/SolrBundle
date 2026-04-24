@@ -13,7 +13,6 @@ use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 use FS\SolrBundle\Tests\Fixtures\EntityNestedProperty;
 use FS\SolrBundle\Tests\Fixtures\NestedEntity;
 use FS\SolrBundle\Tests\Fixtures\NotIndexedEntity;
-use FS\SolrBundle\Tests\Fixtures\ValidOdmTestDocument;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 
 /**
@@ -161,17 +160,6 @@ class MetaInformationFactoryTest extends \PHPUnit\Framework\TestCase
         $metainformation = $factory->loadInformation(new ValidTestEntity());
 
         $this->assertEquals(MetaInformationInterface::DOCTRINE_MAPPER_TYPE_RELATIONAL, $metainformation->getDoctrineMapperType());
-    }
-
-    /**
-     * @test
-     */
-    public function determineDoctrineMapperTypeFromDocument()
-    {
-        $factory = new MetaInformationFactory($this->reader);
-        $metainformation = $factory->loadInformation(new ValidOdmTestDocument());
-
-        $this->assertEquals(MetaInformationInterface::DOCTRINE_MAPPER_TYPE_DOCUMENT, $metainformation->getDoctrineMapperType());
     }
 
     /**

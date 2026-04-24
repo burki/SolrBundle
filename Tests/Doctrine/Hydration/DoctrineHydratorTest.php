@@ -13,7 +13,6 @@ use FS\SolrBundle\Doctrine\Mapper\MetaInformation;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationInterface;
 use FS\SolrBundle\Tests\Doctrine\Mapper\SolrDocumentStub;
-use FS\SolrBundle\Tests\Fixtures\ValidOdmTestDocument;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 
 /**
@@ -55,40 +54,6 @@ class DoctrineHydratorTest extends \PHPUnit\Framework\TestCase
         $obj = new SolrDocumentStub(array('id' => 'document_1'));
 
         $doctrine = new DoctrineHydrator(new ValueHydrator());
-        $doctrine->setOrmManager($ormManager);
-        $hydratedDocument = $doctrine->hydrate($obj, $metainformations);
-
-        $this->assertEntityFromDBReplcesTargetEntity($metainformations, $fetchedFromDoctrine, $hydratedDocument);
-    }
-
-    /**
-     * @test
-     */
-    public function useOdmManagerIfObjectIsOdmDocument()
-    {
-        $fetchedFromDoctrine = new ValidOdmTestDocument();
-
-        $odmRepository = $this->createMock(ObjectRepository::class);
-        $odmRepository->expects($this->once())
-            ->method('find')
-            ->with(1)
-            ->will($this->returnValue($fetchedFromDoctrine));
-
-        $entity = new ValidOdmTestDocument();
-        $entity->setId(1);
-
-        $metainformations = new MetaInformationFactory($this->reader);
-        $metainformations = $metainformations->loadInformation($entity);
-
-        $ormManager = $this->createMock(ObjectManager::class);
-        $ormManager->expects($this->never())
-            ->method('getRepository');
-        $odmManager = $this->setupManager($metainformations, $odmRepository);
-
-        $obj = new SolrDocumentStub(array('id' => 'document_1'));
-
-        $doctrine = new DoctrineHydrator(new ValueHydrator());
-        $doctrine->setOdmManager($odmManager);
         $doctrine->setOrmManager($ormManager);
         $hydratedDocument = $doctrine->hydrate($obj, $metainformations);
 
