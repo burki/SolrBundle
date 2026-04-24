@@ -13,8 +13,7 @@ use FS\SolrBundle\Tests\Fixtures\EntityNestedProperty;
 use FS\SolrBundle\Tests\Fixtures\NestedEntity;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 use FS\SolrBundle\Tests\Util\MetaTestInformationFactory;
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 class EntityMapperObjectRelationTest extends \PHPUnit\Framework\TestCase
 {
@@ -342,12 +341,10 @@ class EntityMapperObjectRelationTest extends \PHPUnit\Framework\TestCase
     }
 }
 
-/** @Solr\Document() */
-#[SolrAttribute\Document()]
+#[Solr\Document()]
 class TestObject
 {
-    /** @Solr\Id  */
-    #[SolrAttribute\Id]
+    #[Solr\Id]
     private $id;
 
     public function __construct()
@@ -360,8 +357,7 @@ class TestObject
         return $this->id;
     }
 
-    /** @Solr\Field(type="string", name="property") */
-    #[SolrAttribute\Field(type:"string", name:"property")]
+    #[Solr\Field(type:"string", name:"property")]
     public function getPropertyValue()
     {
         return 1234;

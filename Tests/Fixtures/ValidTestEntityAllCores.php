@@ -2,56 +2,44 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 use Doctrine\ORM\Mapping as ORM;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 
 /**
- * @ORM\Entity()
- * @Solr\Document(boost="1", index="*")
  */
 #[ORM\Entity]
-#[SolrAttribute\Document(boost:"1", index:"*")]
+#[Solr\Document(boost:"1", index:"*")]
 class ValidTestEntityAllCores
 {
 
     /**
-     * @Solr\Id
      */
-    #[SolrAttribute\Id]
+    #[Solr\Id]
     private $id;
 
     /**
-     * @Solr\Field(type="text")
-     *
      * @var string
      */
-    #[SolrAttribute\Field(type:"text")]
+    #[Solr\Field(type:"text")]
     private $text;
 
     /**
-     * @Solr\Field()
-     *
      * @var string
      */
-    #[SolrAttribute\Field()]
+    #[Solr\Field()]
     private $title;
 
     /**
-     * @Solr\Field(type="date", getter="format('d.m.Y')")
-     *
      * @var \DateTime
      */
-    #[SolrAttribute\Field(type:"date", getter:"format('d.m.Y')")]
+    #[Solr\Field(type:"date", getter:"format('d.m.Y')")]
     private $created_at;
 
     /**
-     * @Solr\Field(type="my_costom_fieldtype")
-     *
      * @var string
      */
-    #[SolrAttribute\Field(type:"my_costom_fieldtype")]
+    #[Solr\Field(type:"my_costom_fieldtype")]
     private $costomField;
 
     /**

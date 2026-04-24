@@ -2,13 +2,11 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
- * @Solr\Document
  */
-#[SolrAttribute\Document]
+#[Solr\Document]
 class ValidTestEntityNoBoost
 {
 }

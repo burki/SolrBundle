@@ -3,44 +3,37 @@
 namespace FS\SolrBundle\Tests\Integration\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
  * Tag
- *
- * @Solr\Nested()
- *
- * @ORM\Table()
- * @ORM\Entity
  */
+#[Solr\Nested]
+#[ORM\Table]
+#[ORM\Entity]
 class Tag
 {
     /**
      * @var integer
-     *
-     * @Solr\Id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[Solr\Id]
+    #[ORM\Column(name: "id", type: "integer")]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $id;
 
     /**
      * @var string
-     *
-     * @Solr\Field(type="string")
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      */
+    #[Solr\Field(type: "string")]
+    #[ORM\Column(name: "name", type: "string", length: 255)]
     private $name;
 
     /**
      * @var Post
-     *
-     * @ORM\ManyToOne(targetEntity="Acme\DemoBundle\Entity\Post", inversedBy="tags", cascade={"persist"})
-     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: "FS\SolrBundle\Tests\Integration\Entity\Post", inversedBy: "tags", cascade: ["persist"])]
+    #[ORM\JoinColumn(name: "tag_id", referencedColumnName: "id")]
     private $post;
 
     /**
@@ -108,7 +101,5 @@ class Tag
     {
         $this->post = $post;
     }
-
-
 }
 

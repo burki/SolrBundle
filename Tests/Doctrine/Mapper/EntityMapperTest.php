@@ -14,7 +14,6 @@ use FS\SolrBundle\Doctrine\Hydration\NoDatabaseValueHydrator;
 use FS\SolrBundle\Doctrine\Hydration\ValueHydrator;
 use FS\SolrBundle\Doctrine\Mapper\EntityMapper;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
-use FS\SolrBundle\Attribute\Field;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 use FS\SolrBundle\Tests\Fixtures\EntityWithCustomId;
 use FS\SolrBundle\Tests\Fixtures\PartialUpdateEntity;
@@ -243,20 +242,14 @@ class EntityMapperTest extends \PHPUnit\Framework\TestCase
     }
 }
 
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
-/**
- * @Solr\Document(boost="1")
- */
-#[SolrAttribute\Document(boost: "1")]
+#[Solr\Document(boost: "1")]
 class PlainObject
 {
     /**
      * @var int
-     *
-     * @Solr\Id
      */
-    #[SolrAttribute\Id]
+    #[Solr\Id]
     private $id;
 }

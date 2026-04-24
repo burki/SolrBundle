@@ -2,8 +2,8 @@
 
 namespace FS\SolrBundle\Doctrine\Mapper;
 
-use FS\SolrBundle\Doctrine\Annotation\Field;
-use FS\SolrBundle\Doctrine\Annotation\Id;
+use FS\SolrBundle\Attribute\Field;
+use FS\SolrBundle\Attribute\Id;
 
 /**
  * Defines common methods for meta-information

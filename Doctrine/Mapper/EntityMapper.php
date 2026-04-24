@@ -4,9 +4,6 @@ namespace FS\SolrBundle\Doctrine\Mapper;
 use FS\SolrBundle\Doctrine\Hydration\HydrationModes;
 use FS\SolrBundle\Doctrine\Hydration\HydratorInterface;
 use FS\SolrBundle\Doctrine\Mapper\Factory\DocumentFactory;
-//use FS\SolrBundle\Doctrine\Mapper\Mapping\AbstractDocumentCommand;
-//use FS\SolrBundle\Doctrine\Annotation\Index as Solr;
-//use Solarium\QueryType\Update\Query\Document;
 
 class EntityMapper implements EntityMapperInterface
 {

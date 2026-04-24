@@ -2,20 +2,16 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
- * @Solr\Document(repository="FS\SolrBundle\Tests\Fixtures\ValidEntityRepository")
  */
-#[SolrAttribute\Document(repository: "FS\SolrBundle\Tests\Fixtures\ValidEntityRepository")]
+#[Solr\Document(repository: "FS\SolrBundle\Tests\Fixtures\ValidEntityRepository")]
 class EntityWithRepository
 {
     /**
-     * @Solr\Id()
-     *
      * @var int
      */
-    #[SolrAttribute\Id]
+    #[Solr\Id]
     private $id;
 }

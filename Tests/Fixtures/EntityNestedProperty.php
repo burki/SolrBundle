@@ -2,74 +2,58 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
- * @Solr\Document()
  */
 #[ORM\Entity]
-#[SolrAttribute\Document()]
+#[Solr\Document()]
 class EntityNestedProperty
 {
     /**
-     * @Solr\Id
      */
-    #[SolrAttribute\Id]
+    #[Solr\Id]
     private $id;
 
     /**
      * @var string
-     *
-     * @Solr\Field(type="text")
      */
-    #[SolrAttribute\Field(type:"text")]
+    #[Solr\Field(type:"text")]
     private $name;
 
     /**
      * @var array
-     *
-     * @Solr\Field(nestedClass="FS\SolrBundle\Tests\Fixtures\NestedEntity")
      */
-    #[SolrAttribute\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity")]
+    #[Solr\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity")]
     private $collection;
 
     /**
      * @var array
-     *
-     * @Solr\Field(nestedClass="FS\SolrBundle\Tests\Fixtures\NestedEntity", getter="sliceCollection")
      */
-    #[SolrAttribute\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity", getter:"sliceCollection")]
+    #[Solr\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity", getter:"sliceCollection")]
     private $collectionValidGetter;
 
     /**
      * @var array
-     *
-     * @Solr\Field(nestedClass="FS\SolrBundle\Tests\Fixtures\NestedEntity", getter="unknown")
      */
-    #[SolrAttribute\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity", getter:"unknown")]
+    #[Solr\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity", getter:"unknown")]
     private $collectionInvalidGetter;
 
     /**
      * @var object
-     *
-     * @Solr\Field(nestedClass="FS\SolrBundle\Tests\Fixtures\NestedEntity")
      */
-    #[SolrAttribute\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity")]
+    #[Solr\Field(nestedClass:"FS\SolrBundle\Tests\Fixtures\NestedEntity")]
     private $nestedProperty;
 
     /**
-     * @Solr\Field(type="datetime", getter="format('d.m.Y')")
      */
-    #[SolrAttribute\Field(type:"datetime", getter:"format('d.m.Y')")]
+    #[Solr\Field(type:"datetime", getter:"format('d.m.Y')")]
     private $getterWithParameters;
 
     /**
-     * @Solr\Field(type="string", getter="getName")
      */
-    #[SolrAttribute\Field(type:"string", getter:"getName")]
+    #[Solr\Field(type:"string", getter:"getName")]
     private $simpleGetter;
 
     /**
@@ -100,8 +84,6 @@ class EntityNestedProperty
     {
         $this->name = $name;
     }
-
-    /**
 
     /**
      * @param array $collection

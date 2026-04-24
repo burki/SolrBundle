@@ -2,53 +2,45 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 
 /**
- * @MongoDB\Document
- * @Solr\Document(boost="1")
  */
 #[MongoDB\Document]
-#[SolrAttribute\Document(boost:"1")]
+#[Solr\Document(boost:"1")]
 class ValidOdmTestDocument
 {
 
     /**
-     * @MongoDB\Id
-     * @Solr\Id
      */
-    #[SolrAttribute\Id]
+    #[MongoDB\Id]
+    #[Solr\Id]
     private $id;
 
     /**
-     * @MongoDB\Field)
-     *
      * @var string
      */
+    #[MongoDB\Field]
     private $text;
 
     /**
-     * @Solr\Field()
-     *
      * @var string
      */
+    #[Solr\Field]
     private $title;
 
     /**
-     * @Solr\Field(type="date", getter="format('d.m.Y')")
-     *
      * @var \DateTime
      */
+    #[Solr\Field(type:"date", getter:"format('d.m.Y')")]
     private $created_at;
 
     /**
-     * @Solr\Field(type="my_costom_fieldtype")
-     *
      * @var string
      */
+    #[Solr\Field(type:"my_costom_fieldtype")]
     private $costomField;
 
     /**

@@ -4,69 +4,55 @@ namespace FS\SolrBundle\Tests\Integration\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
  * Post
- *
- * @Solr\Document(index="core0")
- *
- * @ORM\Table()
- * @ORM\Entity
  */
+#[Solr\Document(index: "core0")]
+#[ORM\Table]
+#[ORM\Entity]
 class Post
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @Solr\Id
      */
+    #[Solr\Id]
+    #[ORM\Column(name: "id", type: "integer")]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $id;
 
     /**
      * @var string
-     *
-     * @Solr\Field(type="string")
-     *
-     * @ORM\Column(name="title", type="string", length=255)
      */
+    #[Solr\Field(type: "string")]
+    #[ORM\Column(name: "title", type: "string", length: 255)]
     private $title;
 
     /**
      * @var string
-     *
-     * @Solr\Field(type="text")
-     *
-     * @ORM\Column(name="text", type="text")
      */
+    #[Solr\Field(type: "text")]
+    #[ORM\Column(name: "text", type: "text")]
     private $text;
 
     /**
      * @var Category
-     *
-     * @Solr\Field(nestedClass="Acme\DemoBundle\Entity\Category")
-     *
-     * @ORM\ManyToOne(targetEntity="Acme\DemoBundle\Entity\Category", inversedBy="posts", cascade={"persist"})
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
+    #[Solr\Field(nestedClass: "Acme\DemoBundle\Entity\Category")]
+    #[ORM\ManyToOne(targetEntity: "Acme\DemoBundle\Entity\Category", inversedBy: "posts", cascade: ["persist"])]
+    #[ORM\JoinColumn(name: "category_id", referencedColumnName: "id")]
     private $category;
 
     /**
      * @var Tag[]
-     *
-     * @Solr\Field(nestedClass="Acme\DemoBundle\Entity\Tag")
-     *
-     * Solr\Fields(getter="getTags", fields={
-     *      Solr\Field(type="integers", getter="getId", fieldAlias="tag_ids"),
-     *      Solr\Field(type="strings", getter="getName", fieldAlias="tag_names")
-     *      })
-     *
-     * @ORM\OneToMany(targetEntity="Acme\DemoBundle\Entity\Tag", mappedBy="post", cascade={"persist", "remove"})
      */
+    #[Solr\Field(nestedClass: "Acme\DemoBundle\Entity\Tag", getter: "getTags", fields: [
+        new Solr\Field(type: "integers", getter: "getId", fieldAlias: "tag_ids"),
+        new Solr\Field(type: "strings", getter: "getName", fieldAlias: "tag_names")
+    ])]
+    #[ORM\OneToMany(targetEntity: "Acme\DemoBundle\Entity\Tag", mappedBy: "post", cascade: ["persist", "remove"])]
     private $tags;
 
     /**
@@ -76,41 +62,34 @@ class Post
 
     /**
      * @var int
-     *
-     * Solr\Field(type="string", fieldModifier="inc")
      */
+    #[Solr\Field(type: "string", fieldModifier: "inc")]
     private $intField;
 
     /**
      * @var \DateTime
-     *
-     * @Solr\Field(type="datetime")
-     *
-     * @ORM\Column(name="created", type="datetime")
      */
+    #[Solr\Field(type: "datetime")]
+    #[ORM\Column(name: "created", type: "datetime")]
     private $created;
 
     /**
      * @var array
-     *
-     * @Solr\Field(type="strings", fieldModifier="remove")
-     *
-     * @ORM\Column(name="multivalues", type="json_array", nullable=true)
      */
+    #[Solr\Field(type: "strings", fieldModifier: "remove")]
+    #[ORM\Column(name: "multivalues", type: "json_array", nullable: true)]
     private $multivalues;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="slug", type="string", nullable=true)
      */
+    #[ORM\Column(name: "slug", type: "string", nullable: true)]
     private $slug;
 
     /**
      * @var bool
-     *
-     * @Solr\Field(type="boolean")
      */
+    #[Solr\Field(type: "boolean")]
     private $isParent;
 
     public function __construct($test = null)
@@ -127,7 +106,7 @@ class Post
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -150,7 +129,7 @@ class Post
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -173,7 +152,7 @@ class Post
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
@@ -196,7 +175,7 @@ class Post
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {

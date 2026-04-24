@@ -2,27 +2,22 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
- * @Solr\Document()
  */
-#[SolrAttribute\Document]
+#[Solr\Document]
 class EntityWithCustomId
 {
     /**
-     * @Solr\Id(generateId = true)
      */
-    #[SolrAttribute\Id(generateId: true)]
+    #[Solr\Id(generateId: true)]
     private $id;
 
     /**
-     * @Solr\Field
-     *
      * @var string
      */
-    #[SolrAttribute\Field()]
+    #[Solr\Field()]
     private $title;
 
     /**

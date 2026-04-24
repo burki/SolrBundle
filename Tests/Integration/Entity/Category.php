@@ -5,52 +5,43 @@ namespace FS\SolrBundle\Tests\Integration\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
  * Post
- *
- * @Solr\Nested()
- *
- * @ORM\Table()
- * @ORM\Entity
  */
+#[Solr\Nested]
+#[ORM\Table]
+#[ORM\Entity]
 class Category {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @Solr\Id
      */
+    #[Solr\Id]
+    #[ORM\Column(name: "id", type: "integer")]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $id;
 
     /**
      * @var string
-     *
-     * @Solr\Field(type="string")
-     *
-     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
+    #[Solr\Field(type: "string")]
+    #[ORM\Column(name: "title", type: "string", length: 255, nullable: true)]
     private $title;
 
     /**
      * @var string
-     *
-     * @Solr\Field(type="string")
-     *
-     * @ORM\Column(name="info", type="string", length=255, nullable=true)
      */
+    #[Solr\Field(type: "string")]
+    #[ORM\Column(name: "info", type: "string", length: 255, nullable: true)]
     private $info;
 
     /**
      * @var Post[]
-     *
-     * Solr\Field(type="strings", getter="getTitle")
-     * @ORM\OneToMany(targetEntity="Acme\DemoBundle\Entity\Post", mappedBy="category")
      */
+    #[Solr\Field(type: "strings", getter: "getTitle")]
+    #[ORM\OneToMany(targetEntity: "Acme\DemoBundle\Entity\Post", mappedBy: "category")]
     private $posts;
 
     public function __construct()
@@ -118,5 +109,4 @@ class Category {
     {
         $this->info = $info;
     }
-
 }

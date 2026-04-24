@@ -3,71 +3,52 @@
 namespace FS\SolrBundle\Tests\Fixtures;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
-use FS\SolrBundle\Tests\Doctrine\Mapper\date;
-use FS\SolrBundle\Tests\Doctrine\Mapper\text;
-use FS\SolrBundle\Tests\Doctrine\Mapper\the;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
- * @Solr\Document(boost="1")
  */
-#[SolrAttribute\Document(boost: 1)]
+#[Solr\Document(boost: 1)]
 class ValidTestEntityWithCollection
 {
-
     /**
-     * @Solr\Id
      */
-    #[SolrAttribute\Id]
+    #[Solr\Id]
     private $id;
 
     /**
-     * @Solr\Field(type="text")
-     *
      * @var string
      */
-    #[SolrAttribute\Field(type: "text")]
+    #[Solr\Field(type: "text")]
     private $text;
 
     /**
-     * @Solr\Field()
-     *
      * @var string
      */
-    #[SolrAttribute\Field()]
+    #[Solr\Field()]
     private $title;
 
     /**
-     * @Solr\Field(type="date")
-     *
      * @var \DateTime
      */
-    #[SolrAttribute\Field(type: "date")]
+    #[Solr\Field(type: "date")]
     private $created_at;
 
     /**
      * @var ArrayCollection
-     *
-     * @Solr\Field(type="strings", getter="getTitle")
      */
-    #[SolrAttribute\Field(type: "strings", getter: "getTitle")]
+    #[Solr\Field(type: "strings", getter: "getTitle")]
     private $collection;
 
     /**
      * @var ArrayCollection
-     *
-     * @Solr\Field(type="strings")
      */
-    #[SolrAttribute\Field(type: "strings")]
+    #[Solr\Field(type: "strings")]
     private $collectionNoGetter;
 
     /**
-     * @Solr\Field(type="my_costom_fieldtype")
-     *
      * @var string
      */
-    #[SolrAttribute\Field(type: "my_costom_fieldtype")]
+    #[Solr\Field(type: "my_costom_fieldtype")]
     private $costomField;
 
     public function getId()

@@ -2,26 +2,21 @@
 
 namespace FS\SolrBundle\Tests\Fixtures;
 
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
- * @Solr\Document(indexHandler="indexHandler")
  */
-#[SolrAttribute\Document(indexHandler:"indexHandler")]
+#[Solr\Document(indexHandler:"indexHandler")]
 class ValidTestEntityIndexHandler
 {
-
     /**
-     * @Solr\Id
      */
-    #[SolrAttribute\Id]
+    #[Solr\Id]
     private $id;
 
     /**
-     * @Solr\Field
      */
-    #[SolrAttribute\Field]
+    #[Solr\Field]
     private $title;
 
     public function indexHandler()

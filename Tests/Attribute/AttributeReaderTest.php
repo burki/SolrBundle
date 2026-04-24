@@ -273,14 +273,11 @@ class AttributeReaderTest extends \PHPUnit\Framework\TestCase
     }
 }
 
-use FS\SolrBundle\Attribute as SolrAttribute;
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
- *
- * @Solr\Document
  */
-#[SolrAttribute\Document]
+#[Solr\Document]
 abstract class BaseEntityAttributes
 {
     /**
@@ -289,58 +286,49 @@ abstract class BaseEntityAttributes
     protected $baseField1;
 
     /**
-     *
-     * @Solr\Field(type="integer")
      */
-    #[SolrAttribute\Field(type:"integer")]
+    #[Solr\Field(type:"integer")]
     protected $baseField2;
 }
 
 class ChildEntityAttributes extends BaseEntityAttributes
 {
     /**
-     * @Solr\Field(type="integer")
      */
-    #[SolrAttribute\Field(type:"integer")]
+    #[Solr\Field(type:"integer")]
     protected $baseField1;
 
     /**
-     * @Solr\Field(type="integer")
      */
-    #[SolrAttribute\Field(type:"integer")]
+    #[Solr\Field(type:"integer")]
     protected $childField1;
 }
 
 class ChildEntity2Attributes extends ChildEntityAttributes
 {
     /**
-     * @Solr\Field(type="integer")
      */
-    #[SolrAttribute\Field(type:"integer")]
+    #[Solr\Field(type:"integer")]
     private $childField2;
 }
 
 class EntityWithObjectAttributes
 {
     /**
-     * @Solr\Field(type="datetime", getter="format('d.m.Y')")
      */
-    #[SolrAttribute\Field(type:"datetime", getter:"format('d.m.Y')")]
+    #[Solr\Field(type:"datetime", getter:"format('d.m.Y')")]
     private $object;
 }
 
 /**
- * @Solr\Nested()
  */
-#[SolrAttribute\Nested]
+#[Solr\Nested]
 class NestedObjectAttributes {}
 
-/** @Solr\Document() */
-#[SolrAttribute\Document]
-class EntityMissingNamePropertyAttributes {
-
-    /** @Solr\Field(type="string") */
-    #[SolrAttribute\Field(type:"string")]
+#[Solr\Document]
+class EntityMissingNamePropertyAttributes
+{
+    #[Solr\Field(type:"string")]
     public function getPropertyValue2()
     {
         return 1234;
