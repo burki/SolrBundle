@@ -10,8 +10,7 @@ use FS\SolrBundle\Doctrine\Mapper\MappingDriverException;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 
 /**
- * This class reads native attributes instead of using
- * Doctrine\Common\Annotations\Reader
+ * This class reads native attributes
  * to create FS\SolrBundle\Attribute instances.
  */
 class AttributeReader implements MappingDriver
@@ -28,7 +27,7 @@ class AttributeReader implements MappingDriver
     const SYNCHRONIZATION_FILTER_CLASS = 'FS\SolrBundle\Attribute\SynchronizationFilter';
 
     /**
-     * reads the entity and returns a set of annotations
+     * reads the entity and returns a set of attributes
      *
      * @param object $entity
      * @param string $type
@@ -47,13 +46,13 @@ class AttributeReader implements MappingDriver
                 continue;
             }
 
-            $annotation = new $type($attributes[0]->getArguments());
+            $attribute = new $type($attributes[0]->getArguments());
 
             $property->setAccessible(true);
-            $annotation->value = $property->getValue($entity);
-            $annotation->name = $property->getName();
+            $attribute->value = $property->getValue($entity);
+            $attribute->name = $property->getName();
 
-            $fields[] = $annotation;
+            $fields[] = $attribute;
         }
 
         return $fields;
@@ -97,7 +96,7 @@ class AttributeReader implements MappingDriver
 
         $methods = [];
         foreach ($reflectionClass->getMethods() as $method) {
-            /** @var Field $annotation */
+            /** @var Field $attribute */
             $attributes = $method->getAttributes(self::FIELD_CLASS);
 
             if (count($attributes) == 0) {
@@ -105,15 +104,15 @@ class AttributeReader implements MappingDriver
             }
 
             $type = self::FIELD_CLASS;
-            $annotation = new $type($attributes[0]->getArguments());
+            $attribute = new $type($attributes[0]->getArguments());
 
-            $annotation->value = $method->invoke($entity);
+            $attribute->value = $method->invoke($entity);
 
-            if ($annotation->name == '') {
-                throw new SolrMappingException(sprintf('Please configure a field-name for method "%s" with field-annotation in class "%s"', $method->getName(), get_class($entity)));
+            if ($attribute->name == '') {
+                throw new SolrMappingException(sprintf('Please configure a field-name for method "%s" with field-attribute in class "%s"', $method->getName(), get_class($entity)));
             }
 
-            $methods[] = $annotation;
+            $methods[] = $attribute;
         }
 
         return $methods;
@@ -128,13 +127,13 @@ class AttributeReader implements MappingDriver
      */
     public function getEntityBoost($entity)
     {
-        $annotation = $this->getClassAnnotation($entity, self::DOCUMENT_CLASS);
+        $attribute = $this->getClassAttribute($entity, self::DOCUMENT_CLASS);
 
-        if (!$annotation instanceof Document) {
+        if (!$attribute instanceof Document) {
             return 0;
         }
 
-        $boostValue = $annotation->getBoost();
+        $boostValue = $attribute->getBoost();
         if (!is_numeric($boostValue)) {
             throw new MappingDriverException(sprintf('Invalid boost value "%s" in class "%s" configured', $boostValue, get_class($entity)));
         }
@@ -153,17 +152,17 @@ class AttributeReader implements MappingDriver
      */
     public function getDocumentIndex($entity)
     {
-        $annotation = $this->getClassAnnotation($entity, self::DOCUMENT_CLASS);
-        if (!$annotation instanceof Document) {
+        $attribute = $this->getClassAttribute($entity, self::DOCUMENT_CLASS);
+        if (!$attribute instanceof Document) {
             return null;
         }
 
-        $indexHandler = $annotation->indexHandler;
+        $indexHandler = $attribute->indexHandler;
         if ($indexHandler != '' && method_exists($entity, $indexHandler)) {
             return $entity->$indexHandler();
         }
 
-        return $annotation->getIndex();
+        return $attribute->getIndex();
     }
 
     /**
@@ -191,10 +190,10 @@ class AttributeReader implements MappingDriver
      */
     public function getRepository($entity)
     {
-        $annotation = $this->getClassAnnotation($entity, self::DOCUMENT_CLASS);
+        $attribute = $this->getClassAttribute($entity, self::DOCUMENT_CLASS);
 
-        if ($annotation instanceof Document) {
-            return $annotation->repository;
+        if ($attribute instanceof Document) {
+            return $attribute->repository;
         }
 
         return '';
@@ -229,7 +228,7 @@ class AttributeReader implements MappingDriver
      */
     public function hasDocumentDeclaration($entity)
     {
-        if ($rootDocument = $this->getClassAnnotation($entity, self::DOCUMENT_CLASS)) {
+        if ($rootDocument = $this->getClassAttribute($entity, self::DOCUMENT_CLASS)) {
             return true;
         }
 
@@ -247,13 +246,13 @@ class AttributeReader implements MappingDriver
      */
     public function getSynchronizationCallback($entity)
     {
-        $annotation = $this->getClassAnnotation($entity, self::SYNCHRONIZATION_FILTER_CLASS);
+        $attribute = $this->getClassAttribute($entity, self::SYNCHRONIZATION_FILTER_CLASS);
 
-        if (!$annotation) {
+        if (!$attribute) {
             return '';
         }
 
-        return $annotation->callback;
+        return $attribute->callback;
     }
 
     /**
@@ -263,9 +262,9 @@ class AttributeReader implements MappingDriver
      */
     public function isOrm($entity)
     {
-        $annotation = $this->getClassAnnotation($entity, 'Doctrine\ORM\Mapping\Entity');
+        $attribute = $this->getClassAttribute($entity, 'Doctrine\ORM\Mapping\Entity');
 
-        if ($annotation === null) {
+        if ($attribute === null) {
             return false;
         }
 
@@ -279,9 +278,9 @@ class AttributeReader implements MappingDriver
      */
     public function isOdm($entity)
     {
-        $annotation = $this->getClassAnnotation($entity, 'Doctrine\ODM\MongoDB\Mapping\Annotations\Document');
+        $attribute = $this->getClassAttribute($entity, 'Doctrine\ODM\MongoDB\Mapping\Annotations\Document');
 
-        if ($annotation === null) {
+        if ($attribute === null) {
             return false;
         }
 
@@ -295,7 +294,7 @@ class AttributeReader implements MappingDriver
      */
     public function isNested($entity)
     {
-        if ($nestedDocument = $this->getClassAnnotation($entity, self::DOCUMENT_NESTED_CLASS)) {
+        if ($nestedDocument = $this->getClassAttribute($entity, self::DOCUMENT_NESTED_CLASS)) {
             return true;
         }
 
@@ -304,38 +303,38 @@ class AttributeReader implements MappingDriver
 
     /**
      * @param string $entity
-     * @param string $annotationName
+     * @param string $attributeName
      *
-     * @return Annotation|null
+     * @return Attribute|null
      */
-    private function getClassAnnotation($entity, $annotationName)
+    private function getClassAttribute($entity, $attributeName)
     {
         $reflectionClass = new \ReflectionClass($entity);
 
-        $attributes = $reflectionClass->getAttributes($annotationName);
+        $attributes = $reflectionClass->getAttributes($attributeName);
 
         if (count($attributes) == 0 && $reflectionClass->getParentClass()) {
-            $attributes = $reflectionClass->getParentClass()->getAttributes($annotationName);
+            $attributes = $reflectionClass->getParentClass()->getAttributes($attributeName);
         }
 
         if (count($attributes) == 0) {
             return null;
         }
 
-        $constructorExpectsScalar = in_array($annotationName, [
+        $constructorExpectsScalar = in_array($attributeName, [
             'Doctrine\ORM\Mapping\Entity',
             'Doctrine\ODM\MongoDB\Mapping\Annotations\Document',
         ]);
 
         if ($constructorExpectsScalar) {
-            $annotation = new $annotationName(... $attributes[0]->getArguments());
+            $attribute = new $attributeName(... $attributes[0]->getArguments());
 
         }
         else {
-            $annotation = new $annotationName($attributes[0]->getArguments());
+            $attribute = new $attributeName($attributes[0]->getArguments());
         }
 
-        return $annotation;
+        return $attribute;
     }
 
     /**
