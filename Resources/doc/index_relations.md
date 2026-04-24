@@ -7,42 +7,38 @@ Given you have the following entity with a ManyToOne relation to `Category`.
 
 // ....
 
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
- * @Solr\Document()
- *
  * @ORM\Table()
  * @ORM\Entity
  */
+#[Solr\Document()]
 class Post
 {
     /**
      * @var integer
      *
      * orm stuff
-     *
-     * @Solr\Id
      */
+    #[Solr\Id]
     private $id;
 
     /**
      * @var string
      *
-     * @Solr\Field(type="string")
-     *
      * @ORM\Column(name="title", type="string", length=255)
      */
+    #[Solr\Field(type:"string")]
     private $title;
 
     /**
      * @var Category
      *
-     * @Solr\Field(type="string", getter="getTitle")
-     *
      * @ORM\ManyToOne(targetEntity="Acme\DemoBundle\Entity\Category", inversedBy="posts", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
+    #[Solr\Field(type:"string", getter:"getTitle")]
     private $category;
 
     // ... some getter / setter
@@ -56,8 +52,8 @@ You have now different ways to index the `category` relation:
 
 ## Flat string representation
 
-The important configuration is `@Solr\Field(type="string", getter="getTitle")`. This tells Solr to call `Category::getTitle()` when the `Post` is indexed.
- 
+The important configuration is `#[Solr\Field(type:"string", getter:"getTitle")]`. This tells Solr to call `Category::getTitle()` when the `Post` is indexed.
+
 ```php
 
 $category = new Category();
@@ -72,7 +68,7 @@ $em->persist($post);
 $em->flush();
 ```
 
-### Quering the relation 
+### Quering the relation
 
 ```php
 $posts = $this->get('solr.client')->getRepository('AcmeDemoBundle:Post')->findOneBy(array(
@@ -96,44 +92,40 @@ Again you can index the collection in two ways:
 
 // ....
 
-use FS\SolrBundle\Doctrine\Annotation as Solr;
+use FS\SolrBundle\Attribute as Solr;
 
 /**
  * Post
  *
- * @Solr\Document()
- *
  * @ORM\Table()
  * @ORM\Entity
  */
+#[Solr\Document()]
 class Post
 {
     /**
      * // orm stuff
-     *
-     * @Solr\Id
      */
+    #[Solr\Id]
     private $id;
 
     /**
-     * @Solr\Field(type="string")
-     *
      * @ORM\Column(name="title", type="string", length=255)
      */
+    #[Solr\Field(type:"string")]
     private $title;
 
     /**
-     * @Solr\Field(type="strings", getter="getName")
-     * 
      * @ORM\OneToMany(targetEntity="Acme\DemoBundle\Entity\Tag", mappedBy="post", cascade={"persist"})
      */
+    #[Solr\Field(type:"strings", getter:"getName")]
     private $tags;
 
     // ... some getter / setter
 }
 ```
 
-All `Tag`s will be transformed to a set of strings `@Solr\Field(type="strings", getter="getName")`. 
+All `Tag`s will be transformed to a set of strings `#[Solr\Field(type:"strings", getter:"getName")]`.
 
 ```php
 $post = new Post();
@@ -177,17 +169,16 @@ $posts = $this->get('solr.client')->getRepository('AcmeDemoBundle:Post')->findOn
     'tags' => 'tag #1'
 ));
 ```
-   
+
 ## Index full objects
 
 Post entity:
 
 ```php
     /**
-     * @Solr\Field(type="strings", nestedClass="Acme\DemoBundle\Entity\Tag")
-     * 
      * @ORM\OneToMany(targetEntity="Acme\DemoBundle\Entity\Tag", mappedBy="post", cascade={"persist"})
      */
+    #[Solr\Field(type:"string", nestedClass:"Acme\DemoBundle\Entity\Tag")]
     private $tags;
 ```
 
@@ -197,31 +188,28 @@ Mark the `Tag` entity as Nested
 /**
  * Tag
  *
- * @Solr\Nested()
- *
  * @ORM\Table()
  * @ORM\Entity
  */
+#[Solr\Nested()]
 class Tag
 {
     /**
      * @var integer
      *
-     * @Solr\Id
-     *
      * orm stuff
      */
+    #[Solr\Id]
     private $id;
 
     /**
      * @var string
      *
-     * @Solr\Field(type="string")
-     *
      * @ORM\Column(name="name", type="string", length=255)
      */
+    #[Solr\Field(type:"string")]
     private $name;
-    
+
     // getter and setter
 }
 ```
@@ -235,4 +223,3 @@ $posts = $this->get('solr.client')->getRepository('AcmeDemoBundle:Post')->findOn
     'tags.name' => 'tag #1'
 ));
 ```
-

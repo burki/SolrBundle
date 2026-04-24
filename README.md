@@ -2,9 +2,9 @@ SolrBundle
 ==========
 Introduction
 ------------
-Forked from floriansemm/solr-bundle to integrate with Solarium 5, Symfony > 4.3
+Forked from floriansemm/solr-bundle to integrate with Solarium 6, Symfony 5.4, 6.4, 7.x, 8.0
 
-This Bundle provides a simple API to index and query a Solr Index. 
+This Bundle provides a simple API to index and query a Solr Index.
 
 ## Installation
 
@@ -18,11 +18,11 @@ This Bundle provides a simple API to index and query a Solr Index.
 This bundle is available on Packagist. You can install it using Composer:
 
 ```bash
-$ composer require maxgr0/solr-bundle
+$ composer require boppy/solr-bundle
 ```
 
 ### Step 2: Enable the bundle
-When using Symfony Flex, you can skip this step. 
+When using Symfony Flex, you can skip this step.
 
 Next, enable the bundle in the kernel:
 
@@ -74,61 +74,58 @@ Any values in `schema`, `host`, `port` and `path` option, will be ignored if you
 
 ### Step 4: Configure your entities
 
-To make an entity indexed, you must add some annotations to your entity. Basic configuration requires two annotations: 
-`@Solr\Document()`, `@Solr\Id()`. To index data add `@Solr\Field()` to your properties. 
+To make an entity indexed, you must add some attributes to your entity. Basic configuration requires two annotations:
+`#Solr\Document()`, `#Solr\Id()`. To index data add `#Solr\Field()` to your properties.
 
 If you want to index documents without any database, then you have to use the same annotations. Make sure you have set a Id or
-set `@Solr\Id(generateId=true)`.
+set `#Solr\Id(generateId:true)`.
 
 ```php
 // ....
-use FS\SolrBundle\Doctrine\Annotation as Solr;
-    
+use FS\SolrBundle\Attribute as Solr;
+
 /**
-* @Solr\Document()
 * @ORM\Table()
 */
+#[Solr\Document()]
 class Post
 {
     /**
-     * @Solr\Id
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[Solr\Id]
     private $id;
-    
+
     /**
-     * @Solr\Field(type="string")
-     *
      * @ORM\Column(name="title", type="string", length=255)
      */
+    #[Solr\Field(type:"text")]
     private $title = '';
 
     /**
-     * @Solr\Field(type="string")
-     *
      * @ORM\Column(name="text", type="text")
      */
+    #[Solr\Field(type:"string")]
     private $text = '';
 
    /**
-    * @Solr\Field(type="date", getter="format('Y-m-d\TH:i:s.z\Z')")
     *
     * @ORM\Column(name="created_at", type="datetime")
     */
+    #[Solr\Field(type:"date", getter:"format('Y-m-d\TH:i:s.z\Z')")]
     private $created_at = null;
 }
 ```
 
 The bundle handles now updates / inserts / deletions for your configured entity.
 
-# Annotation reference
+# Attribute reference
 
-## `@Solr\Document` annotation
+## `#[Solr\Document]`
 
-This annotation denotes that an entity should be indexed as a document. It has several optional properties: 
+This attributes denotes that an entity should be indexed as a document. It has several optional properties:
 
 * `repository`
 * `index`
@@ -139,9 +136,7 @@ This annotation denotes that an entity should be indexed as a document. It has s
 If you specify your own repository, the repository must extend the `FS\SolrBundle\Repository\Repository` class.
 
 ```php
-/**
- * @Solr\Document(repository="My/Custom/Repository")
- */
+#[Solr\Document(repository:"My/Custom/Repository")]
 class SomeEntity
 {
     // ...
@@ -153,9 +148,7 @@ class SomeEntity
 It is possible to specify a core the document will be indexed in:
 
 ```php
-/**
- * @Solr\Document(index="core0")
- */
+#[Solr\Document(index:"core0")]
 class SomeEntity
 {
     // ...
@@ -168,9 +161,7 @@ By default, all documents will be indexed in the core `core0`. If your entities/
 a callback method, which should return the core the entity will be indexed in.
 
 ```php
-/**
- * @Solr\Document(indexHandler="indexHandler")
- */
+#[Solr\Document(indexHandler:"indexHandler")]
 class SomeEntity
 {
     public function indexHandler()
@@ -185,7 +176,7 @@ class SomeEntity
 Each core must be set up in `config.yml` under `endpoints`. If you leave the `index` or `indexHandler` property empty,
 then the default core will be used (first one in the `endpoints` list). To index a document in all cores, use `*` as index value.
 
-## `@Solr\Id` annotation
+## `#[Solr\Id]`
 
 This annotation is required to index an entity. The annotation has no properties. You should add this annotation to the field that will be
 used as the primary identifier for the entity/document.
@@ -194,25 +185,22 @@ used as the primary identifier for the entity/document.
 class Post
 {
     /**
-     * @Solr\Id
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-
+    #[Solr\Id]
     private $id;
 }
 ```
 
 ### `generateId` option
 
-Set this option to true and a the bundle will generate a Id for you. Use this option if you have no underlying DB which 
- generates incremental Ids for you.
+Set this option to true and a the bundle will generate a Id for you. Use this option if you have no underlying DB which generates incremental Ids for you.
 
-## `@Solr\Field` annotation
+## `#[Solr\Field]`
 
-This annotation should be added to properties that should be indexed. You should specify the `type` option for the annotation.
+This attribute should be added to properties that should be indexed. You should specify the `type` option for the attribute.
 
 ### `type` property
 
@@ -227,7 +215,7 @@ Currently, a basic set of types is implemented:
 - long(s)
 - boolean(s)
 
-If you have a customized `schema.xml` than you don't need to setup a field-type. 
+If you have a customized `schema.xml` than you don't need to setup a field-type.
 
 ### `fieldModifier` property
 
@@ -237,7 +225,7 @@ Solr supports partial updates of fields in an existing document. Supported value
 - add (multivalue field only, adds a value(s) to a existing list)
 - remove (multivalue field only, removes a value(s) from existing list)
 - inc (integer field only)
-   
+
 ### `nestedClass` property
 
 Set this property if you want to index collections with nested Objects.
@@ -248,15 +236,16 @@ Set this property if you want to index collections with nested Objects.
 
 [For more information read the more detailed "How to index relation" guide](Resources/doc/index_relations.md)
 
-### `@Solr\SynchronizationFilter(callback="shouldBeIndexed")` annotation
+### `#[Solr\SynchronizationFilter(callback:"shouldBeIndexed")]`
 
-In some cases, an entity should not be indexed. For this, you have the `SynchronizationFilter` annotation to run a filter-callback.
+In some cases, an entity should not be indexed. For this, you have the `SynchronizationFilter` attribute to run a filter-callback.
 
 ```php
 /**
  * // ....
- * @Solr\SynchronizationFilter(callback="shouldBeIndexed")
+ *
  */
+#[Solr\SynchronizationFilter(callback:"shouldBeIndexed")]
 class SomeEntity
 {
     /**
@@ -269,8 +258,7 @@ class SomeEntity
 }
 ```
 
-The callback property specifies an callable function, which should return a boolean value, specifying whether a concrete 
-entity should be indexed.
+The callback property specifies an callable function, which should return a boolean value, specifying whether a concrete entity should be indexed.
 
 ## Queries
 
@@ -286,7 +274,7 @@ $query->addSearchTerm('collection_field', array('value1', 'value2'));
 $result = $query->getResult();
 ```
 
-or 
+or
 
 ```php
 $posts = $this->get('solr.client')->getRepository('AcmeDemoBundle:Post')->findOneBy(array(
@@ -319,7 +307,7 @@ $result = $query->getResult();
 
 ### The QueryBuilder
 
-The query-builder based on [https://github.com/minimalcode-org/search](/minimalcode-org/search) Criteria API. 
+The query-builder based on [https://github.com/minimalcode-org/search](/minimalcode-org/search) Criteria API.
 
 ```php
 $queryBuilder = $this->get('solr.client')->getQueryBuilder('AcmeDemoBundle:Post');
@@ -373,7 +361,7 @@ With a custom document-repository you have to set the property `$hydrationMode` 
 public function find($id)
 {
     $this->hydrationMode = HydrationModes::HYDRATE_INDEX;
-    
+
     return parent::find($id);
 }
 ```
