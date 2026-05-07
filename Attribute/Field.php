@@ -2,45 +2,26 @@
 
 namespace FS\SolrBundle\Attribute;
 
-use Doctrine\Common\Annotations\Annotation;
+use Attribute;
 
 /**
  * Defines a field of a solr-document
  *
- * @Annotation
+ * @Attribute
  */
-class Field extends Annotation
+#[Attribute(Attribute::TARGET_PROPERTY)]
+class Field
 {
-
-    /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * @var string
-     */
-    public $name;
-
-    /**
-     * @var float
-     */
-    public $boost = 0;
-
-    /**
-     * @var string
-     */
-    public $getter;
-
-    /**
-     * @var string
-     */
-    public $fieldModifier;
-
-    /**
-     * @var string
-     */
-    public $nestedClass;
+    public function __construct(
+        public $type = '',
+        public $name = '',
+        public $boost = 0,
+        public $getter = '',
+        public $fieldModifier = '',
+        public $nestedClass = '',
+        public $value = null)
+    {
+    }
 
     /**
      * @var array
@@ -104,11 +85,11 @@ class Field extends Annotation
             return '';
         }
 
-        if (!isset(self::$TYP_MAPPING[$this->type])) {
+        if (!isset(self::$TYP_MAPPING[$type])) {
             return '';
         }
 
-        return self::$TYP_MAPPING[$this->type];
+        return self::$TYP_MAPPING[$type];
     }
 
     /**

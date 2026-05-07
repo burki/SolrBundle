@@ -19,8 +19,7 @@
         "symfony/doctrine-bridge": "^5.4|^6.4|^7.0|^8.0",
         "burki/minimalcode-search": "^1.0",
         "ramsey/uuid": "^3.5|^4.1",
-        "myclabs/deep-copy": "^1.6",
-        "doctrine/annotations": "^1.7|^2.0"
+        "myclabs/deep-copy": "^1.6"
     },
     "require-dev": {
         "doctrine/orm": "^2.9",

@@ -1,34 +1,24 @@
 <?php
+
 namespace FS\SolrBundle\Attribute;
 
-use Doctrine\Common\Annotations\Annotation;
+use Attribute;
 
 /**
  * Defines a solr-document
  *
- * @Annotation
+ * @Attribute
  */
-class Document extends Annotation
+#[Attribute(Attribute::TARGET_CLASS)]
+class Document
 {
-    /**
-     * @var string
-     */
-    public $repository = '';
-
-    /**
-     * @var int
-     */
-    public $boost = 0;
-
-    /**
-     * @var string
-     */
-    public $index = null;
-
-    /**
-     * @var string
-     */
-    public $indexHandler;
+    public function __construct(
+        public $repository = '',
+        public $boost = 0,
+        public $index = null,
+        public $indexHandler = null)
+    {
+    }
 
     /**
      * @return number

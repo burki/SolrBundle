@@ -2,22 +2,19 @@
 
 namespace FS\SolrBundle\Attribute;
 
-use Doctrine\Common\Annotations\Annotation;
+use Attribute;
 
 /**
- * @Annotation
+ * @Attribute
  */
-class Id extends Annotation
+#[Attribute(Attribute::TARGET_PROPERTY)]
+class Id
 {
-    /**
-     * @var string name of the identifier field
-     */
-    public $name;
+    public $value; // currently used in AttributeReader, should be reworked
 
-    /**
-     * Generate new Id value
-     *
-     * @var bool
-     */
-    public $generateId = false;
+    public function __construct(
+        public $name = '',
+        public $generateId = false)
+    {
+    }
 }

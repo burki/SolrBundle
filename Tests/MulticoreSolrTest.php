@@ -3,11 +3,8 @@
 namespace FS\SolrBundle\Tests;
 
 use FS\SolrBundle\Solr;
-use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityAllCores;
 use FS\SolrBundle\Tests\DocumentStub;
-use FS\SolrBundle\Tests\Util\CommandFactoryStub;
-use FS\SolrBundle\Tests\Util\MetaTestInformationFactory;
 use Solarium\QueryType\Update\Query\Query;
 
 class MulticoreSolrTest extends AbstractSolrTest
@@ -136,4 +133,3 @@ class MulticoreSolrTest extends AbstractSolrTest
         $solr->removeDocument(new ValidTestEntityAllCores());
     }
 }
- 

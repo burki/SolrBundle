@@ -46,7 +46,7 @@ class AttributeReader implements MappingDriver
                 continue;
             }
 
-            $attribute = new $type($attributes[0]->getArguments());
+            $attribute = new $type(... $attributes[0]->getArguments());
 
             $property->setAccessible(true);
             $attribute->value = $property->getValue($entity);
@@ -104,7 +104,7 @@ class AttributeReader implements MappingDriver
             }
 
             $type = self::FIELD_CLASS;
-            $attribute = new $type($attributes[0]->getArguments());
+            $attribute = new $type(... $attributes[0]->getArguments());
 
             $attribute->value = $method->invoke($entity);
 
@@ -278,13 +278,7 @@ class AttributeReader implements MappingDriver
      */
     public function isOdm($entity)
     {
-        $attribute = $this->getClassAttribute($entity, 'Doctrine\ODM\MongoDB\Mapping\Annotations\Document');
-
-        if ($attribute === null) {
-            return false;
-        }
-
-        return true;
+        return false; // we do not support ODM annotations anymore, so we return false here to avoid confusion with the old annotation reader
     }
 
     /**
@@ -324,6 +318,11 @@ class AttributeReader implements MappingDriver
         $constructorExpectsScalar = in_array($attributeName, [
             'Doctrine\ORM\Mapping\Entity',
             'Doctrine\ODM\MongoDB\Mapping\Annotations\Document',
+            self::DOCUMENT_CLASS,
+            self::DOCUMENT_NESTED_CLASS,
+            self::FIELD_CLASS,
+            self::FIELD_IDENTIFIER_CLASS,
+            self::SYNCHRONIZATION_FILTER_CLASS,
         ]);
 
         if ($constructorExpectsScalar) {

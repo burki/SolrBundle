@@ -25,7 +25,7 @@ class DoctrineValueHydratorTest extends \PHPUnit\Framework\TestCase
     {
         $hydrator = new DoctrineValueHydrator();
 
-        $field = new Field(array('type' => 'datetime'));
+        $field = new Field(... array('type' => 'datetime'));
         $field->name = 'createdAt';
         $field->getter = 'format(\'Y-m-d\TH:i:s.z\Z\')';
 
@@ -42,7 +42,7 @@ class DoctrineValueHydratorTest extends \PHPUnit\Framework\TestCase
     {
         $hydrator = new DoctrineValueHydrator();
 
-        $field = new Field(array('type' => 'string'));
+        $field = new Field(... array('type' => 'string'));
         $field->name = 'title';
 
         $metaInformation = new MetaInformation();

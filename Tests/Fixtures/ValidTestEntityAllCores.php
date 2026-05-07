@@ -12,7 +12,6 @@ use FS\SolrBundle\Tests\Fixtures\ValidTestEntity;
 #[Solr\Document(boost:"1", index:"*")]
 class ValidTestEntityAllCores
 {
-
     /**
      */
     #[Solr\Id]

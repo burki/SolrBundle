@@ -2,12 +2,12 @@
 
 namespace FS\SolrBundle\Attribute;
 
-use Doctrine\Common\Annotations\Annotation;
+use Attribute;
 
 /**
- * @Annotation
+ * @Attribute
  */
-class Nested extends Annotation
+#[Attribute(Attribute::TARGET_CLASS)]
+class Nested
 {
-
 }

@@ -253,7 +253,7 @@ class EntityMapperObjectRelationTest extends \PHPUnit\Framework\TestCase
 
         $metaInformation = MetaTestInformationFactory::getMetaInformation($entity1);
         $metaInformation->setFields(array(
-            new Field(array('name' => 'test_field', 'type' => 'datetime', 'boost' => '1', 'value' => new TestObject(), 'getter' => "testGetter('string3', 'string1', 'string')"))
+            new Field(... array('name' => 'test_field', 'type' => 'datetime', 'boost' => '1', 'value' => new TestObject(), 'getter' => "testGetter('string3', 'string1', 'string')"))
         ));
 
         $fields = $metaInformation->getFields();
@@ -301,7 +301,7 @@ class EntityMapperObjectRelationTest extends \PHPUnit\Framework\TestCase
 
         $metaInformation = MetaTestInformationFactory::getMetaInformation($entity1);
         $metaInformation->setFields(array(
-            new Field(array('name' => 'test_field', 'type' => 'datetime', 'boost' => '1', 'value' => new TestObject(), 'getter' => "asString"))
+            new Field(... array('name' => 'test_field', 'type' => 'datetime', 'boost' => '1', 'value' => new TestObject(), 'getter' => "asString"))
         ));
 
         $fields = $metaInformation->getFields();

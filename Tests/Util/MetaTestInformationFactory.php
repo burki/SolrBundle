@@ -22,9 +22,9 @@ class MetaTestInformationFactory
 
         $metaInformation = new MetaInformation();
 
-        $title = new Field(array('name' => 'title', 'boost' => '1.8', 'value' => 'A title'));
-        $text = new Field(array('name' => 'text', 'type' => 'text', 'value' => 'A text'));
-        $createdAt = new Field(array('name' => 'created_at', 'type' => 'date', 'boost' => '1', 'value' => 'A created at'));
+        $title = new Field(... array('name' => 'title', 'boost' => '1.8', 'value' => 'A title'));
+        $text = new Field(... array('name' => 'text', 'type' => 'text', 'value' => 'A text'));
+        $createdAt = new Field(... array('name' => 'created_at', 'type' => 'date', 'boost' => '1', 'value' => 'A created at'));
 
         $metaInformation->setFields(array($title, $text, $createdAt));
 
@@ -34,7 +34,7 @@ class MetaTestInformationFactory
             'text_t' => 'text',
             'created_at_dt' => 'created_at'
         );
-        $metaInformation->setIdentifier(new Id(array()));
+        $metaInformation->setIdentifier(new Id(... array()));
         $metaInformation->setBoost(1);
         $metaInformation->setFieldMapping($fieldMapping);
         $metaInformation->setEntity($entity);

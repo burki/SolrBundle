@@ -104,63 +104,63 @@ class QueryBuilderTest extends \PHPUnit\Framework\TestCase
     {
         $metaInformation = new MetaInformation();
 
-        $field1 = new Field(array());
+        $field1 = new Field(... array());
         $field1->name = 'position';
         $field1->type = 'string';
 
-        $field2 = new Field(array());
+        $field2 = new Field(... array());
         $field2->name = 'santa-beard-exists';
         $field2->type = 'boolean';
 
-        $field3 = new Field(array());
+        $field3 = new Field(... array());
         $field3->name = 'santa-beard-lenght';
         $field3->type = 'float';
 
-        $field4 = new Field(array());
+        $field4 = new Field(... array());
         $field4->name = 'santa-beard-color';
         $field4->type = 'string';
 
-        $field5 = new Field(array());
+        $field5 = new Field(... array());
         $field5->name = 'good-actions';
         $field5->type = 'integer';
 
-        $field6 = new Field(array());
+        $field6 = new Field(... array());
         $field6->name = 'gift-name';
         $field6->type = 'string';
 
-        $field7 = new Field(array());
+        $field7 = new Field(... array());
         $field7->name = 'gift-type';
         $field7->type = 'string';
 
-        $field8 = new Field(array());
+        $field8 = new Field(... array());
         $field8->name = 'gift-received';
         $field8->type = 'string';
 
-        $field9 = new Field(array());
+        $field9 = new Field(... array());
         $field9->name = 'chimney';
         $field9->type = 'string';
 
-        $field10 = new Field(array());
+        $field10 = new Field(... array());
         $field10->name = 'date';
         $field10->type = 'datetime';
 
-        $field11 = new Field(array());
+        $field11 = new Field(... array());
         $field11->name = 'santa-name';
         $field11->type = 'strings';
 
-        $field12 = new Field(array());
+        $field12 = new Field(... array());
         $field12->name = 'bad-actions';
         $field12->type = 'integer';
 
-        $field13 = new Field(array());
+        $field13 = new Field(... array());
         $field13->name = '__query__';
         $field13->type = 'string';
 
-        $field14 = new Field(array());
+        $field14 = new Field(... array());
         $field14->name = 'name';
         $field14->type = 'string';
 
-        $field15 = new Field(array());
+        $field15 = new Field(... array());
         $field15->name = 'id';
 
         $metaInformation->setFields(array($field1, $field2, $field3, $field4, $field5, $field6, $field7, $field8, $field9, $field10, $field11, $field12, $field13, $field14, $field15));

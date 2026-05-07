@@ -11,43 +11,43 @@ class FieldTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetNameWithAlias_String()
     {
-        $field = new Field(array('name' => 'test', 'type' => 'string'));
+        $field = new Field(... array('name' => 'test', 'type' => 'string'));
         $this->assertEquals('test_s', $field->getNameWithAlias());
     }
 
     public function testGetNameWithAlias_Text()
     {
-        $field = new Field(array('name' => 'test', 'type' => 'text'));
+        $field = new Field(... array('name' => 'test', 'type' => 'text'));
         $this->assertEquals('test_t', $field->getNameWithAlias());
     }
 
     public function testGetNameWithAlias_Date()
     {
-        $field = new Field(array('name' => 'test', 'type' => 'date'));
+        $field = new Field(... array('name' => 'test', 'type' => 'date'));
         $this->assertEquals('test_dt', $field->getNameWithAlias());
     }
 
     public function testGetNameWithAlias_Boolean()
     {
-        $field = new Field(array('name' => 'test', 'type' => 'boolean'));
+        $field = new Field(... array('name' => 'test', 'type' => 'boolean'));
         $this->assertEquals('test_b', $field->getNameWithAlias());
     }
 
     public function testGetNameWithAlias_NoFieldType()
     {
-        $field = new Field(array('name' => 'title'));
+        $field = new Field(... array('name' => 'title'));
         $this->assertEquals('title', $field->getNameWithAlias());
     }
 
     public function testGetNameWithAlias_Integer()
     {
-        $field = new Field(array('name' => 'test', 'type' => 'integer'));
+        $field = new Field(... array('name' => 'test', 'type' => 'integer'));
         $this->assertEquals('test_i', $field->getNameWithAlias());
     }
 
     public function testNormalizeName_CamelCase()
     {
-        $field = new Field(array('name' => 'testCamelCase', 'type' => 'string'));
+        $field = new Field(... array('name' => 'testCamelCase', 'type' => 'string'));
 
         $meta = new \ReflectionClass($field);
         $method = $meta->getMethod('normalizeName');
@@ -59,7 +59,7 @@ class FieldTest extends \PHPUnit\Framework\TestCase
 
     public function testNormalizeName_Underscore()
     {
-        $field = new Field(array('name' => 'test_underscore', 'type' => 'string'));
+        $field = new Field(... array('name' => 'test_underscore', 'type' => 'string'));
 
         $meta = new \ReflectionClass($field);
         $method = $meta->getMethod('normalizeName');
@@ -71,9 +71,8 @@ class FieldTest extends \PHPUnit\Framework\TestCase
 
     public function testCostomFieldType()
     {
-        $field = new Field(array('name' => 'costumtype', 'type' => 'my_special_type'));
+        $field = new Field(... array('name' => 'costumtype', 'type' => 'my_special_type'));
 
         $this->assertEquals('costumtype', $field->getNameWithAlias());
     }
-
 }

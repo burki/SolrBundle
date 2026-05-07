@@ -2,13 +2,16 @@
 
 namespace FS\SolrBundle\Attribute;
 
-use Doctrine\Common\Annotations\Annotation;
+use Attribute;
 
 /**
- * @Annotation
- * @Target("CLASS")
+ * @Attribute
  */
-class SynchronizationFilter extends Annotation
+#[Attribute(Attribute::TARGET_CLASS)]
+class SynchronizationFilter
 {
-    public $callback = '';
+    public function __construct(
+        public $callback = '',
+    ) {
+    }
 }
