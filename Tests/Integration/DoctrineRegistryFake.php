@@ -3,9 +3,9 @@
 namespace FS\SolrBundle\Tests\Integration;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 
-class DoctrineRegistryFake implements RegistryInterface
+class DoctrineRegistryFake extends ManagerRegistry
 {
     /**
      * Gets the default connection name.
@@ -244,4 +244,4 @@ class DoctrineRegistryFake implements RegistryInterface
         // TODO: Implement getEntityManagerForClass() method.
     }
 
-} 
+}
