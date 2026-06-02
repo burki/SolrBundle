@@ -27,8 +27,13 @@
     },
     "minimum-stability": "stable",
     "autoload": {
-        "psr-0": {
-            "FS\\SolrBundle": ""
+        "psr-4": {
+            "FS\\SolrBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FS\\SolrBundle\\Tests\\": "tests/"
         }
     },
     "config": {
@@ -36,6 +41,5 @@
     },
     "suggest": {
         "doctrine/orm": "Required if you want to use the Doctrine ORM"
-    },
-    "target-dir": "FS/SolrBundle"
+    }
 }
