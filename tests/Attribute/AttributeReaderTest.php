@@ -249,22 +249,6 @@ class AttributeReaderTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function checkIfPlainObjectIsNotDoctrineDocument()
-    {
-        $this->assertFalse($this->reader->isOdm(new ChildEntityAttributes()), 'is not a doctrine document');
-    }
-
-    /**
-     * @test
-     */
-    public function checkIfValidDocumentIsNotDoctrineDocument()
-    {
-        $this->assertFalse($this->reader->isOdm(new ValidTestEntity()), 'is not a doctrine document');
-    }
-
-    /**
-     * @test
-     */
     public function methodWithAnnotationShouldHaveField(): void
     {
         $this->expectException(\FS\SolrBundle\Doctrine\Mapper\SolrMappingException::class);

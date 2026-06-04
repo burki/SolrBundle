@@ -24,11 +24,6 @@ class FSSolrExtensionTest extends \PHPUnit\Framework\TestCase
         $this->container = new ContainerBuilder();
     }
 
-    private function enableOdmConfig()
-    {
-        $this->container->setParameter('doctrine_mongodb.odm.document_managers', array('default' => 'odm.default.mananger'));
-    }
-
     private function enableOrmConfig()
     {
         $this->container->setParameter('doctrine.entity_managers', array('default' => 'orm.default.mananger'));
@@ -63,35 +58,16 @@ class FSSolrExtensionTest extends \PHPUnit\Framework\TestCase
         $this->assertClassnameResolverHasOrmDefaultConfiguration();
     }
 
-    public function testDoctrineODMSetup()
-    {
-        $config = $this->commonConfig();
-        $this->enableOdmConfig();
-
-        $extension = new FSSolrExtension();
-        $extension->load($config, $this->container);
-
-        $this->assertTrue($this->container->has('solr.document.odm.subscriber'), 'odm subscriber');
-
-        $this->assertDefinitionHasTag('solr.document.odm.subscriber', 'doctrine_mongodb.odm.event_subscriber');
-
-        $this->assertClassnameResolverHasOdmDefaultConfiguration();
-    }
-
     /**
      * @test
      */
-    public function solrListensToOdmAndOrmEvents()
+    public function solrListensToOrmEvents()
     {
         $config = $this->commonConfig();
-        $this->enableOdmConfig();
         $this->enableOrmConfig();
 
         $extension = new FSSolrExtension();
         $extension->load($config, $this->container);
-
-        $this->assertTrue($this->container->has('solr.document.odm.subscriber'), 'odm subscriber');
-        $this->assertDefinitionHasTag('solr.document.odm.subscriber', 'doctrine_mongodb.odm.event_subscriber');
 
         $this->assertTrue($this->container->has('solr.document.orm.subscriber'), 'orm subscriber');
         $this->assertDefinitionHasTag('solr.document.orm.subscriber', 'doctrine.event_subscriber');

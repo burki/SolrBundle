@@ -104,7 +104,7 @@ class MetaInformationFactory
      */
     private function isDoctrineEntity($entity)
     {
-        if ($this->mappingDriver->isOrm($entity) || $this->mappingDriver->isOdm($entity)) {
+        if ($this->mappingDriver->isOrm($entity)) {
             return true;
         }
 
@@ -114,16 +114,12 @@ class MetaInformationFactory
     /**
      * @param object $entity
      *
-     * @return string
+     * @return string|null
      */
     private function getDoctrineMapperType($entity)
     {
         if ($this->isDoctrineEntity($entity) == false) {
             return '';
-        }
-
-        if ($this->mappingDriver->isOdm($entity)) {
-            return MetaInformationInterface::DOCTRINE_MAPPER_TYPE_DOCUMENT;
         }
 
         if ($this->mappingDriver->isOrm($entity)) {

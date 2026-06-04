@@ -20,9 +20,9 @@ interface EntityMapperInterface
      * @param \ArrayAccess  $document
      * @param object|string $sourceTargetEntity entity, entity-alias or classname
      *
-     * @return object
+     * @return object|null
      *
-     * @throws SolrMappingException( if $sourceTargetEntity is null
+     * @throws SolrMappingException if $sourceTargetEntity is null
      */
     public function toEntity(\ArrayAccess $document, $sourceTargetEntity);
 

@@ -14,13 +14,4 @@ return static function (ContainerConfigurator $container) {
             service('logger'),
         ])
         ->tag('monolog.logger', ['channel' => 'solr']);
-
-    $services->set('solr.document.odm.subscriber', \FS\SolrBundle\Doctrine\ODM\Listener\DocumentIndexerSubscriber::class)
-        ->private()
-        ->args([
-            service('solr.client'),
-            service('solr.meta.information.factory'),
-            service('logger'),
-        ])
-        ->tag('monolog.logger', ['channel' => 'solr']);
 };

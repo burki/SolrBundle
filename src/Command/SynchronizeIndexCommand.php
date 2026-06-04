@@ -3,7 +3,6 @@
 namespace FS\SolrBundle\Command;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ORM\EntityRepository;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 use Symfony\Component\Console\Command\Command;
@@ -199,27 +198,21 @@ class SynchronizeIndexCommand extends Command
         $objectManager = $this->getObjectManager($entity);
         $repository = $objectManager->getRepository($entity);
 
-        if ($repository instanceof DocumentRepository) {
-            $totalSize = $repository->createQueryBuilder()
-                ->getQuery()
-                ->count();
-        } else {
-            $dataStoreMetadata = $objectManager->getClassMetadata($entity);
+        $dataStoreMetadata = $objectManager->getClassMetadata($entity);
 
-            $identifierFieldNames = $dataStoreMetadata->getIdentifierFieldNames();
+        $identifierFieldNames = $dataStoreMetadata->getIdentifierFieldNames();
 
-            if (!count($identifierFieldNames)) {
-                throw new \Exception(sprintf('No primary key found for entity %s', $entity));
-            }
-
-            $countableColumn = reset($identifierFieldNames);
-
-            /** @var EntityRepository $repository */
-            $totalSize = $repository->createQueryBuilder('size')
-                ->select(sprintf('count(size.%s)', $countableColumn))
-                ->getQuery()
-                ->getSingleScalarResult();
+        if (!count($identifierFieldNames)) {
+            throw new \Exception(sprintf('No primary key found for entity %s', $entity));
         }
+
+        $countableColumn = reset($identifierFieldNames);
+
+        /** @var EntityRepository $repository */
+        $totalSize = $repository->createQueryBuilder('size')
+            ->select(sprintf('count(size.%s)', $countableColumn))
+            ->getQuery()
+            ->getSingleScalarResult();
 
         return $totalSize - $startOffset;
     }

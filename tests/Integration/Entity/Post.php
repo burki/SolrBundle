@@ -47,6 +47,9 @@ class Post
 
     /**
      * @var Tag[]
+     *
+     * TODO: fields / fieldAlias are currently not supported, there is an open pull request for this:
+     *  https://github.com/floriansemm/SolrBundle/pull/188/changes
      */
     #[Solr\Field(nestedClass: "Acme\DemoBundle\Entity\Tag", getter: "getTags", fields: [
         new Solr\Field(type: "integers", getter: "getId", fieldAlias: "tag_ids"),

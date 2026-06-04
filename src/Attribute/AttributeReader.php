@@ -276,16 +276,6 @@ class AttributeReader implements MappingDriver
      *
      * @return bool
      */
-    public function isOdm($entity)
-    {
-        return false; // we do not support ODM annotations anymore, so we return false here to avoid confusion with the old annotation reader
-    }
-
-    /**
-     * @param object $entity
-     *
-     * @return bool
-     */
     public function isNested($entity)
     {
         if ($nestedDocument = $this->getClassAttribute($entity, self::DOCUMENT_NESTED_CLASS)) {
@@ -317,17 +307,17 @@ class AttributeReader implements MappingDriver
 
         $constructorExpectsScalar = in_array($attributeName, [
             'Doctrine\ORM\Mapping\Entity',
-            'Doctrine\ODM\MongoDB\Mapping\Annotations\Document',
             self::DOCUMENT_CLASS,
-            self::DOCUMENT_NESTED_CLASS,
             self::FIELD_CLASS,
             self::FIELD_IDENTIFIER_CLASS,
             self::SYNCHRONIZATION_FILTER_CLASS,
         ]);
 
-        if ($constructorExpectsScalar) {
+        if ($attributeName == self::DOCUMENT_NESTED_CLASS) {
+           $attribute = new $attributeName(); // no arguments for nested document attribute
+        }
+        else if ($constructorExpectsScalar) {
             $attribute = new $attributeName(... $attributes[0]->getArguments());
-
         }
         else {
             $attribute = new $attributeName($attributes[0]->getArguments());

@@ -10,8 +10,8 @@ use FS\SolrBundle\Solr;
 use FS\SolrBundle\Tests\Util\MetaTestInformationFactory;
 use PHPUnit\Framework\TestCase;
 use Solarium\Client;
+use Solarium\Core\Query\DocumentInterface;
 use Solarium\QueryType\Select\Query\Query as SelectQuery;
-use Solarium\QueryType\Update\Query\Document\DocumentInterface;
 use Solarium\QueryType\Update\Query\Query as UpdateQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

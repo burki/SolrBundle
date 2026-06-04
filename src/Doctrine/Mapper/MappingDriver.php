@@ -87,12 +87,5 @@ interface MappingDriver
      *
      * @return bool
      */
-    public function isOdm($entity);
-
-    /**
-     * @param object $entity
-     *
-     * @return bool
-     */
     public function isNested($entity);
 }

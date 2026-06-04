@@ -2,11 +2,10 @@
 
 namespace FS\SolrBundle\Doctrine\ClassnameResolver;
 
-use Doctrine\ODM\MongoDB\Configuration as OdmConfiguration;
 use Doctrine\ORM\Configuration as OrmConfiguration;
 
 /**
- * Class collects document and entity aliases from ORM and ODM configuration
+ * Class collects document and entity aliases from ORM configuration
  */
 class KnownNamespaceAliases
 {
@@ -19,18 +18,6 @@ class KnownNamespaceAliases
      * @var array
      */
     private $entityClassnames = array();
-
-    /**
-     * @param OdmConfiguration $configuration
-     */
-    public function addDocumentNamespaces(OdmConfiguration $configuration)
-    {
-        $this->knownNamespaceAlias = array_merge($this->knownNamespaceAlias, $configuration->getDocumentNamespaces());
-
-        if ($configuration->getMetadataDriverImpl()) {
-            $this->entityClassnames = array_merge($this->entityClassnames, $configuration->getMetadataDriverImpl()->getAllClassNames());
-        }
-    }
 
     /**
      * @param OrmConfiguration $configuration

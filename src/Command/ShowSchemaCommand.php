@@ -79,7 +79,7 @@ class ShowSchemaCommand extends Command
                 if ($nestedField = $metaInformation->getField($propertyName)) {
                     $output->writeln(sprintf('Field <comment>%s</comment> contains nested class <comment>%s</comment>', $propertyName, $nestedField->nestedClass));
 
-                    $nestedDocument = $metaInformationFactory->loadInformation($nestedField->nestedClass);
+                    $nestedDocument = $this->metaInformationFactory->loadInformation($nestedField->nestedClass);
                     $rows = [];
                     foreach ($nestedDocument->getFieldMapping() as $documentField => $property) {
                         $field = $nestedDocument->getField($documentField);

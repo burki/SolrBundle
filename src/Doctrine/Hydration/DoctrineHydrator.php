@@ -66,11 +66,6 @@ class DoctrineHydrator implements HydratorInterface
                 ->getManager()
                 ->getRepository($metaInformation->getClassName())
                 ->find($entityId);
-        } elseif ($metaInformation->getDoctrineMapperType() == MetaInformationInterface::DOCTRINE_MAPPER_TYPE_DOCUMENT) {
-            $doctrineEntity = $this->odmManager
-                ->getManager()
-                ->getRepository($metaInformation->getClassName())
-                ->find($entityId);
         }
 
         if ($doctrineEntity !== null) {

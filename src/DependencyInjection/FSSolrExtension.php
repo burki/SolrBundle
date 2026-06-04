@@ -67,18 +67,6 @@ class FSSolrExtension extends Extension
             }
         }
 
-        if ($this->isODMConfigured($container)) {
-            $documentManagers = $container->getParameter('doctrine_mongodb.odm.document_managers');
-
-            $documentManagersNames = array_keys($documentManagers);
-            foreach ($documentManagersNames as $documentManager) {
-                $container->getDefinition('solr.doctrine.classnameresolver.known_entity_namespaces')->addMethodCall(
-                    'addDocumentNamespaces',
-                    array(new Reference(sprintf('doctrine_mongodb.odm.%s_configuration', $documentManager)))
-                );
-            }
-        }
-
         $container->getDefinition('solr.meta.information.factory')->addMethodCall(
             'setClassnameResolver',
             array(new Reference('solr.doctrine.classnameresolver'))
@@ -86,8 +74,6 @@ class FSSolrExtension extends Extension
     }
 
     /**
-     * doctrine_orm and doctrine_mongoDB can't be used together. mongo_db wins when it is configured.
-     *
      * listener-methods expecting different types of events
      *
      * @param array            $config
@@ -101,23 +87,9 @@ class FSSolrExtension extends Extension
             return;
         }
 
-        if ($this->isODMConfigured($container)) {
-            $container->getDefinition('solr.document.odm.subscriber')->addTag('doctrine_mongodb.odm.event_subscriber');
-        }
-
         if ($this->isOrmConfigured($container)) {
             $container->getDefinition('solr.document.orm.subscriber')->addTag('doctrine.event_subscriber');
         }
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     *
-     * @return boolean
-     */
-    private function isODMConfigured(ContainerBuilder $container)
-    {
-        return $container->hasParameter('doctrine_mongodb.odm.document_managers');
     }
 
     /**
