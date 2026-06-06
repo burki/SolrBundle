@@ -7,10 +7,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
-use Doctrine\Persistence\ObjectManager;
 use FS\SolrBundle\Attribute\AttributeReader;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
-use FS\SolrBundle\Doctrine\ORM\Listener\EntityIndexerSubscriber;
+use FS\SolrBundle\Doctrine\ORM\Listener\EntityIndexer;
 use FS\SolrBundle\SolrInterface;
 use FS\SolrBundle\Tests\Fixtures\NestedEntity;
 use FS\SolrBundle\Tests\Fixtures\NotIndexedEntity;
@@ -19,10 +18,10 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Tests\Constraints\ValidTest;
 
-class EntityIndexerSubscriberTest extends TestCase
+class EntityIndexerTest extends TestCase
 {
     /**
-     * @var EntityIndexerSubscriber
+     * @var EntityIndexer
      */
     private $subscriber;
 
@@ -38,7 +37,7 @@ class EntityIndexerSubscriberTest extends TestCase
         $this->solr = $this->createMock(SolrInterface::class);
         $this->metaInformationFactory = new MetaInformationFactory(new AttributeReader());
 
-        $this->subscriber = new EntityIndexerSubscriber($this->solr, $this->metaInformationFactory, $this->logger);
+        $this->subscriber = new EntityIndexer($this->solr, $this->metaInformationFactory, $this->logger);
     }
 
     /**

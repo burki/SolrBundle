@@ -13,13 +13,12 @@ use FS\SolrBundle\Doctrine\Hydration\IndexHydrator;
 use FS\SolrBundle\Doctrine\Hydration\ValueHydrator;
 use FS\SolrBundle\Doctrine\Mapper\EntityMapper;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
-use FS\SolrBundle\Doctrine\ORM\Listener\EntityIndexerSubscriber;
+use FS\SolrBundle\Doctrine\ORM\Listener\EntityIndexer;
 use FS\SolrBundle\Solr;
 use FS\SolrBundle\Tests\Integration\Entity\Category;
 use FS\SolrBundle\Tests\Integration\Entity\Post;
 use FS\SolrBundle\Tests\Integration\Entity\Tag;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\DistributionBundle\Configurator\Step\DoctrineStep;
 use Solarium\Client;
 use Solarium\QueryType\Ping\Query;
 
@@ -36,9 +35,9 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
     private $client;
 
     /**
-     * @var EntityIndexerSubscriber
+     * @var EntityIndexer
      */
-    private $doctrineSubscriber;
+    private $doctrineListener;
 
     /**
      * @var EventDispatcherFake
@@ -73,7 +72,7 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
 
         $this->solr->clearIndex();
 
-        $this->doctrineSubscriber = new EntityIndexerSubscriber($this->solr, $metainformationFactory, $logger);
+        $this->doctrineListener = new EntityIndexer($this->solr, $metainformationFactory, $logger);
     }
 
     /**
@@ -114,9 +113,9 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
 
         $lifecycleEventArgs = new LifecycleEventArgs($post, $objectManager);
 
-        $this->doctrineSubscriber->postPersist($lifecycleEventArgs);
+        $this->doctrineListener->postPersist($lifecycleEventArgs);
 
-        $this->doctrineSubscriber->postFlush(new PostFlushEventArgs($objectManager));
+        $this->doctrineListener->postFlush(new PostFlushEventArgs($objectManager));
 
         $events = $this->eventDispatcher->getEvents();
 
@@ -142,14 +141,14 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
 
         $objectManager = $this->createMock(EntityManagerInterface::class);
 
-        $this->doctrineSubscriber->postPersist(new LifecycleEventArgs($post, $objectManager));
-        $this->doctrineSubscriber->postFlush(new PostFlushEventArgs($objectManager));
+        $this->doctrineListener->postPersist(new LifecycleEventArgs($post, $objectManager));
+        $this->doctrineListener->postFlush(new PostFlushEventArgs($objectManager));
 
         $this->assertEntityExists('deleteEntityWithOneToOne', 'deleteEntityWithOneToOne category');
 
-        $this->doctrineSubscriber->preRemove(new LifecycleEventArgs($category, $objectManager));
-        $this->doctrineSubscriber->preRemove(new LifecycleEventArgs($post, $objectManager));
-        $this->doctrineSubscriber->postFlush(new PostFlushEventArgs($objectManager));
+        $this->doctrineListener->preRemove(new LifecycleEventArgs($category, $objectManager));
+        $this->doctrineListener->preRemove(new LifecycleEventArgs($post, $objectManager));
+        $this->doctrineListener->postFlush(new PostFlushEventArgs($objectManager));
 
         $this->assertEntityNotExists('deleteEntityWithOneToOne', 'deleteEntityWithOneToOne category');
     }
@@ -205,9 +204,9 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
 
         $lifecycleEventArgs = new LifecycleEventArgs($post, $objectManager);
 
-        $this->doctrineSubscriber->postPersist($lifecycleEventArgs);
+        $this->doctrineListener->postPersist($lifecycleEventArgs);
 
-        $this->doctrineSubscriber->postFlush(new PostFlushEventArgs($objectManager));
+        $this->doctrineListener->postFlush(new PostFlushEventArgs($objectManager));
 
         $events = $this->eventDispatcher->getEvents();
 
@@ -237,11 +236,11 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
         $objectManager = $this->createMock(EntityManagerInterface::class);
 
 
-        $this->doctrineSubscriber->postPersist(new LifecycleEventArgs($tag1, $objectManager));
-        $this->doctrineSubscriber->postPersist(new LifecycleEventArgs($tag2, $objectManager));
-        $this->doctrineSubscriber->postPersist(new LifecycleEventArgs($post, $objectManager));
+        $this->doctrineListener->postPersist(new LifecycleEventArgs($tag1, $objectManager));
+        $this->doctrineListener->postPersist(new LifecycleEventArgs($tag2, $objectManager));
+        $this->doctrineListener->postPersist(new LifecycleEventArgs($post, $objectManager));
 
-        $this->doctrineSubscriber->postFlush(new PostFlushEventArgs($objectManager));
+        $this->doctrineListener->postFlush(new PostFlushEventArgs($objectManager));
 
         $events = $this->eventDispatcher->getEvents();
 

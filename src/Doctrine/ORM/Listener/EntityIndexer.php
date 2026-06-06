@@ -5,12 +5,11 @@ namespace FS\SolrBundle\Doctrine\ORM\Listener;
 use DeepCopy\DeepCopy;
 use DeepCopy\Filter\Doctrine\DoctrineEmptyCollectionFilter;
 use DeepCopy\Matcher\PropertyTypeMatcher;
-use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use FS\SolrBundle\Doctrine\AbstractIndexingListener;
 
-class EntityIndexerSubscriber extends AbstractIndexingListener implements EventSubscriber
+class EntityIndexer extends AbstractIndexingListener
 {
     /**
      * @var array
@@ -26,14 +25,6 @@ class EntityIndexerSubscriber extends AbstractIndexingListener implements EventS
      * @var array
      */
     private $deletedNestedEntities = [];
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSubscribedEvents(): array
-    {
-        return ['postUpdate', 'postPersist', 'preRemove', 'postFlush'];
-    }
 
     /**
      * @param LifecycleEventArgs $args

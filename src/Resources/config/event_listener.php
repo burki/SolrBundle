@@ -6,7 +6,7 @@ return static function (ContainerConfigurator $container) {
     $services = $container->services();
     $parameters = $container->parameters();
 
-    $services->set('solr.document.orm.subscriber', \FS\SolrBundle\Doctrine\ORM\Listener\EntityIndexerSubscriber::class)
+    $services->set('solr.document.orm.listener', \FS\SolrBundle\Doctrine\ORM\Listener\EntityIndexer::class)
         ->private()
         ->args([
             service('solr.client'),

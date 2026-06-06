@@ -2,7 +2,6 @@
 
 namespace FS\SolrBundle\Tests\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use FS\SolrBundle\DependencyInjection\FSSolrExtension;
 use Symfony\Component\DependencyInjection\Reference;
@@ -51,9 +50,9 @@ class FSSolrExtensionTest extends \PHPUnit\Framework\TestCase
         $extension = new FSSolrExtension();
         $extension->load($config, $this->container);
 
-        $this->assertTrue($this->container->has('solr.document.orm.subscriber'), 'orm subscriber');
+        $this->assertTrue($this->container->has('solr.document.orm.listener'), 'orm listener');
 
-        $this->assertDefinitionHasTag('solr.document.orm.subscriber', 'doctrine.event_subscriber');
+        $this->assertDefinitionHasTag('solr.document.orm.listener', 'doctrine.event_listener');
 
         $this->assertClassnameResolverHasOrmDefaultConfiguration();
     }
@@ -69,8 +68,8 @@ class FSSolrExtensionTest extends \PHPUnit\Framework\TestCase
         $extension = new FSSolrExtension();
         $extension->load($config, $this->container);
 
-        $this->assertTrue($this->container->has('solr.document.orm.subscriber'), 'orm subscriber');
-        $this->assertDefinitionHasTag('solr.document.orm.subscriber', 'doctrine.event_subscriber');
+        $this->assertTrue($this->container->has('solr.document.orm.listener'), 'orm listener');
+        $this->assertDefinitionHasTag('solr.document.orm.listener', 'doctrine.event_listener');
     }
 
     private function assertClassnameResolverHasOrmDefaultConfiguration()

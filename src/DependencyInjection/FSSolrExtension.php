@@ -88,7 +88,12 @@ class FSSolrExtension extends Extension
         }
 
         if ($this->isOrmConfigured($container)) {
-            $container->getDefinition('solr.document.orm.subscriber')->addTag('doctrine.event_subscriber');
+            $container->getDefinition('solr.document.orm.listener')
+                ->addTag('doctrine.event_listener', ['event' => 'postUpdate'])
+                ->addTag('doctrine.event_listener', ['event' => 'postPersist'])
+                ->addTag('doctrine.event_listener', ['event' => 'preRemove'])
+                ->addTag('doctrine.event_listener', ['event' => 'postFlush'])
+                ;
         }
     }
 
