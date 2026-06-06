@@ -10,9 +10,9 @@ Given you have the following entity with a ManyToOne relation to `Category`.
 use FS\SolrBundle\Attribute as Solr;
 
 /**
- * @ORM\Table()
- * @ORM\Entity
  */
+#[ORM\Table]
+#[ORM\Entity]
 #[Solr\Document()]
 class Post
 {
@@ -26,18 +26,16 @@ class Post
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
      */
+    #[ORM\Column(name: "title", type: "string", length: 255)]
     #[Solr\Field(type:"string")]
     private $title;
 
     /**
      * @var Category
-     *
-     * @ORM\ManyToOne(targetEntity="Acme\DemoBundle\Entity\Category", inversedBy="posts", cascade={"persist"})
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: "Acme\DemoBundle\Entity\Category", inversedBy: "posts", cascade: ["persist"])]
+    #[ORM\JoinColumn(name: "category_id", referencedColumnName: "id")]
     #[Solr\Field(type:"string", getter:"getTitle")]
     private $category;
 
@@ -96,11 +94,10 @@ use FS\SolrBundle\Attribute as Solr;
 
 /**
  * Post
- *
- * @ORM\Table()
- * @ORM\Entity
  */
 #[Solr\Document()]
+#[ORM\Table]
+#[ORM\Entity]
 class Post
 {
     /**
@@ -110,15 +107,15 @@ class Post
     private $id;
 
     /**
-     * @ORM\Column(name="title", type="string", length=255)
      */
     #[Solr\Field(type:"string")]
+    #[ORM\Column(name: "title", type: "string", length: 255)]
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="Acme\DemoBundle\Entity\Tag", mappedBy="post", cascade={"persist"})
      */
     #[Solr\Field(type:"strings", getter:"getName")]
+    #[ORM\OneToMany(targetEntity: "Acme\DemoBundle\Entity\Tag", mappedBy: "post", cascade: ["persist"])]
     private $tags;
 
     // ... some getter / setter
@@ -176,9 +173,9 @@ Post entity:
 
 ```php
     /**
-     * @ORM\OneToMany(targetEntity="Acme\DemoBundle\Entity\Tag", mappedBy="post", cascade={"persist"})
      */
     #[Solr\Field(type:"string", nestedClass:"Acme\DemoBundle\Entity\Tag")]
+    #[ORM\OneToMany(targetEntity: "Acme\DemoBundle\Entity\Tag", mappedBy: "post", cascade: ["persist"])]
     private $tags;
 ```
 
@@ -187,11 +184,10 @@ Mark the `Tag` entity as Nested
 ```php
 /**
  * Tag
- *
- * @ORM\Table()
- * @ORM\Entity
  */
 #[Solr\Nested()]
+#[ORM\Table]
+#[ORM\Entity]
 class Tag
 {
     /**
@@ -204,10 +200,9 @@ class Tag
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      */
     #[Solr\Field(type:"string")]
+    #[ORM\Column(name: "name", type: "string", length: 255)]
     private $name;
 
     // getter and setter

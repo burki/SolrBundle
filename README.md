@@ -2,7 +2,7 @@ SolrBundle
 ==========
 Introduction
 ------------
-Forked from floriansemm/solr-bundle to integrate with Solarium 6, Symfony 5.4, 6.4, 7.x, 8.0
+Forked from floriansemm/solr-bundle to integrate with Solarium 6, Symfony 6.4, 7.4, 8.x
 
 This Bundle provides a simple API to index and query a Solr Index.
 
@@ -85,35 +85,34 @@ set `#Solr\Id(generateId:true)`.
 use FS\SolrBundle\Attribute as Solr;
 
 /**
-* @ORM\Table()
 */
+#[ORM\Table()]
 #[Solr\Document()]
 class Post
 {
     /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Column(name: "id", type: "integer")]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     #[Solr\Id]
     private $id;
 
     /**
-     * @ORM\Column(name="title", type="string", length=255)
      */
+    #[ORM\Column(name: "title", type: "string", length: 255)]
     #[Solr\Field(type:"text")]
     private $title = '';
 
     /**
-     * @ORM\Column(name="text", type="text")
      */
+    #[ORM\Column(name: "text", type: "text")]
     #[Solr\Field(type:"string")]
     private $text = '';
 
    /**
-    *
-    * @ORM\Column(name="created_at", type="datetime")
     */
+    #[ORM\Column(name: "created_at", type: "datetime")]
     #[Solr\Field(type:"date", getter:"format('Y-m-d\TH:i:s.z\Z')")]
     private $created_at = null;
 }
@@ -185,10 +184,10 @@ used as the primary identifier for the entity/document.
 class Post
 {
     /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Column(name: "id", type: "integer")]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     #[Solr\Id]
     private $id;
 }
@@ -229,8 +228,6 @@ Solr supports partial updates of fields in an existing document. Supported value
 ### `nestedClass` property
 
 Set this property if you want to index collections with nested Objects.
-
-
 
 ### Object relations
 
