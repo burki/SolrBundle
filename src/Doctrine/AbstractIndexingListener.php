@@ -2,7 +2,6 @@
 
 namespace FS\SolrBundle\Doctrine;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use FS\SolrBundle\Doctrine\Mapper\MetaInformationFactory;
 use FS\SolrBundle\Doctrine\Mapper\SolrMappingException;
 use FS\SolrBundle\SolrInterface;

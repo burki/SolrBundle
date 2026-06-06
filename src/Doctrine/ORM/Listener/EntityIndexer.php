@@ -5,7 +5,9 @@ namespace FS\SolrBundle\Doctrine\ORM\Listener;
 use DeepCopy\DeepCopy;
 use DeepCopy\Filter\Doctrine\DoctrineEmptyCollectionFilter;
 use DeepCopy\Matcher\PropertyTypeMatcher;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostUpdateEventArgs;
+use Doctrine\ORM\Event\PostPersistEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use FS\SolrBundle\Doctrine\AbstractIndexingListener;
 
@@ -27,17 +29,21 @@ class EntityIndexer extends AbstractIndexingListener
     private $deletedNestedEntities = [];
 
     /**
-     * @param LifecycleEventArgs $args
+     * @param PostUpdateEventArgs $args
      */
-    public function postUpdate(LifecycleEventArgs $args)
+    public function postUpdate(PostUpdateEventArgs $args)
     {
-        $entity = $args->getEntity();
+        // in Doctrine ORM3, $args is a subclass of Doctrine\Persistence\Event\EventArgs
+        $entity = method_exists($args, 'getEntity') ? $args->getEntity() : $args->getObject();
 
         if ($this->isAbleToIndex($entity) === false) {
             return;
         }
 
-        $doctrineChangeSet = $args->getEntityManager()->getUnitOfWork()->getEntityChangeSet($entity);
+        $entityManager = method_exists($args, 'getEntityManager')
+            ? $args->getEntityManager() : $args->getObjectManager();
+
+        $doctrineChangeSet = $entityManager->getUnitOfWork()->getEntityChangeSet($entity);
         try {
             if ($this->hasChanged($doctrineChangeSet, $entity) === false) {
                 return;
@@ -50,11 +56,12 @@ class EntityIndexer extends AbstractIndexingListener
     }
 
     /**
-     * @param LifecycleEventArgs $args
+     * @param PostPersistEventArgs $args
      */
-    public function postPersist(LifecycleEventArgs $args)
+    public function postPersist(PostPersistEventArgs $args)
     {
-        $entity = $args->getEntity();
+        // in Doctrine ORM3, $args is a subclass of Doctrine\Persistence\Event\EventArgs
+        $entity = method_exists($args, 'getEntity') ? $args->getEntity() : $args->getObject();
 
         if ($this->isAbleToIndex($entity) === false) {
             return;
@@ -64,11 +71,12 @@ class EntityIndexer extends AbstractIndexingListener
     }
 
     /**
-     * @param LifecycleEventArgs $args
+     * @param PreRemoveEventArgs $args
      */
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(PreRemoveEventArgs $args)
     {
-        $entity = $args->getEntity();
+        // in Doctrine ORM3, $args is a subclass of Doctrine\Persistence\Event\EventArgs
+        $entity = method_exists($args, 'getEntity') ? $args->getEntity() : $args->getObject();
 
         if ($this->isAbleToIndex($entity) === false) {
             return;

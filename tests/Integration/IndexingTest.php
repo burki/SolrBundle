@@ -2,9 +2,9 @@
 
 namespace FS\SolrBundle\Tests\Integration;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostPersistEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use FS\SolrBundle\Client\Solarium\SolariumClientBuilder;
 use FS\SolrBundle\Attribute\AttributeReader;
@@ -111,9 +111,7 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
 
         $objectManager = $this->createMock(EntityManagerInterface::class);
 
-        $lifecycleEventArgs = new LifecycleEventArgs($post, $objectManager);
-
-        $this->doctrineListener->postPersist($lifecycleEventArgs);
+        $this->doctrineListener->postPersist(new PostPersistEventArgs($post, $objectManager));
 
         $this->doctrineListener->postFlush(new PostFlushEventArgs($objectManager));
 
@@ -141,13 +139,13 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
 
         $objectManager = $this->createMock(EntityManagerInterface::class);
 
-        $this->doctrineListener->postPersist(new LifecycleEventArgs($post, $objectManager));
+        $this->doctrineListener->postPersist(new PostPersistEventArgs($post, $objectManager));
         $this->doctrineListener->postFlush(new PostFlushEventArgs($objectManager));
 
         $this->assertEntityExists('deleteEntityWithOneToOne', 'deleteEntityWithOneToOne category');
 
-        $this->doctrineListener->preRemove(new LifecycleEventArgs($category, $objectManager));
-        $this->doctrineListener->preRemove(new LifecycleEventArgs($post, $objectManager));
+        $this->doctrineListener->preRemove(new PreRemoveEventArgs($category, $objectManager));
+        $this->doctrineListener->preRemove(new PreRemoveEventArgs($post, $objectManager));
         $this->doctrineListener->postFlush(new PostFlushEventArgs($objectManager));
 
         $this->assertEntityNotExists('deleteEntityWithOneToOne', 'deleteEntityWithOneToOne category');
@@ -202,9 +200,7 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
 
         $objectManager = $this->createMock(EntityManagerInterface::class);
 
-        $lifecycleEventArgs = new LifecycleEventArgs($post, $objectManager);
-
-        $this->doctrineListener->postPersist($lifecycleEventArgs);
+        $this->doctrineListener->postPersist(new PostPersistEventArgs($post, $objectManager));
 
         $this->doctrineListener->postFlush(new PostFlushEventArgs($objectManager));
 
@@ -236,9 +232,9 @@ class IndexingTest extends \PHPUnit\Framework\TestCase
         $objectManager = $this->createMock(EntityManagerInterface::class);
 
 
-        $this->doctrineListener->postPersist(new LifecycleEventArgs($tag1, $objectManager));
-        $this->doctrineListener->postPersist(new LifecycleEventArgs($tag2, $objectManager));
-        $this->doctrineListener->postPersist(new LifecycleEventArgs($post, $objectManager));
+        $this->doctrineListener->postPersist(new PostPersistEventArgs($tag1, $objectManager));
+        $this->doctrineListener->postPersist(new PostPersistEventArgs($tag2, $objectManager));
+        $this->doctrineListener->postPersist(new PostPersistEventArgs($post, $objectManager));
 
         $this->doctrineListener->postFlush(new PostFlushEventArgs($objectManager));
 

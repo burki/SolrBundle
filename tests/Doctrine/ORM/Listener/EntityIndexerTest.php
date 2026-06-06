@@ -4,7 +4,9 @@ namespace FS\SolrBundle\Tests\Doctrine\ORM\Listener;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostUpdateEventArgs;
+use Doctrine\ORM\Event\PostPersistEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
 use FS\SolrBundle\Attribute\AttributeReader;
@@ -16,7 +18,6 @@ use FS\SolrBundle\Tests\Fixtures\NotIndexedEntity;
 use FS\SolrBundle\Tests\Fixtures\ValidTestEntityWithCollection;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Validator\Tests\Constraints\ValidTest;
 
 class EntityIndexerTest extends TestCase
 {
@@ -43,7 +44,7 @@ class EntityIndexerTest extends TestCase
     /**
      * @test
      */
-    public function separteDeletedRootEntitiesFromNested()
+    public function separateDeletedRootEntitiesFromNested()
     {
         $nested = new NestedEntity();
         $nested->setId(uniqid());
@@ -73,10 +74,10 @@ class EntityIndexerTest extends TestCase
                 })
             );
 
-        $deleteRootEntityEvent = new LifecycleEventArgs($entity, $objectManager);
+        $deleteRootEntityEvent = new PreRemoveEventArgs($entity, $objectManager);
         $this->subscriber->preRemove($deleteRootEntityEvent);
 
-        $deleteNestedEntityEvent = new LifecycleEventArgs($nested, $objectManager);
+        $deleteNestedEntityEvent = new PreRemoveEventArgs($nested, $objectManager);
         $this->subscriber->preRemove($deleteNestedEntityEvent);
 
         $entityManager = $this->createMock(EntityManagerInterface::class);
@@ -107,10 +108,10 @@ class EntityIndexerTest extends TestCase
             ->method('getUnitOfWork')
             ->willReturn($unitOfWork);
 
-        $updateEntityEvent1 = new LifecycleEventArgs($changedEntity, $objectManager);
+        $updateEntityEvent1 = new PostUpdateEventArgs($changedEntity, $objectManager);
 
         $unmodifiedEntity = new ValidTestEntityWithCollection();
-        $updateEntityEvent2 = new LifecycleEventArgs($unmodifiedEntity, $objectManager);
+        $updateEntityEvent2 = new PostUpdateEventArgs($unmodifiedEntity, $objectManager);
 
         $this->subscriber->postUpdate($updateEntityEvent1);
         $this->subscriber->postUpdate($updateEntityEvent2);
@@ -131,10 +132,8 @@ class EntityIndexerTest extends TestCase
 
         $objectManager = $this->createMock(EntityManagerInterface::class);
 
-        $lifecycleEventArgs = new LifecycleEventArgs($entity, $objectManager);
-
-        $this->subscriber->postPersist($lifecycleEventArgs);
-        $this->subscriber->preRemove($lifecycleEventArgs);
+        $this->subscriber->postPersist(new PostPersistEventArgs($entity, $objectManager));
+        $this->subscriber->preRemove(new PreRemoveEventArgs($entity, $objectManager));
 
         $this->subscriber->postFlush(new PostFlushEventArgs($objectManager));
     }
